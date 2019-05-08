@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Emico_AttributeLanding::Page" sortOrder="10" title="Page">
+					<resource id="Emico_AttributeLanding::Page_save" sortOrder="10" title="Save Page"/>
+					<resource id="Emico_AttributeLanding::Page_delete" sortOrder="20" title="Delete Page"/>
+					<resource id="Emico_AttributeLanding::Page_update" sortOrder="30" title="Update Page"/>
+					<resource id="Emico_AttributeLanding::Page_view" sortOrder="40" title="View Page"/>
+				</resource>
+				<resource id="Emico_AttributeLanding::OverviewPage" sortOrder="10" title="OverviewPage">
+					<resource id="Emico_AttributeLanding::OverviewPage_save" sortOrder="10" title="Save OverviewPage"/>
+					<resource id="Emico_AttributeLanding::OverviewPage_delete" sortOrder="20" title="Delete OverviewPage"/>
+					<resource id="Emico_AttributeLanding::OverviewPage_update" sortOrder="30" title="Update OverviewPage"/>
+					<resource id="Emico_AttributeLanding::OverviewPage_view" sortOrder="40" title="View OverviewPage"/>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

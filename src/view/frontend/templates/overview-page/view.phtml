@@ -1,0 +1,16 @@
+<?php
+/** @var \Emico\AttributeLanding\Block\OverviewPage\View $this */
+?>
+<div><?=$this->getOverviewPage()->getContentFirst()?></div>
+<div class="landingpages-grid">
+    <ol class="landingpage-items">
+    <?php foreach ($this->getLandingPages() as $landingPage): ?>
+        <li class="landingpage-item">
+            <a href="<?=$landingPage->getUrlPath()?>"><?=$landingPage->getHeading() ?: $landingPage->getName()?>
+                <img src="<?=$this->getLandingPageImage($landingPage)?>" />
+            </a>
+        </li>
+    <?php endforeach; ?>
+    </ol>
+</div>
+<div><?=$this->getOverviewPage()->getContentLast()?></div>

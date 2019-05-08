@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Emico_AttributeLanding::landingpages"
+			 title="Attribute landingpages"
+			 module="Emico_AttributeLanding"
+			 parent="Magento_Backend::content"
+			 sortOrder="110"
+			 resource="Emico_AttributeLanding::landingpages"
+		/>
+
+		<add action="emico_attributelanding/page/index"
+			 id="Emico_AttributeLanding::page_management"
+			 title="Manage pages"
+			 module="Emico_AttributeLanding"
+			 parent="Emico_AttributeLanding::landingpages"
+			 sortOrder="10"
+			 resource="Emico_AttributeLanding::page_management"
+		/>
+
+		<add action="emico_attributelanding/overviewpage/index"
+			 id="Emico_AttributeLanding::overviewpage_management"
+			 title="Manage overview pages"
+			 module="Emico_AttributeLanding"
+			 parent="Emico_AttributeLanding::landingpages"
+			 sortOrder="10"
+			 resource="Emico_AttributeLanding::overviewpage_management"
+		/>
+	</menu>
+</config>

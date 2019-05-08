@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Tweakwise & Emico (https://www.tweakwise.com/ & https://www.emico.nl/) - All Rights Reserved
+ *
+ * @copyright Copyright (c) 2017-2017 Tweakwise.com B.V. (https://www.tweakwise.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="emico" translate="label" sortOrder="999999" class="emico-tab">
+            <label>Emico Extensions</label>
+        </tab>
+        <section id="emico_attributelanding" sortOrder="-5000" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Attribute Landing pages</label>
+            <tab>emico</tab>
+            <resource>Emico_AttributeLanding::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="allow_crosslink" translate="label,comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow crosslink</label>
+                    <comment>Allow landingpages to be crosslink from within layered navigation filters</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

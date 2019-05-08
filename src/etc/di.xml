@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Emico\AttributeLanding\Api\LandingPageRepositoryInterface" type="Emico\AttributeLanding\Model\LandingPageRepository"/>
+	<preference for="Emico\AttributeLanding\Api\OverviewPageRepositoryInterface" type="Emico\AttributeLanding\Model\OverviewPageRepository"/>
+	<preference for="Emico\AttributeLanding\Api\Data\LandingPageInterface" type="Emico\AttributeLanding\Model\LandingPage"/>
+	<preference for="Emico\AttributeLanding\Api\Data\OverviewPageInterface" type="Emico\AttributeLanding\Model\OverviewPage"/>
+	<preference for="Emico\AttributeLanding\Api\Data\PageSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<preference for="Emico\AttributeLanding\Api\Data\OverviewPageSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<preference for="Emico\AttributeLanding\Model\FilterApplier\FilterApplierInterface" type="Emico\AttributeLanding\Model\FilterApplier\AggregateFilterApplier"/>
+	<preference for="Emico\AttributeLanding\Model\FilterHider\FilterHiderInterface" type="Emico\AttributeLanding\Model\FilterHider\MagentoFilterHider"/>
+	<preference for="Magento\Catalog\Block\Breadcrumbs" type="Emico\AttributeLanding\Block\Catalog\Breadcrumbs"/>
+
+	<virtualType name="Emico\AttributeLanding\Model\ResourceModel\Page\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">emico_attributelanding_page</argument>
+			<argument name="resourceModel" xsi:type="string">Emico\AttributeLanding\Model\ResourceModel\Page\Collection</argument>
+		</arguments>
+	</virtualType>
+
+	<virtualType name="Emico\AttributeLanding\Model\ResourceModel\OverviewPage\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">emico_attributelanding_overviewpage</argument>
+			<argument name="resourceModel" xsi:type="string">Emico\AttributeLanding\Model\ResourceModel\OverviewPage\Collection</argument>
+		</arguments>
+	</virtualType>
+
+	<virtualType name="Magento\LayeredNavigation\Block\Navigation\Category">
+		<plugin name="emicoAttributeLanding" type="Emico\AttributeLanding\Block\LayeredNavigation\Navigation\FilterHidePlugin" />
+	</virtualType>
+
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="emico_attributelanding_page_listing_data_source" xsi:type="string">Emico\AttributeLanding\Model\ResourceModel\Page\Grid\Collection</item>
+				<item name="emico_attributelanding_overviewpage_listing_data_source" xsi:type="string">Emico\AttributeLanding\Model\ResourceModel\OverviewPage\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+
+	<type name="Emico\AttributeLanding\Model\FilterApplier\AggregateFilterApplier">
+		<arguments>
+			<argument name="appliers" xsi:type="array">
+				<item name="magento" xsi:type="string">Emico\AttributeLanding\Model\FilterApplier\MagentoFilterApplier</item>
+			</argument>
+		</arguments>
+	</type>
+
+	<type name="Magento\Catalog\Model\Layer\State">
+		<plugin name="emicoAttributeLanding" type="Emico\AttributeLanding\Model\Catalog\Layer\State\Plugin" />
+	</type>
+	<type name="Magento\LayeredNavigation\Block\Navigation">
+		<plugin name="emicoAttributeLanding" type="Emico\AttributeLanding\Block\LayeredNavigation\Navigation\FilterHidePlugin" />
+	</type>
+
+	<!--<type name="Emico\AttributeLanding\Model\Sitemap\LandingPageItemProvider">
+		<arguments>
+			<argument name="configReader" xsi:type="object">Magento\Sitemap\Model\ItemProvider\CategoryConfigReader</argument>
+		</arguments>
+	</type>
+    <type name="Magento\Sitemap\Model\ItemProvider\Composite">
+        <arguments>
+            <argument name="itemProviders" xsi:type="array">
+                <item name="landingPageProvider" xsi:type="object">Emico\AttributeLanding\Model\Sitemap\LandingPageItemProvider</item>
+            </argument>
+        </arguments>
+    </type>-->
+</config>

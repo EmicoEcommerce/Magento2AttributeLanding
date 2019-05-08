@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="emico_attributelanding_page_save_after">
+        <observer name="landingpage_urlrewrite_generate" instance="Emico\AttributeLanding\Observer\UrlRewriteGenerateObserver"/>
+        <observer name="landingpage_cache_invalidate" instance="Emico\AttributeLanding\Observer\InvalidateCacheObserver"/>
+    </event>
+    <event name="emico_attributelanding_overviewpage_save_after">
+        <observer name="landingpage_urlrewrite_generate" instance="Emico\AttributeLanding\Observer\UrlRewriteGenerateObserver"/>
+    </event>
+    <event name="emico_attributelanding_page_delete_after">
+        <observer name="landingpage_urlrewrite_remove" instance="Emico\AttributeLanding\Observer\UrlRewriteRemoveObserver"/>
+    </event>
+    <event name="emico_attributelanding_overviewpage_delete_after">
+        <observer name="landingpage_urlrewrite_remove" instance="Emico\AttributeLanding\Observer\UrlRewriteRemoveObserver"/>
+    </event>
+</config>

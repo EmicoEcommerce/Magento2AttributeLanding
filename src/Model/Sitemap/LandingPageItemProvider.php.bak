@@ -1,0 +1,69 @@
+<?php
+/**
+ * @author Bram Gerritsen <bgerritsen@emico.nl>
+ * @copyright (c) Emico B.V. 2017
+ */
+
+namespace Emico\AttributeLanding\Model\Sitemap;
+
+
+use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
+use Magento\Sitemap\Model\ItemProvider\ConfigReaderInterface;
+use Magento\Sitemap\Model\ItemProvider\ItemProviderInterface;
+use Magento\Sitemap\Model\SitemapItemInterfaceFactory;
+use Magento\Sitemap\Model\SitemapItemInterface;
+
+class LandingPageItemProvider implements ItemProviderInterface
+{
+    /**
+     * @var LandingPageRepositoryInterface
+     */
+    private $landingPageRepository;
+
+    /**
+     * @var SitemapItemInterfaceFactory
+     */
+    private $itemFactory;
+
+    /**
+     * @var ConfigReaderInterface
+     */
+    private $configReader;
+
+    /**
+     * LandingPageItemProvider constructor.
+     * @param LandingPageRepositoryInterface $landingPageRepository
+     * @param SitemapItemInterfaceFactory $itemFactory
+     * @param ConfigReaderInterface $configReader
+     */
+    public function __construct(
+        LandingPageRepositoryInterface $landingPageRepository,
+        SitemapItemInterfaceFactory $itemFactory,
+        ConfigReaderInterface $configReader
+    ) {
+        $this->landingPageRepository = $landingPageRepository;
+        $this->itemFactory = $itemFactory;
+        $this->configReader = $configReader;
+    }
+
+    /**
+     * Get sitemap items
+     *
+     * @param int $storeId
+     * @return SitemapItemInterface[]
+     */
+    public function getItems($storeId)
+    {
+        $landingPages = $this->landingPageRepository->findAllActive();
+
+        foreach ($landingPages as $landingPage) {
+
+            yield $this->itemFactory->create([
+                'url' => $landingPage->getUrlPath(),
+                'updatedAt' => date('Y-m-d H:i:s'),
+                'priority' => $this->configReader->getPriority($storeId),
+                'changeFrequency' => $this->configReader->getChangeFrequency($storeId),
+            ]);
+        }
+    }
+}
