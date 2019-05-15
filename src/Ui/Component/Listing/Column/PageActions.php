@@ -5,11 +5,15 @@ namespace Emico\AttributeLanding\Ui\Component\Listing\Column;
 
 class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
 {
+    /**
+     * @var \Magento\Framework\UrlInterface
+     */
+    protected $urlBuilder;
 
     const URL_PATH_DETAILS = 'emico_attributelanding/page/details';
-    protected $urlBuilder;
     const URL_PATH_EDIT = 'emico_attributelanding/page/edit';
     const URL_PATH_DELETE = 'emico_attributelanding/page/delete';
+    const URL_PATH_DUPLICATE = 'emico_attributelanding/page/duplicate';
 
     /**
      * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
@@ -50,6 +54,15 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
                             ),
                             'label' => __('Edit')
                         ],
+                        'duplicate' => [
+                            'href' => $this->urlBuilder->getUrl(
+                                static::URL_PATH_DUPLICATE,
+                                [
+                                    'page_id' => $item['page_id']
+                                ]
+                            ),
+                            'label' => __('Duplicate')
+                        ],
                         'delete' => [
                             'href' => $this->urlBuilder->getUrl(
                                 static::URL_PATH_DELETE,
@@ -67,7 +80,7 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
                 }
             }
         }
-        
+
         return $dataSource;
     }
 }
