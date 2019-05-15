@@ -201,7 +201,7 @@
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
-				<label translate="true">Content above results</label>
+				<label translate="true">Content below results</label>
 				<dataScope>content_last</dataScope>
 			</settings>
 			<formElements>
