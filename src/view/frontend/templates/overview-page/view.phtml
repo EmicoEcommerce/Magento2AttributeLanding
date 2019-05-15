@@ -1,7 +1,7 @@
 <?php
 /** @var \Emico\AttributeLanding\Block\OverviewPage\View $this */
 ?>
-<div><?=$this->getOverviewPage()->getContentFirst()?></div>
+<div><?=$this->getContentFirst()?></div>
 <div class="landingpages-grid">
     <ol class="landingpage-items">
     <?php foreach ($this->getLandingPages() as $landingPage): ?>
@@ -13,4 +13,4 @@
     <?php endforeach; ?>
     </ol>
 </div>
-<div><?=$this->getOverviewPage()->getContentLast()?></div>
+<div><?=$this->getContentLast()?></div>
