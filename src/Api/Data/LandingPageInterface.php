@@ -31,6 +31,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public const OVERVIEW_PAGE_ID = 'overview_page_id';
     public const OVERVIEW_PAGE_IMAGE = 'overview_page_image';
     public const FILTER_LINK_ALLOWED = 'is_filter_link_allowed';
+    public const HIDE_SELECTED_FILTERS = 'hide_selected_filters';
     public const CANONICAL_URL = 'canonical_url';
     public const CREATED_AT = 'created_at';
     public const UPDATED_AT = 'updated_at';
@@ -169,6 +170,11 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return bool
      */
     public function getIsFilterLinkAllowed(): bool;
+
+    /**
+     * @return bool
+     */
+    public function getHideSelectedFilters(): bool;
 
     /**
      * @return string

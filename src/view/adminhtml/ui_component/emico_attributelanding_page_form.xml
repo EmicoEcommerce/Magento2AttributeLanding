@@ -192,7 +192,35 @@
 			</container>
 		</dynamicRows>
 
-		<field formElement="select" name="tweakwise_filter_template" sortOrder="60">
+		<field formElement="checkbox" name="hide_selected_filters" sortOrder="60">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Page</item>
+					<item name="default" xsi:type="number">1</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">Hide selected filters</label>
+				<dataScope>hide_selected_filters</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+			<formElements>
+				<checkbox>
+					<settings>
+						<valueMap>
+							<map name="false" xsi:type="string">0</map>
+							<map name="true" xsi:type="string">1</map>
+						</valueMap>
+						<prefer>toggle</prefer>
+					</settings>
+				</checkbox>
+			</formElements>
+		</field>
+
+		<field formElement="select" name="tweakwise_filter_template" sortOrder="61">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>

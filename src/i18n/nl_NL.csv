@@ -17,3 +17,4 @@
 "Pages","Pagina's"
 "Allow link in faceted search","Link in facetnavigatie toestaan"
 "Specify canonical url if needed, if left empty it will fall back the page url.","Specificeer een canonical URL. Als deze leeg gelaten wordt dan is die gelijk aan de landingpage URL"
+"Hide selected filters":"Verberg geselecteerde filters"
