@@ -12,8 +12,10 @@ use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Emico\AttributeLanding\Model\Page\ImageUploader;
+use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Template;
+use Psr\Log\LoggerInterface;
 
 class View extends Template
 {
@@ -33,21 +35,38 @@ class View extends Template
     private $imageUploader;
 
     /**
+     * @var \Magento\Framework\Filter\Template
+     */
+    private $pageFilter;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * View constructor.
      * @param Template\Context $context
      * @param LandingPageContext $landingPageContext
      * @param LandingPageRepositoryInterface $landingPageRepository
+     * @param ImageUploader $imageUploader
+     * @param FilterProvider $filterProvider
+     * @param LoggerInterface $logger
      */
     public function __construct(
         Template\Context $context,
         LandingPageContext $landingPageContext,
         LandingPageRepositoryInterface $landingPageRepository,
-        ImageUploader $imageUploader
+        ImageUploader $imageUploader,
+        FilterProvider $filterProvider,
+        LoggerInterface $logger
     ) {
         parent::__construct($context);
         $this->landingPageContext = $landingPageContext;
         $this->landingPageRepository = $landingPageRepository;
         $this->imageUploader = $imageUploader;
+        $this->pageFilter = $filterProvider->getPageFilter();
+        $this->logger = $logger;
     }
 
     /**
@@ -83,6 +102,36 @@ class View extends Template
         }
 
         return $this->imageUploader->getMediaUrl($image);
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentFirst(): string
+    {
+        return $this->getFilteredContent($this->getOverviewPage()->getContentFirst());
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentLast(): string
+    {
+        return $this->getFilteredContent($this->getOverviewPage()->getContentLast());
+    }
+
+    /**
+     * @param string $content
+     * @return string
+     */
+    protected function getFilteredContent(string $content): string
+    {
+        try {
+            return $this->pageFilter->filter($content);
+        } catch (\Exception $e) {
+            $this->logger->critical($e->getMessage());
+            return '';
+        }
     }
 
     /**

@@ -9,7 +9,9 @@ namespace Emico\AttributeLanding\Block\LandingPage;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
+use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\View\Element\Template;
+use Psr\Log\LoggerInterface;
 
 class Content extends Template
 {
@@ -19,14 +21,31 @@ class Content extends Template
     private $landingPageContext;
 
     /**
+     * @var \Magento\Framework\Filter\Template
+     */
+    private $pageFilter;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * PageContent constructor.
      * @param Template\Context $context
      * @param LandingPageContext $landingPageContext
+     * @param FilterProvider $filterProvider
      */
-    public function __construct(Template\Context $context, LandingPageContext $landingPageContext)
-    {
+    public function __construct(
+        Template\Context $context,
+        LandingPageContext $landingPageContext,
+        FilterProvider $filterProvider,
+        LoggerInterface $logger
+    ) {
         parent::__construct($context);
         $this->landingPageContext = $landingPageContext;
+        $this->pageFilter = $filterProvider->getPageFilter();
+        $this->logger = $logger;
     }
 
     /**
@@ -34,7 +53,7 @@ class Content extends Template
      */
     public function getTopContent(): string
     {
-        return $this->getLandingPage()->getContentFirst() ?? '';
+        return $this->getFilteredContent($this->getLandingPage()->getContentFirst() ?? '');
     }
 
     /**
@@ -42,7 +61,7 @@ class Content extends Template
      */
     public function getBottomContent(): string
     {
-        return $this->getLandingPage()->getContentLast() ?? '';
+        return $this->getFilteredContent($this->getLandingPage()->getContentLast() ?? '');
     }
 
     /**
@@ -51,5 +70,19 @@ class Content extends Template
     protected function getLandingPage(): LandingPageInterface
     {
         return $this->landingPageContext->getLandingPage();
+    }
+
+    /**
+     * @param string $content
+     * @return string
+     */
+    protected function getFilteredContent(string $content): string
+    {
+        try {
+            return $this->pageFilter->filter($content);
+        } catch (\Exception $e) {
+            $this->logger->critical($e->getMessage());
+            return '';
+        }
     }
 }
