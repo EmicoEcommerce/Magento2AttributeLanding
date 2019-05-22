@@ -47,7 +47,7 @@ class Plugin
         }
 
         $landingPage = $this->landingPageContext->getLandingPage();
-        if (!$landingPage) {
+        if (!$landingPage || !$landingPage->getHideSelectedFilters()) {
             return $result;
         }
 

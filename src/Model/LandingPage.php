@@ -442,6 +442,23 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
+     * @return bool
+     */
+    public function getHideSelectedFilters(): bool
+    {
+        return (bool) $this->getData(LandingPageInterface::HIDE_SELECTED_FILTERS);
+    }
+
+    /**
+     * @param bool $hideSelectedFilters
+     * @return LandingPageInterface
+     */
+    public function setHideSelectedFilters(bool $hideSelectedFilters = true): LandingPageInterface
+    {
+        return $this->setData(LandingPageInterface::HIDE_SELECTED_FILTERS, $hideSelectedFilters);
+    }
+
+    /**
      * @return string
      */
     public function getCanonicalUrl()
