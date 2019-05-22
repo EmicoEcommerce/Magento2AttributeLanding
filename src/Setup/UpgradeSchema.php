@@ -49,7 +49,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
         if (version_compare($context->getVersion(), '0.4.2') < 0) {
             $this->addCanonicalUrlColumn($setup);
         }
-        if (version_compare($context->getVersion(), '1.0.1') < 0) {
+        if (version_compare($context->getVersion(), '1.0.0') < 0) {
             $this->addHideSelectedFiltersColumn($setup);
         }
         $setup->endSetup();
