@@ -52,7 +52,13 @@
 		<plugin name="emicoAttributeLanding" type="Emico\AttributeLanding\Block\LayeredNavigation\Navigation\FilterHidePlugin" />
 	</type>
 
-	<!--<type name="Emico\AttributeLanding\Model\Sitemap\LandingPageItemProvider">
+	<!-- Sitemap compatibility for Magento 2.2 -->
+	<type name="Magento\Sitemap\Model\Sitemap">
+		<plugin name="emicoAttributeLanding" sortOrder="1" disabled="false" type="Emico\AttributeLanding\Plugin\Model\SitemapPlugin" />
+	</type>
+
+	<!-- Sitemap compatibility for Magento 2.3 -->
+	<type name="Emico\AttributeLanding\Model\Sitemap\LandingPageItemProvider">
 		<arguments>
 			<argument name="configReader" xsi:type="object">Magento\Sitemap\Model\ItemProvider\CategoryConfigReader</argument>
 		</arguments>
@@ -63,5 +69,5 @@
                 <item name="landingPageProvider" xsi:type="object">Emico\AttributeLanding\Model\Sitemap\LandingPageItemProvider</item>
             </argument>
         </arguments>
-    </type>-->
+    </type>
 </config>
