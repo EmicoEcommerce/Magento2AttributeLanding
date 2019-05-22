@@ -6,6 +6,12 @@
         "magento/module-sitemap": "^100.3",
         "magento/module-catalog": "^103.0"
     },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "phpcompatibility/php-compatibility": "*",
+        "phpro/grumphp": "^0.15.2"
+    },
+    "prefer-stable" : true,
     "type": "magento2-module",
     "suggest": {
         "emico/m2-attributelanding-tweakwise": "Install to use attributelanding page in combination with Tweakwise"
@@ -17,5 +23,11 @@
         "psr-4": {
             "Emico\\AttributeLanding\\": "src"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        }
+    ]
 }

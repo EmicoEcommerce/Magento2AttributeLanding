@@ -94,7 +94,7 @@ class View extends Template
      * @param LandingPageInterface $landingPage
      * @return string|null
      */
-    public function getLandingPageImage(LandingPageInterface $landingPage): ?string
+    public function getLandingPageImage(LandingPageInterface $landingPage)
     {
         $image = $landingPage->getOverviewPageImage();
         if ($image === null) {
