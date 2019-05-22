@@ -26,7 +26,7 @@ abstract class GenericButton
      *
      * @return int|null
      */
-    public function getModelId(): ?int
+    public function getModelId()
     {
         return $this->context->getRequest()->getParam(LandingPageInterface::PAGE_ID);
     }

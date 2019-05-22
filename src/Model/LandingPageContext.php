@@ -25,7 +25,7 @@ class LandingPageContext
     /**
      * @return LandingPageInterface
      */
-    public function getLandingPage(): ?LandingPageInterface
+    public function getLandingPage()
     {
         return $this->landingPage;
     }
@@ -33,7 +33,7 @@ class LandingPageContext
     /**
      * @param LandingPageInterface $page
      */
-    public function setLandingPage(LandingPageInterface $page): void
+    public function setLandingPage(LandingPageInterface $page)
     {
         $this->landingPage = $page;
     }
@@ -49,7 +49,7 @@ class LandingPageContext
     /**
      * @return OverviewPageInterface
      */
-    public function getOverviewPage(): ?OverviewPageInterface
+    public function getOverviewPage()
     {
         return $this->overviewPage;
     }
@@ -57,7 +57,7 @@ class LandingPageContext
     /**
      * @param OverviewPageInterface $overviewPage
      */
-    public function setOverviewPage(OverviewPageInterface $overviewPage): void
+    public function setOverviewPage(OverviewPageInterface $overviewPage)
     {
         $this->overviewPage = $overviewPage;
     }

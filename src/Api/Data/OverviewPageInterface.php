@@ -11,26 +11,26 @@ interface OverviewPageInterface
     /**
      * Field constants
      */
-    public const META_TITLE = 'meta_title';
-    public const ACTIVE = 'active';
-    public const HEADING = 'heading';
-    public const CONTENT_FIRST = 'content_first';
-    public const CONTENT_LAST = 'content_last';
-    public const NAME = 'name';
-    public const URL_PATH = 'url_path';
-    public const META_KEYWORDS = 'meta_keywords';
-    public const CATEGORY_ID = 'category_id';
-    public const PAGE_ID = 'page_id';
-    public const META_DESCRIPTION = 'meta_description';
-    public const STORE_IDS = 'store_ids';
-    public const CREATED_AT = 'created_at';
-    public const UPDATED_AT = 'updated_at';
+    const META_TITLE = 'meta_title';
+    const ACTIVE = 'active';
+    const HEADING = 'heading';
+    const CONTENT_FIRST = 'content_first';
+    const CONTENT_LAST = 'content_last';
+    const NAME = 'name';
+    const URL_PATH = 'url_path';
+    const META_KEYWORDS = 'meta_keywords';
+    const CATEGORY_ID = 'category_id';
+    const PAGE_ID = 'page_id';
+    const META_DESCRIPTION = 'meta_description';
+    const STORE_IDS = 'store_ids';
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 
     /**
      * Get page_id
      * @return int|null
      */
-    public function getPageId(): ?int;
+    public function getPageId();
 
     /**
      * Get active
@@ -42,49 +42,49 @@ interface OverviewPageInterface
      * Get name
      * @return string|null
      */
-    public function getName(): ?string;
+    public function getName();
 
     /**
      * Get url_path
      * @return string|null
      */
-    public function getUrlPath(): ?string;
+    public function getUrlPath();
 
     /**
      * Get heading
      * @return string|null
      */
-    public function getHeading(): ?string;
+    public function getHeading();
 
     /**
      * Get meta_title
      * @return string|null
      */
-    public function getMetaTitle(): ?string;
+    public function getMetaTitle();
 
     /**
      * Get meta_keywords
      * @return string|null
      */
-    public function getMetaKeywords(): ?string;
+    public function getMetaKeywords();
 
     /**
      * Get meta_description
      * @return string|null
      */
-    public function getMetaDescription(): ?string;
+    public function getMetaDescription();
 
     /**
      * Get content_first
      * @return string|null
      */
-    public function getContentFirst(): ?string;
+    public function getContentFirst();
 
     /**
      * Get content_last
      * @return string|null
      */
-    public function getContentLast(): ?string;
+    public function getContentLast();
 
     /**
      * Get active stores IDs

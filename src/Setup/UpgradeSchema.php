@@ -19,8 +19,8 @@ class UpgradeSchema implements UpgradeSchemaInterface
     /**
      * Define table names
      */
-    private const LANDINGPAGE_TABLE = 'emico_attributelanding_page';
-    private const OVERVIEWPAGE_TABLE = 'emico_attributelanding_overviewpage';
+    const LANDINGPAGE_TABLE = 'emico_attributelanding_page';
+    const OVERVIEWPAGE_TABLE = 'emico_attributelanding_overviewpage';
 
     /**
      * Upgrades DB schema for a module

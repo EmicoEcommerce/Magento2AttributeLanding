@@ -29,7 +29,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
      * Get page_id
      * @return int|null
      */
-    public function getPageId(): ?int
+    public function getPageId()
     {
         return $this->getData(self::PAGE_ID);
     }
@@ -67,7 +67,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
      * Get name
      * @return string|null
      */
-    public function getName(): ?string
+    public function getName()
     {
         return $this->getData(self::NAME);
     }
@@ -86,7 +86,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
      * Get url_path
      * @return string|null
      */
-    public function getUrlPath(): ?string
+    public function getUrlPath()
     {
         return $this->getData(self::URL_PATH);
     }
@@ -105,7 +105,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
      * Get heading
      * @return string|null
      */
-    public function getHeading(): ?string
+    public function getHeading()
     {
         return $this->getData(self::HEADING);
     }
@@ -124,7 +124,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
      * Get meta_title
      * @return string|null
      */
-    public function getMetaTitle(): ?string
+    public function getMetaTitle()
     {
         return $this->getData(self::META_TITLE);
     }
@@ -143,7 +143,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
      * Get meta_keywords
      * @return string|null
      */
-    public function getMetaKeywords(): ?string
+    public function getMetaKeywords()
     {
         return $this->getData(self::META_KEYWORDS);
     }
@@ -162,7 +162,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
      * Get meta_description
      * @return string|null
      */
-    public function getMetaDescription(): ?string
+    public function getMetaDescription()
     {
         return $this->getData(self::META_DESCRIPTION);
     }
@@ -181,7 +181,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
      * Get content_first
      * @return string|null
      */
-    public function getContentFirst(): ?string
+    public function getContentFirst()
     {
         return $this->getData(self::CONTENT_FIRST);
     }
@@ -200,7 +200,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
      * Get content_last
      * @return string|null
      */
-    public function getContentLast(): ?string
+    public function getContentLast()
     {
         return $this->getData(self::CONTENT_LAST);
     }

@@ -13,28 +13,28 @@ interface LandingPageInterface extends ExtensibleDataInterface
     /**
      * Field constants
      */
-    public const META_TITLE = 'meta_title';
-    public const CONTENT_LAST = 'content_last';
-    public const ACTIVE = 'active';
-    public const HEADING = 'heading';
-    public const CONTENT_FIRST = 'content_first';
-    public const FILTER_ATTRIBUTES = 'filter_attributes';
-    public const NAME = 'name';
-    public const URL_PATH = 'url_path';
-    public const META_KEYWORDS = 'meta_keywords';
-    public const TWEAKWISE_FILTER_TEMPLATE = 'tweakwise_filter_template';
-    public const HEADER_IMAGE = 'header_image';
-    public const CATEGORY_ID = 'category_id';
-    public const PAGE_ID = 'page_id';
-    public const META_DESCRIPTION = 'meta_description';
-    public const STORE_IDS = 'store_ids';
-    public const OVERVIEW_PAGE_ID = 'overview_page_id';
-    public const OVERVIEW_PAGE_IMAGE = 'overview_page_image';
-    public const FILTER_LINK_ALLOWED = 'is_filter_link_allowed';
-    public const HIDE_SELECTED_FILTERS = 'hide_selected_filters';
-    public const CANONICAL_URL = 'canonical_url';
-    public const CREATED_AT = 'created_at';
-    public const UPDATED_AT = 'updated_at';
+    const META_TITLE = 'meta_title';
+    const CONTENT_LAST = 'content_last';
+    const ACTIVE = 'active';
+    const HEADING = 'heading';
+    const CONTENT_FIRST = 'content_first';
+    const FILTER_ATTRIBUTES = 'filter_attributes';
+    const NAME = 'name';
+    const URL_PATH = 'url_path';
+    const META_KEYWORDS = 'meta_keywords';
+    const TWEAKWISE_FILTER_TEMPLATE = 'tweakwise_filter_template';
+    const HEADER_IMAGE = 'header_image';
+    const CATEGORY_ID = 'category_id';
+    const PAGE_ID = 'page_id';
+    const META_DESCRIPTION = 'meta_description';
+    const STORE_IDS = 'store_ids';
+    const OVERVIEW_PAGE_ID = 'overview_page_id';
+    const OVERVIEW_PAGE_IMAGE = 'overview_page_image';
+    const FILTER_LINK_ALLOWED = 'is_filter_link_allowed';
+    const HIDE_SELECTED_FILTERS = 'hide_selected_filters';
+    const CANONICAL_URL = 'canonical_url';
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 
     /**
      * Set an extension attributes object.
@@ -47,13 +47,13 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * Retrieve existing extension attributes object or create a new one.
      * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
      */
-    public function getExtensionAttributes(): ?LandingPageExtensionInterface;
+    public function getExtensionAttributes();
 
     /**
      * Get page_id
      * @return int|null
      */
-    public function getPageId(): ?int;
+    public function getPageId();
 
     /**
      * Get active
@@ -71,61 +71,61 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * Get url_path
      * @return string|null
      */
-    public function getUrlPath(): ?string;
+    public function getUrlPath();
 
     /**
      * Get category_id
      * @return int|null
      */
-    public function getCategoryId(): ?int;
+    public function getCategoryId();
 
     /**
      * Get heading
      * @return string|null
      */
-    public function getHeading(): ?string;
+    public function getHeading();
 
     /**
      * Get header_image
      * @return string|null
      */
-    public function getHeaderImage(): ?string;
+    public function getHeaderImage();
 
     /**
      * Get meta_title
      * @return string|null
      */
-    public function getMetaTitle(): ?string;
+    public function getMetaTitle();
 
     /**
      * Get meta_keywords
      * @return string|null
      */
-    public function getMetaKeywords(): ?string;
+    public function getMetaKeywords();
 
     /**
      * Get meta_description
      * @return string|null
      */
-    public function getMetaDescription(): ?string;
+    public function getMetaDescription();
 
     /**
      * Get content_first
      * @return string|null
      */
-    public function getContentFirst(): ?string;
+    public function getContentFirst();
 
     /**
      * Get content_last
      * @return string|null
      */
-    public function getContentLast(): ?string;
+    public function getContentLast();
 
     /**
      * Get tweakwise_filter_template
      * @return string|null
      */
-    public function getTweakwiseFilterTemplate(): ?int;
+    public function getTweakwiseFilterTemplate();
 
     /**
      * Get active stores IDs
@@ -137,7 +137,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * Get filter_attributes
      * @return string|null
      */
-    public function getFilterAttributes(): ?string;
+    public function getFilterAttributes();
 
     /**
      * Set filter_attributes
@@ -159,12 +159,12 @@ interface LandingPageInterface extends ExtensibleDataInterface
     /**
      * @return int
      */
-    public function getOverviewPageId(): ?int;
+    public function getOverviewPageId();
 
     /**
      * @return string
      */
-    public function getOverviewPageImage(): ?string;
+    public function getOverviewPageImage();
 
     /**
      * @return bool
@@ -179,7 +179,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
     /**
      * @return string
      */
-    public function getCanonicalUrl(): ?string;
+    public function getCanonicalUrl();
 
     /**
      * @return string
