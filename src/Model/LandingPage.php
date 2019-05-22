@@ -29,7 +29,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get page_id
      * @return int|null
      */
-    public function getPageId(): ?int
+    public function getPageId()
     {
         return $this->getData(self::PAGE_ID);
     }
@@ -67,7 +67,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Retrieve existing extension attributes object or create a new one.
      * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
      */
-    public function getExtensionAttributes(): ?LandingPageExtensionInterface
+    public function getExtensionAttributes()
     {
         return $this->_getExtensionAttributes();
     }
@@ -104,7 +104,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get url_path
      * @return string|null
      */
-    public function getUrlPath(): ?string
+    public function getUrlPath()
     {
         return $this->getData(self::URL_PATH);
     }
@@ -123,7 +123,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get category_id
      * @return string|null
      */
-    public function getCategoryId(): ?int
+    public function getCategoryId()
     {
         return $this->getData(self::CATEGORY_ID);
     }
@@ -142,7 +142,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get heading
      * @return string|null
      */
-    public function getHeading(): ?string
+    public function getHeading()
     {
         return $this->getData(self::HEADING);
     }
@@ -161,7 +161,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get header_image
      * @return string|null
      */
-    public function getHeaderImage(): ?string
+    public function getHeaderImage()
     {
         return $this->getData(self::HEADER_IMAGE);
     }
@@ -180,7 +180,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get meta_title
      * @return string|null
      */
-    public function getMetaTitle(): ?string
+    public function getMetaTitle()
     {
         return $this->getData(self::META_TITLE);
     }
@@ -199,7 +199,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get meta_keywords
      * @return string|null
      */
-    public function getMetaKeywords(): ?string
+    public function getMetaKeywords()
     {
         return $this->getData(self::META_KEYWORDS);
     }
@@ -218,7 +218,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get meta_description
      * @return string|null
      */
-    public function getMetaDescription(): ?string
+    public function getMetaDescription()
     {
         return $this->getData(self::META_DESCRIPTION);
     }
@@ -237,7 +237,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get content_first
      * @return string|null
      */
-    public function getContentFirst(): ?string
+    public function getContentFirst()
     {
         return $this->getData(self::CONTENT_FIRST);
     }
@@ -256,7 +256,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get content_last
      * @return string|null
      */
-    public function getContentLast(): ?string
+    public function getContentLast()
     {
         return $this->getData(self::CONTENT_LAST);
     }
@@ -275,7 +275,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get filter_attributes
      * @return string|null
      */
-    public function getFilterAttributes(): ?string
+    public function getFilterAttributes()
     {
         return $this->getData(self::FILTER_ATTRIBUTES);
     }
@@ -322,7 +322,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get tweakwise_filter_template
      * @return string|null
      */
-    public function getTweakwiseFilterTemplate(): ?int
+    public function getTweakwiseFilterTemplate()
     {
         return $this->getData(self::TWEAKWISE_FILTER_TEMPLATE);
     }
@@ -390,7 +390,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     /**
      * @return int
      */
-    public function getOverviewPageId(): ?int
+    public function getOverviewPageId()
     {
         return $this->getData(LandingPageInterface::OVERVIEW_PAGE_ID);
     }
@@ -410,7 +410,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     /**
      * @return string|null
      */
-    public function getOverviewPageImage(): ?string
+    public function getOverviewPageImage()
     {
         return $this->getData(LandingPageInterface::OVERVIEW_PAGE_IMAGE);
     }
@@ -444,7 +444,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     /**
      * @return string
      */
-    public function getCanonicalUrl(): ?string
+    public function getCanonicalUrl()
     {
         return $this->getData(LandingPageInterface::CANONICAL_URL);
     }

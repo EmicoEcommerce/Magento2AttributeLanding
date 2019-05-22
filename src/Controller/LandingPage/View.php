@@ -106,7 +106,7 @@ class View extends Action
      * @param LandingPageInterface $page
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    protected function setCategoryInRegistry(LandingPageInterface $page): void
+    protected function setCategoryInRegistry(LandingPageInterface $page)
     {
         $categoryId = $page->getCategoryId();
         $category = $this->categoryRepository->get($categoryId);
