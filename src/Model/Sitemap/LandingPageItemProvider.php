@@ -8,12 +8,14 @@ namespace Emico\AttributeLanding\Model\Sitemap;
 
 
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\ObjectManagerInterface;
+use Magento\Sitemap\Model\ItemProvider\CategoryConfigReader;
 use Magento\Sitemap\Model\ItemProvider\ConfigReaderInterface;
-use Magento\Sitemap\Model\ItemProvider\ItemProviderInterface;
 use Magento\Sitemap\Model\SitemapItemInterfaceFactory;
 use Magento\Sitemap\Model\SitemapItemInterface;
 
-class LandingPageItemProvider implements ItemProviderInterface
+class LandingPageItemProvider
 {
     /**
      * @var LandingPageRepositoryInterface
@@ -33,17 +35,17 @@ class LandingPageItemProvider implements ItemProviderInterface
     /**
      * LandingPageItemProvider constructor.
      * @param LandingPageRepositoryInterface $landingPageRepository
-     * @param SitemapItemInterfaceFactory $itemFactory
-     * @param ConfigReaderInterface $configReader
+     * @param ObjectManager $objectManager
      */
     public function __construct(
         LandingPageRepositoryInterface $landingPageRepository,
-        SitemapItemInterfaceFactory $itemFactory,
-        ConfigReaderInterface $configReader
+        ObjectManagerInterface $objectManager
     ) {
+        // We need to use the ObjectManager here because SitemapItemInterface and ConfigReaderInterface are only available from Magento 2.3 upwards
+        // DI compile will break when executed in Magento 2.2 installation
         $this->landingPageRepository = $landingPageRepository;
-        $this->itemFactory = $itemFactory;
-        $this->configReader = $configReader;
+        $this->itemFactory = $objectManager->get(SitemapItemInterfaceFactory::class);
+        $this->configReader = $objectManager->get(CategoryConfigReader::class);
     }
 
     /**
@@ -60,7 +62,7 @@ class LandingPageItemProvider implements ItemProviderInterface
 
             yield $this->itemFactory->create([
                 'url' => $landingPage->getUrlPath(),
-                'updatedAt' => date('Y-m-d H:i:s'),
+                'updatedAt' => $landingPage->getUpdatedAt(),
                 'priority' => $this->configReader->getPriority($storeId),
                 'changeFrequency' => $this->configReader->getChangeFrequency($storeId),
             ]);
