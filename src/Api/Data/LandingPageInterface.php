@@ -172,6 +172,11 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public function getIsFilterLinkAllowed(): bool;
 
     /**
+     * @return bool
+     */
+    public function getHideSelectedFilters(): bool;
+
+    /**
      * @return string
      */
     public function getCanonicalUrl();

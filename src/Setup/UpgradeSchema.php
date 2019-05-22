@@ -49,6 +49,9 @@ class UpgradeSchema implements UpgradeSchemaInterface
         if (version_compare($context->getVersion(), '0.4.2') < 0) {
             $this->addCanonicalUrlColumn($setup);
         }
+        if (version_compare($context->getVersion(), '1.0.1') < 0) {
+            $this->addHideSelectedFiltersColumn($setup);
+        }
         $setup->endSetup();
     }
 
@@ -261,6 +264,22 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'type' => Table::TYPE_TEXT,
                 'length' => 255,
                 'comment' => 'Canonical URL'
+            ]
+        );
+    }
+
+    /**
+     * @param SchemaSetupInterface $setup
+     */
+    private function addHideSelectedFiltersColumn(SchemaSetupInterface $setup)
+    {
+        $setup->getConnection()->addColumn(
+            $setup->getTable(self::LANDINGPAGE_TABLE),
+            LandingPageInterface::HIDE_SELECTED_FILTERS,
+            [
+                'default' => true,
+                'type' => Table::TYPE_BOOLEAN,
+                'comment' => 'Whether to hide selected filters'
             ]
         );
     }

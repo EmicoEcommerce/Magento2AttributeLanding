@@ -46,12 +46,13 @@ class FilterHidePlugin
      */
     public function afterGetFilters(Navigation $subject, array $filters)
     {
-        if (!$this->landingPageContext->isOnLandingPage()) {
+        $landingPage = $this->landingPageContext->getLandingPage();
+        if (!$landingPage || !$landingPage->getHideSelectedFilters()) {
             return $filters;
         }
 
         foreach ($filters as $index => $tweakwiseFilter) {
-            if ($this->filterHider->shouldHideFilter($this->landingPageContext->getLandingPage(), $tweakwiseFilter)) {
+            if ($this->filterHider->shouldHideFilter($landingPage, $tweakwiseFilter)) {
                 unset($filters[$index]);
             }
         }
