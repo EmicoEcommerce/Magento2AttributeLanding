@@ -8,4 +8,8 @@
             <block class="Emico\AttributeLanding\Block\LandingPage\Content" name="attributelanding.content_bottom" template="Emico_AttributeLanding::landing-page/bottom-content.phtml" after="category.products" />
         </referenceContainer>
     </body>
+    <!-- Remove original category blocks -->
+    <referenceBlock name="category.cms" remove="true"/>
+    <referenceBlock name="category.image" remove="true"/>
+    <referenceBlock name="category.description" remove="true"/>
 </page>
