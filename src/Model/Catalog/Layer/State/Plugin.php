@@ -9,7 +9,7 @@ namespace Emico\AttributeLanding\Model\Catalog\Layer\State;
 use Emico\AttributeLanding\Controller\Page\ViewContext;
 use Emico\AttributeLanding\Model\FilterHider\FilterHiderInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
-use Emico\Tweakwise\Model\Catalog\Layer\Filter\Item;
+use Magento\Catalog\Model\Layer\Filter\Item;
 use Magento\Catalog\Model\Layer\State;
 
 class Plugin

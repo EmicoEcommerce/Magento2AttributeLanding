@@ -51,8 +51,8 @@ class FilterHidePlugin
             return $filters;
         }
 
-        foreach ($filters as $index => $tweakwiseFilter) {
-            if ($this->filterHider->shouldHideFilter($landingPage, $tweakwiseFilter)) {
+        foreach ($filters as $index => $filter) {
+            if ($this->filterHider->shouldHideFilter($landingPage, $filter)) {
                 unset($filters[$index]);
             }
         }
