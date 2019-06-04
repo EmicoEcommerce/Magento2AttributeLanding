@@ -38,6 +38,7 @@ class UrlFinder
      * @var SerializerInterface
      */
     private $serializer;
+
     /**
      * @var SearchCriteriaBuilder
      */
