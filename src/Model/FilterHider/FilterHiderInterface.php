@@ -3,7 +3,7 @@
 namespace Emico\AttributeLanding\Model\FilterHider;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
-use Emico\Tweakwise\Model\Catalog\Layer\Filter\Item;
+use Magento\Catalog\Model\Layer\Filter\Item;
 use Magento\Catalog\Model\Layer\Filter\FilterInterface;
 
 /**
