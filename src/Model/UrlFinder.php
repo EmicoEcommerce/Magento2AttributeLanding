@@ -64,21 +64,12 @@ class UrlFinder
     }
 
     /**
-     * @param array $filterItems
+     * @param Filter[] $filters
      * @param int|null $categoryId
      * @return string|null
      */
-    public function findUrlByFilters(array $filterItems, int $categoryId = null)
+    public function findUrlByFilters(array $filters, int $categoryId = null)
     {
-        $filters = array_map(
-            function (Item $item) {
-                return new Filter(
-                    $item->getFilter()->getUrlKey(),
-                    $item->getAttribute()->getTitle()
-                );
-            },
-            $filterItems
-        );
         $filterHash = $this->createHashForFilters($filters, $categoryId);
 
         if ($this->landingPageLookup === null) {
