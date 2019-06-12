@@ -45,7 +45,7 @@ class Config
      * @param Store|null $store
      * @return bool
      */
-    public function isCrosslinkEnabled(Store $store = null): bool
+    public function isCrossLinkEnabled(Store $store = null): bool
     {
         return (bool) $this->getStoreConfig('emico_attributelanding/general/allow_crosslink', $store);
     }
