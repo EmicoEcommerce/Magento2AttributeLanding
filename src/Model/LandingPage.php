@@ -114,8 +114,9 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param string $urlPath
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setUrlPath($urlPath): LandingPageInterface
+    public function setUrlPath(string $urlPath): LandingPageInterface
     {
+        $urlPath = trim($urlPath, ' /');
         return $this->setData(self::URL_PATH, $urlPath);
     }
 

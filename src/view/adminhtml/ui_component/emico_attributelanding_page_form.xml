@@ -85,6 +85,9 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
+					<item name="tooltip" xsi:type="array">
+						<item name="description" xsi:type="string">This is the url path under which this page will be available. Leading and ending '/' and whitespace characters will be trimmed.</item>
+					</item>
 				</item>
 			</argument>
 			<settings>
