@@ -52,6 +52,9 @@ class UpgradeSchema implements UpgradeSchemaInterface
         if (version_compare($context->getVersion(), '1.0.0') < 0) {
             $this->addHideSelectedFiltersColumn($setup);
         }
+        if (version_compare($context->getVersion(), '1.0.1') < 0) {
+            $this->addSortTemplateColumn($setup);
+        }
         $setup->endSetup();
     }
 
@@ -280,6 +283,21 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'default' => true,
                 'type' => Table::TYPE_BOOLEAN,
                 'comment' => 'Whether to hide selected filters'
+            ]
+        );
+    }
+
+    /**
+     * @param SchemaSetupInterface $setup
+     */
+    private function addSortTemplateColumn(SchemaSetupInterface $setup)
+    {
+        $setup->getConnection()->addColumn(
+            $setup->getTable(self::LANDINGPAGE_TABLE),
+            LandingPageInterface::TWEAKWISE_SORT_TEMPLATE,
+            [
+                'type' => Table::TYPE_INTEGER,
+                'comment' => 'Tweakwise sort template'
             ]
         );
     }

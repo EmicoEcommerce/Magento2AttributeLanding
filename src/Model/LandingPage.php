@@ -339,6 +339,25 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
+     * Get tweakwise_filter_template
+     * @return string|null
+     */
+    public function getTweakwiseSortTemplate()
+    {
+        return $this->getData(self::TWEAKWISE_SORT_TEMPLATE);
+    }
+
+    /**
+     * Set tweakwise_filter_template
+     * @param $tweakwiseSortTemplate
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     */
+    public function setTweakwiseSortTemplate($tweakwiseSortTemplate): LandingPageInterface
+    {
+        return $this->setData(self::TWEAKWISE_SORT_TEMPLATE, $tweakwiseSortTemplate);
+    }
+
+    /**
      * Get active stores IDs
      * @return int[]
      */

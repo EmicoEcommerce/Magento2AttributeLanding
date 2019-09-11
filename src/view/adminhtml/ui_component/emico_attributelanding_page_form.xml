@@ -247,6 +247,30 @@
 			</formElements>
 		</field>
 
+		<field formElement="select" name="tweakwise_sort_template" sortOrder="62">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Page</item>
+				</item>
+			</argument>
+
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">Tweakwise sorteer template</label>
+				<dataScope>tweakwise_sort_template</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+			<formElements>
+				<select>
+					<settings>
+						<options class="Emico\Tweakwise\Model\Config\Source\SortTemplate" />
+					</settings>
+				</select>
+			</formElements>
+		</field>
+
 		<field name="store_ids" formElement="multiselect" sortOrder="70">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">

@@ -23,6 +23,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
     const URL_PATH = 'url_path';
     const META_KEYWORDS = 'meta_keywords';
     const TWEAKWISE_FILTER_TEMPLATE = 'tweakwise_filter_template';
+    const TWEAKWISE_SORT_TEMPLATE = 'tweakwise_sort_template';
     const HEADER_IMAGE = 'header_image';
     const CATEGORY_ID = 'category_id';
     const PAGE_ID = 'page_id';
@@ -126,6 +127,12 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return string|null
      */
     public function getTweakwiseFilterTemplate();
+
+    /**
+     * Get tweakwise_filter_template
+     * @return string|null
+     */
+    public function getTweakwiseSortTemplate();
 
     /**
      * Get active stores IDs
