@@ -12,13 +12,12 @@
 
 namespace Emico\AttributeLanding\Block\Catalog;
 
-
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\OverviewPageRepositoryInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
+use Magento\Catalog\Block\Breadcrumbs as CatalogBreadcrumbs;
 use Magento\Catalog\Helper\Data;
 use Magento\Framework\View\Element\Template\Context;
-use Magento\Catalog\Block\Breadcrumbs as CatalogBreadcrumbs;
 
 class Breadcrumbs extends CatalogBreadcrumbs
 {
