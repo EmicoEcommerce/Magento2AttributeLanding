@@ -13,6 +13,7 @@
 namespace Emico\AttributeLanding\Block\Catalog;
 
 
+use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\OverviewPageRepositoryInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Magento\Catalog\Helper\Data;
@@ -25,6 +26,7 @@ class Breadcrumbs extends CatalogBreadcrumbs
      * @var LandingPageContext
      */
     private $landingPageContext;
+
     /**
      * @var OverviewPageRepositoryInterface
      */
@@ -63,6 +65,16 @@ class Breadcrumbs extends CatalogBreadcrumbs
             return parent::_prepareLayout();
         }
 
+        $this->addLandingPageBreadCrumbs($landingPage);
+    }
+
+    /**
+     * @param LandingPageInterface $landingPage
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function addLandingPageBreadCrumbs(LandingPageInterface $landingPage): void
+    {
         if ($breadcrumbsBlock = $this->getLayout()->getBlock('breadcrumbs')) {
             $breadcrumbsBlock->addCrumb(
                 'home',
