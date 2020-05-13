@@ -6,6 +6,7 @@
 
 namespace Emico\AttributeLanding\Model;
 
+use Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\Store;
@@ -48,5 +49,23 @@ class Config
     public function isCrossLinkEnabled(Store $store = null): bool
     {
         return (bool) $this->getStoreConfig('emico_attributelanding/general/allow_crosslink', $store);
+    }
+
+    /**
+     * @param Store|null $store
+     * @return bool
+     */
+    public function isAppendCategoryUrlSuffix(Store $store = null): bool
+    {
+        return (bool) $this->getStoreConfig('emico_attributelanding/general/append_category_url_suffix', $store);
+    }
+
+    /**
+     * @param Store|null $store
+     * @return string
+     */
+    public function getCategoryUrlSuffix(Store $store = null)
+    {
+        return (string) $this->getStoreConfig(CategoryUrlPathGenerator::XML_PATH_CATEGORY_URL_SUFFIX, $store);
     }
 }

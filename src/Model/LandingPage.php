@@ -7,12 +7,57 @@ use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Emico\AttributeLanding\Model\ResourceModel\Page as PageResourceModel;
+use Magento\Framework\Api\AttributeValueFactory;
+use Magento\Framework\Api\ExtensionAttributesFactory;
+use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\Model\AbstractExtensibleModel;
+use Magento\Framework\Registry;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
 
 class LandingPage extends AbstractExtensibleModel implements LandingPageInterface, UrlRewriteGeneratorInterface
 {
 
     protected $_eventPrefix = 'emico_attributelanding_page';
+
+    /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
+     * LandingPage constructor.
+     * @param Context $context
+     * @param Registry $registry
+     * @param ExtensionAttributesFactory $extensionFactory
+     * @param AttributeValueFactory $customAttributeFactory
+     * @param Config $config
+     * @param AbstractResource $resource
+     * @param AbstractDb|null $resourceCollection
+     * @param array $data
+     */
+    public function __construct(
+        Context $context,
+        Registry $registry,
+        ExtensionAttributesFactory $extensionFactory,
+        AttributeValueFactory $customAttributeFactory,
+        Config $config,
+        AbstractResource $resource = null,
+        AbstractDb $resourceCollection = null,
+        array $data = []
+    ) {
+        parent::__construct(
+            $context,
+            $registry,
+            $extensionFactory,
+            $customAttributeFactory,
+            $resource,
+            $resourceCollection,
+            $data
+        );
+
+        $this->config = $config;
+    }
 
     /**
      * Initialize resource model
@@ -301,7 +346,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         }
         return unserialize($this->getFilterAttributes());
     }
-    
+
     /**
      * @return array
      */
@@ -404,7 +449,12 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function getUrlRewriteRequestPath(): string
     {
-        return $this->getUrlPath();
+        $urlPath = $this->getUrlPath();
+        if ($this->config->isAppendCategoryUrlSuffix()) {
+            $urlPath .= $this->config->getCategoryUrlSuffix();
+        }
+
+        return $urlPath;
     }
 
     /**
