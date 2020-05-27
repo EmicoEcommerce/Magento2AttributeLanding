@@ -16,13 +16,18 @@ class SitemapPlugin
     /**
      * @var LandingPageRepositoryInterface
      */
-    private $landingPageRepository;
+    protected $landingPageRepository;
 
     /**
      * @var Data
      */
-    private $helper;
+    protected $helper;
 
+    /**
+     * SitemapPlugin constructor.
+     * @param Data $helper
+     * @param LandingPageRepositoryInterface $landingPageRepository
+     */
     public function __construct(
         Data $helper,
         LandingPageRepositoryInterface $landingPageRepository
@@ -31,6 +36,11 @@ class SitemapPlugin
         $this->landingPageRepository = $landingPageRepository;
     }
 
+    /**
+     * Add landingpages to sitemap
+     *
+     * @param Sitemap $subject
+     */
     public function afterCollectSitemapItems(Sitemap $subject)
     {
         $storeId = $subject->getStoreId();
