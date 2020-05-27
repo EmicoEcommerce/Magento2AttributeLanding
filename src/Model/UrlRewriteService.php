@@ -7,12 +7,15 @@
 
 namespace Emico\AttributeLanding\Model;
 
+use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\UrlRewrite\Model\UrlFinderInterface;
 use Magento\UrlRewrite\Model\UrlPersistInterface;
-use Magento\UrlRewrite\Model\UrlRewrite;
 use Magento\UrlRewrite\Service\V1\Data\UrlRewriteFactory;
+use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
 
 /**
  * Class UrlRewriteService
@@ -36,19 +39,73 @@ class UrlRewriteService
     protected $urlPersist;
 
     /**
+     * @var SearchCriteriaBuilder
+     */
+    protected $searchCriteriaBuilder;
+
+    /**
+     * @var UrlFinderInterface
+     */
+    protected $urlFinder;
+
+    /**
+     * @var LandingPageRepositoryInterface
+     */
+    protected $landingPageRepository;
+
+    /**
      * UrlRewriteService constructor.
      * @param UrlRewriteFactory $urlRewriteFactory
      * @param StoreManagerInterface $storeManager
      * @param UrlPersistInterface $urlPersist
+     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param UrlFinderInterface $urlFinder
+     * @param LandingPageRepositoryInterface $landingPageRepository
      */
     public function __construct(
         UrlRewriteFactory $urlRewriteFactory,
         StoreManagerInterface $storeManager,
-        UrlPersistInterface $urlPersist
+        UrlPersistInterface $urlPersist,
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        UrlFinderInterface $urlFinder,
+        LandingPageRepositoryInterface $landingPageRepository
     ) {
         $this->urlRewriteFactory = $urlRewriteFactory;
         $this->storeManager = $storeManager;
         $this->urlPersist = $urlPersist;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->urlFinder = $urlFinder;
+        $this->landingPageRepository = $landingPageRepository;
+    }
+
+    /**
+     * @param string $newSuffix
+     * @see \Emico\AttributeLanding\Observer\UrlRewriteGenerateObserver::execute()
+     */
+    public function updateLandingPageRewrites(string $newSuffix = '')
+    {
+        $filter = [
+            UrlRewrite::ENTITY_TYPE => 'landingpage',
+        ];
+
+        $landingPageRewrites = $this->urlFinder->findAllByData($filter);
+        $landingPageIds = array_map(
+            static function (UrlRewrite $rewrite) {
+                return $rewrite->getEntityId();
+            },
+            $landingPageRewrites
+        );
+
+        $searchCriteria = $this->searchCriteriaBuilder->addFilter(
+            LandingPage::PAGE_ID,
+            $landingPageIds,
+            'in'
+        )->create();
+
+        $landingPages = $this->landingPageRepository->getList($searchCriteria);
+        foreach ($landingPages->getItems() as $page) {
+            $this->generateRewrite($page, $newSuffix);
+        }
     }
 
     /**
@@ -81,7 +138,7 @@ class UrlRewriteService
 
     /**
      * @param UrlRewriteGeneratorInterface $landingPage
-     * @return array
+     * @return int[]
      */
     protected function getActiveStoreIds(UrlRewriteGeneratorInterface $landingPage): array
     {
