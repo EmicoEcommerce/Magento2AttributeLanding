@@ -89,7 +89,6 @@ class CategoryUrlSuffixObserver implements ObserverInterface
     }
 
     /**
-     * Pass responsibility for updating to UrlRewriteGenerateObserver
      * @param string $newSuffix
      * @see \Emico\AttributeLanding\Observer\UrlRewriteGenerateObserver::execute()
      */
