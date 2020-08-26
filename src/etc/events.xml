@@ -13,4 +13,7 @@
     <event name="emico_attributelanding_overviewpage_delete_after">
         <observer name="landingpage_urlrewrite_remove" instance="Emico\AttributeLanding\Observer\UrlRewriteRemoveObserver"/>
     </event>
+    <event name="config_data_save_after">
+        <observer name="landingpage_category_url_suffix_save_after" instance="Emico\AttributeLanding\Observer\CategoryUrlSuffixObserver"/>
+    </event>
 </config>

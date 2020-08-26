@@ -20,8 +20,14 @@
                 <label>General</label>
                 <field id="allow_crosslink" translate="label,comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Allow crosslink</label>
-                    <comment>Allow landingpages to be crosslink from within layered navigation filters</comment>
+                    <comment>Allow landingpages to be crosslinked from within layered navigation filters</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="append_category_url_suffix" translate="label,comment" type="select" sortOrder="20" showInDefault="1">
+                    <label>Append Category url suffix to landingpage Urls</label>
+                    <comment>If set to yes the category url suffix will be appended to landingpage urls, this will change landingpage urls. You will need to flush cache and possibly update links</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <backend_model>Emico\AttributeLanding\Model\System\Config\AppendUrlSuffix</backend_model>
                 </field>
             </group>
         </section>
