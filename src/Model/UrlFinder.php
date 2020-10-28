@@ -122,7 +122,7 @@ class UrlFinder
         $landingPageLookup = [];
         foreach ($this->landingPageRepository->getList($searchCriteria)->getItems() as $landingPage) {
             $hash = $this->createHashForFilters($landingPage->getFilters(), $landingPage->getCategoryId());
-            $landingPageLookup[$hash] = $landingPage->getUrlPath();
+            $landingPageLookup[$hash] = $landingPage->getUrlRewriteRequestPath();
         }
         $this->cache->save($this->serializer->serialize($landingPageLookup), self::CACHE_KEY);
         return $landingPageLookup;
