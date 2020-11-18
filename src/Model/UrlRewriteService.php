@@ -109,10 +109,10 @@ class UrlRewriteService
     }
 
     /**
-     * @param LandingPage $page
+     * @param UrlRewriteGeneratorInterface $page
      * @param string|null $suffix
      */
-    public function generateRewrite(LandingPage $page, string $suffix = null)
+    public function generateRewrite(UrlRewriteGeneratorInterface $page, string $suffix = null)
     {
         $urlRewritesToPersist = [];
 

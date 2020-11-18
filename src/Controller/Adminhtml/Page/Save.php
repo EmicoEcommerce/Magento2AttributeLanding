@@ -121,6 +121,7 @@ class Save extends Action
             unset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE]);
         }
         $this->dataObjectHelper->populateWithArray($landingPage, $data, LandingPageInterface::class);
-        $landingPage->setFilterAttributes(serialize($data[LandingPageInterface::FILTER_ATTRIBUTES]));
+        $filterAttributes = $data[LandingPageInterface::FILTER_ATTRIBUTES] ?? [];
+        $landingPage->setFilterAttributes(serialize($filterAttributes));
     }
 }
