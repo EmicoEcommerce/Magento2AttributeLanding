@@ -360,6 +360,7 @@
 						<item name="toggle_button" xsi:type="boolean">false</item>
 						<item name="add_variables" xsi:type="boolean">false</item>
 						<item name="add_directives" xsi:type="boolean">true</item>
+						<item name="pagebuilder_button" xsi:type="boolean">true</item>
 					</item>
 				</item>
 			</argument>
@@ -396,6 +397,7 @@
 						<item name="toggle_button" xsi:type="boolean">false</item>
 						<item name="add_variables" xsi:type="boolean">false</item>
 						<item name="add_directives" xsi:type="boolean">true</item>
+						<item name="pagebuilder_button" xsi:type="boolean">true</item>
 					</item>
 				</item>
 			</argument>
