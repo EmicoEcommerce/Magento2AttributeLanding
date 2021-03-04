@@ -51,7 +51,7 @@ class Edit extends Page
     /**
      * Edit action
      *
-     * @return ResultInterface
+     * @return \Magento\Backend\Model\View\Result\Page|ResultInterface
      * @throws LocalizedException
      */
     public function execute()
@@ -66,6 +66,7 @@ class Edit extends Page
 
                 /** @var Redirect $resultRedirect */
                 $resultRedirect = $this->resultRedirectFactory->create();
+
                 return $resultRedirect->setPath('*/*/');
             }
         } else {
@@ -76,12 +77,11 @@ class Edit extends Page
         $resultPage = $this->resultPageFactory->create();
 
         $this->initPage($resultPage)->addBreadcrumb(
-            $id ? __('Edit Page') : __('New Page'),
-            $id ? __('Edit Page') : __('New Page')
+            $id ? __('Edit page') : __('New page'),
+            $id ? __('Edit page') : __('New page')
         );
 
-        $resultPage->getConfig()->getTitle()->prepend(__('Pages'));
-        $resultPage->getConfig()->getTitle()->prepend($id ? __('Edit Page %1', $landingPage->getPageId()) : __('New Page'));
+        $resultPage->getConfig()->getTitle()->prepend($id ? __('Edit page %1', $landingPage->getPageId()) : __('New page'));
 
         return $resultPage;
     }

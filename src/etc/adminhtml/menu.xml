@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
 	<menu>
 		<add id="Emico_AttributeLanding::landingpages"
-			 title="Attribute landingpages"
+			 title="Attribute landing pages"
 			 module="Emico_AttributeLanding"
 			 parent="Magento_Backend::content"
 			 sortOrder="110"
