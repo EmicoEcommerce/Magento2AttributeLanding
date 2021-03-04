@@ -25,7 +25,7 @@
         <settings>
             <updateUrl path="mui/index/render"/>
         </settings>
-        <aclResource>Emico_AttributeLanding::OverviewPage</aclResource>
+        <aclResource>Emico_AttributeLanding::overviewpage_management</aclResource>
         <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider"
                       name="emico_attributelanding_overviewpage_listing_data_source">
             <settings>
