@@ -13,7 +13,7 @@
             <label>Emico Extensions</label>
         </tab>
         <section id="emico_attributelanding" sortOrder="-5000" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Attribute Landing pages</label>
+            <label>Attribute landing pages</label>
             <tab>emico</tab>
             <resource>Emico_AttributeLanding::config</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">

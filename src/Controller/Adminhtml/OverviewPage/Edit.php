@@ -49,7 +49,7 @@ class Edit extends OverviewPage
     /**
      * Edit action
      *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return \Magento\Backend\Model\View\Result\Page|\Magento\Framework\Controller\ResultInterface
      * @throws InputException
      * @throws \Magento\Framework\Exception\LocalizedException
      */
@@ -65,6 +65,7 @@ class Edit extends OverviewPage
 
                 /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
                 $resultRedirect = $this->resultRedirectFactory->create();
+
                 return $resultRedirect->setPath('*/*/');
             }
         } else {
@@ -75,12 +76,11 @@ class Edit extends OverviewPage
         $resultPage = $this->resultPageFactory->create();
 
         $this->initPage($resultPage)->addBreadcrumb(
-            $id ? __('Edit Page') : __('New Page'),
-            $id ? __('Edit Page') : __('New Page')
+            $id ? __('Edit overview page') : __('New overview page'),
+            $id ? __('Edit overview page') : __('New overview page')
         );
 
-        $resultPage->getConfig()->getTitle()->prepend(__('Pages'));
-        $resultPage->getConfig()->getTitle()->prepend($id ? __('Edit Page %1', $landingPage->getPageId()) : __('New Page'));
+        $resultPage->getConfig()->getTitle()->prepend($id ? __('Edit overview page %1', $landingPage->getPageId()) : __('New overview page'));
 
         return $resultPage;
     }

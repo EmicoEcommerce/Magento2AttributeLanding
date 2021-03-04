@@ -4,7 +4,7 @@
 		<resources>
 			<resource id="Magento_Backend::admin">
                 <resource id="Magento_Backend::content">
-                    <resource id="Emico_AttributeLanding::landingpages" sortOrder="50" title="Attribute landingpages">
+                    <resource id="Emico_AttributeLanding::landingpages" sortOrder="50" title="Attribute landing pages">
                         <resource id="Emico_AttributeLanding::page_management" sortOrder="10" title="Manage pages"/>
                         <resource id="Emico_AttributeLanding::overviewpage_management" sortOrder="20" title="Manage overview pages"/>
                     </resource>

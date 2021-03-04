@@ -15,7 +15,7 @@ use Magento\Framework\Event\ObserverInterface;
 use Emico\AttributeLanding\Model\UrlRewriteService;
 
 /**
- * Update landingpage url rewrites if category url suffix changes
+ * Update landing page url rewrites if category url suffix changes
  *
  * Class CategoryUrlSuffixObserver
  * @package Emico\AttributeLanding\Observer
