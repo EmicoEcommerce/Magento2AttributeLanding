@@ -7,7 +7,7 @@ use Magento\Backend\App\Action;
 
 abstract class Page extends Action
 {
-    const ADMIN_MENU = 'Emico_AttributeLanding::page_management';
+    const ADMIN_MENU_RESOURCE = 'Emico_AttributeLanding::page_management';
 
     /**
      * Init page
@@ -18,7 +18,7 @@ abstract class Page extends Action
     public function initPage($resultPage)
     {
         $resultPage
-            ->setActiveMenu(self::ADMIN_MENU)
+            ->setActiveMenu(self::ADMIN_MENU_RESOURCE)
             ->addBreadcrumb(__('Attribute landing pages'), __('Attribute landing pages'))
             ->addBreadcrumb(__('Manage pages'), __('Manage pages'));
 

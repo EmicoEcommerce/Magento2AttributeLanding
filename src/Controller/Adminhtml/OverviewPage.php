@@ -9,7 +9,7 @@ use Magento\Backend\Model\View\Result\Page;
 
 abstract class OverviewPage extends Action
 {
-    const ADMIN_MENU = 'Emico_AttributeLanding::overviewpage_management';
+    const ADMIN_MENU_RESOURCE = 'Emico_AttributeLanding::overviewpage_management';
 
     /**
      * @param Context $context
@@ -29,7 +29,7 @@ abstract class OverviewPage extends Action
     public function initPage($resultPage)
     {
         $resultPage
-            ->setActiveMenu(self::ADMIN_MENU)
+            ->setActiveMenu(self::ADMIN_MENU_RESOURCE)
             ->addBreadcrumb(__('Attribute landing pages'), __('Attribute landing pages'))
             ->addBreadcrumb(__('Manage overview pages'), __('Manage overview pages'));
 
