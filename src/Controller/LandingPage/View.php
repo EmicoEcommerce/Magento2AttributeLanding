@@ -109,6 +109,9 @@ class View extends Action
     protected function setCategoryInRegistry(LandingPageInterface $page)
     {
         $categoryId = $page->getCategoryId();
+        if (!$categoryId) {
+            return;
+        }
         $category = $this->categoryRepository->get($categoryId);
         $this->coreRegistry->register('current_category', $category);
     }

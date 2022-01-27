@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="emico_attributelanding_page" resource="default" engine="innodb" comment="Landing pages">
+        <column xsi:type="int" name="page_id" unsigned="true" nullable="false" identity="true" comment="Autoincrement ID" />
+        <column xsi:type="boolean" name="active" nullable="true" default="1" comment="Active state" />
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" comment="Creation Time" default="CURRENT_TIMESTAMP" />
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" comment="Update Time" default="CURRENT_TIMESTAMP" />
+        <column xsi:type="varchar" name="url_path" nullable="false" comment="Url Path"/>
+        <column xsi:type="int" name="category_id" unsigned="true" nullable="true" comment="Category Id"/>
+        <column xsi:type="varchar" name="heading" nullable="true" comment="H2 Heading"/>
+        <column xsi:type="text" name="header_image" nullable="true" comment="Header Image"/>
+        <column xsi:type="varchar" name="meta_title" nullable="true" comment="Meta Title"/>
+        <column xsi:type="text" name="meta_keywords" nullable="true" comment="Meta Keywords"/>
+        <column xsi:type="text" name="meta_description" nullable="true" comment="Meta Description"/>
+        <column xsi:type="text" name="content_first" nullable="true" comment="Content above results"/>
+        <column xsi:type="text" name="content_last" nullable="true" comment="Content below results"/>
+        <column xsi:type="text" name="filter_attributes" nullable="true" comment="The attribute values defining the page"/>
+        <column xsi:type="int" name="tweakwise_filter_template" nullable="true" comment="Associated tweakwise filter template of applicable"/>
+        <column xsi:type="varchar" name="store_ids" nullable="true" comment="Activated for stores"/>
+        <column xsi:type="int" name="overview_page_id" nullable="true" unsigned="true" comment="Link to overview page"/>
+        <column xsi:type="boolean" name="is_filter_link_allowed" nullable="true" default="1" comment="May be be linked to from the facets"/>
+        <column xsi:type="varchar" name="name" nullable="true" comment="Name"/>
+        <column xsi:type="varchar" name="overview_page_image" nullable="true" comment="Optional image to show on overview page"/>
+        <column xsi:type="varchar" name="canonical_url" nullable="true" comment="Canonical URL"/>
+        <column xsi:type="boolean" name="hide_selected_filters" nullable="true" default="1" comment="Whether to hide selected filters"/>
+        <column xsi:type="int" name="tweakwise_sort_template" nullable="true" comment="Tweakwise sort template"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY"><column name="page_id"/></constraint>
+        <index referenceId="EMICO_ATTRIBUTELANDING_PAGE_URL_PATH" indexType="btree"><column name="url_path"/></index>
+        <constraint xsi:type="foreign" referenceId="EMICO_ATTRLANDING_PAGE_CTGR_ID_CAT_CTGR_ENTT_ENTT_ID"
+                    table="emico_attributelanding_page" column="category_id"
+                    referenceTable="catalog_category_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="EMICO_ATTRLANDING_PAGE_OVERVIEW_PAGE"
+                    table="emico_attributelanding_page" column="overview_page_id"
+                    referenceTable="emico_attributelanding_overviewpage" referenceColumn="page_id" onDelete="SET NULL"/>
+    </table>
+    <table name="emico_attributelanding_overviewpage" resource="default" engine="innodb" comment="Overview pages">
+        <column xsi:type="int" name="page_id" unsigned="true" nullable="false" identity="true" comment="Autoincrement ID" />
+        <column xsi:type="boolean" name="active" nullable="true" default="1" comment="Active state" />
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" comment="Creation Time" default="CURRENT_TIMESTAMP" />
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" comment="Update Time" default="CURRENT_TIMESTAMP" />
+        <column xsi:type="varchar" name="url_path" nullable="false" comment="Url Path"/>
+        <column xsi:type="varchar" name="heading" nullable="true" comment="H2 Heading"/>
+        <column xsi:type="varchar" name="meta_title" nullable="true" comment="Meta Title"/>
+        <column xsi:type="text" name="meta_keywords" nullable="true" comment="Meta Keywords"/>
+        <column xsi:type="text" name="meta_description" nullable="true" comment="Meta Description"/>
+        <column xsi:type="text" name="content_first" nullable="true" comment="Content above results"/>
+        <column xsi:type="text" name="content_last" nullable="true" comment="Content below results"/>
+        <column xsi:type="varchar" name="store_ids" nullable="true" comment="Activated for stores"/>
+        <column xsi:type="varchar" name="name" nullable="true" comment="Name"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY"><column name="page_id"/></constraint>
+        <index referenceId="EMICO_ATTRIBUTELANDING_PAGE_URL_PATH" indexType="btree"><column name="url_path"/></index>
+    </table>
+</schema>
