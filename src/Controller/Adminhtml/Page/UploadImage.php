@@ -35,14 +35,6 @@ class UploadImage extends \Magento\Backend\App\Action
     }
 
     /**
-     * @return bool
-     */
-    public function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('Emico_AttributeLanding::Page');
-    }
-
-    /**
      * @return \Magento\Framework\App\ResponseInterface|Json|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()

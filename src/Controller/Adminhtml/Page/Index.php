@@ -3,11 +3,12 @@
 
 namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
+use Emico\AttributeLanding\Controller\Adminhtml\Page;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
 
-class Index extends Action
+class Index extends Page
 {
 
     protected $resultPageFactory;
@@ -34,7 +35,8 @@ class Index extends Action
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend(__('LandingPage management'));
+        $this->initPage($resultPage);
+        $resultPage->getConfig()->getTitle()->prepend(__('Landing page management'));
 
         return $resultPage;
     }

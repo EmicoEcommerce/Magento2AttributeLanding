@@ -114,6 +114,13 @@ class UrlRewriteService
      */
     public function generateRewrite(UrlRewriteGeneratorInterface $page, string $suffix = null)
     {
+        // This is needed because you want to delete all the existing rewrites
+        // before saving the new ones due to same url paths but different store id.
+        // When duplicating a page, for example, the url_rewrite of that store gets copied as well and
+        // this needs to be removed in order to make it possible
+        // to choose same url paths with different store views
+        $this->removeExistingUrlRewrites($page);
+
         $urlRewritesToPersist = [];
 
         foreach ($this->getActiveStoreIds($page) as $storeId) {
@@ -137,6 +144,20 @@ class UrlRewriteService
     }
 
     /**
+     * @param UrlRewriteGeneratorInterface $page
+     * @return void
+     */
+    protected function removeExistingUrlRewrites(UrlRewriteGeneratorInterface $page): void
+    {
+        $this->urlPersist->deleteByData(
+            [
+                UrlRewrite::ENTITY_ID => $page->getUrlRewriteEntityId(),
+                UrlRewrite::ENTITY_TYPE => $page->getUrlRewriteEntityType(),
+            ]
+        );
+    }
+
+    /**
      * @param UrlRewriteGeneratorInterface $landingPage
      * @return int[]
      */
@@ -154,3 +175,4 @@ class UrlRewriteService
         return $landingPage->getStoreIds();
     }
 }
+
