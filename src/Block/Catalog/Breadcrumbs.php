@@ -74,38 +74,39 @@ class Breadcrumbs extends CatalogBreadcrumbs
      */
     public function addLandingPageBreadCrumbs(LandingPageInterface $landingPage): void
     {
-        if ($breadcrumbsBlock = $this->getLayout()->getBlock('breadcrumbs')) {
+        $breadcrumbsBlock = $this->getLayout()->getBlock('breadcrumbs');
+
+        if (!$breadcrumbsBlock) {
+            return;
+        }
+
+        $breadcrumbsBlock->addCrumb(
+            'home',
+            [
+                'label' => __('Home'),
+                'title' => __('Go to Home Page'),
+                'link' => $this->_storeManager->getStore()->getBaseUrl()
+            ]
+        );
+
+        if ($landingPage->getOverviewPageId() !== null) {
+            $overviewPage = $this->overviewPageRepository->getById($landingPage->getOverviewPageId());
             $breadcrumbsBlock->addCrumb(
-                'home',
+                'overviewpage',
                 [
-                    'label' => __('Home'),
-                    'title' => __('Go to Home Page'),
-                    'link' => $this->_storeManager->getStore()->getBaseUrl()
+                    'label' => __($overviewPage->getName()),
+                    'title' => __($overviewPage->getName()),
+                    'link' => $overviewPage->getUrlPath()
                 ]
             );
-
-            if ($landingPage->getOverviewPageId() !== null) {
-                $overviewPage = $this->overviewPageRepository->getById($landingPage->getOverviewPageId());
-                $breadcrumbsBlock->addCrumb(
-                    'overviewpage',
-                    [
-                        'label' => __($overviewPage->getName()),
-                        'title' => __($overviewPage->getName()),
-                        'link' => $overviewPage->getUrlPath()
-                    ]
-                );
-            }
-
-            if ($landingPage) {
-                $breadcrumbsBlock->addCrumb(
-                    'landingpage',
-                    [
-                        'label' => __($landingPage->getName()),
-                        'title' => __($landingPage->getName()),
-                        'link' => $landingPage->getUrlPath()
-                    ]
-                );
-            }
         }
+
+        $breadcrumbsBlock->addCrumb(
+            'landingpage',
+            [
+                'label' => __($landingPage->getName()),
+                'title' => __($landingPage->getName()),
+            ]
+        );
     }
 }
