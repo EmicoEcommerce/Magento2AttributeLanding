@@ -203,19 +203,19 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @param string|null $pageId
      * @return LandingPageInterface
      */
-    public function setPageId( ?string $pageId): LandingPageInterface;
+    public function setPageId(?string $pageId): LandingPageInterface;
 
     /**
      * @param string|null $active
      * @return LandingPageInterface
      */
-    public function setActive( ?string $active): LandingPageInterface;
+    public function setActive(?string $active): LandingPageInterface;
 
     /**
      * @param string|null $name
      * @return LandingPageInterface
      */
-    public function setName( ?string $name): LandingPageInterface;
+    public function setName(?string $name): LandingPageInterface;
 
     /**
      * @param string|null $categoryId
@@ -227,37 +227,37 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @param string|null $heading
      * @return LandingPageInterface
      */
-    public function setHeading( ?string $heading): LandingPageInterface;
+    public function setHeading(?string $heading): LandingPageInterface;
 
     /**
      * @param string|null $headerImage
      * @return LandingPageInterface
      */
-    public function setHeaderImage( ?string $headerImage): LandingPageInterface;
+    public function setHeaderImage(?string $headerImage): LandingPageInterface;
 
     /**
      * @param string|null $metaTitle
      * @return LandingPageInterface
      */
-    public function setMetaTitle( ?string $metaTitle): LandingPageInterface;
+    public function setMetaTitle(?string $metaTitle): LandingPageInterface;
 
     /**
      * @param string|null $metaKeywords
      * @return LandingPageInterface
      */
-    public function setMetaKeywords( ?string $metaKeywords): LandingPageInterface;
+    public function setMetaKeywords(?string $metaKeywords): LandingPageInterface;
 
     /**
      * @param string|null $metaDescription
      * @return LandingPageInterface
      */
-    public function setMetaDescription( ?string $metaDescription): LandingPageInterface;
+    public function setMetaDescription(?string $metaDescription): LandingPageInterface;
 
     /**
      * @param string|null $contentFirst
      * @return LandingPageInterface
      */
-    public function setContentFirst( ?string $contentFirst): LandingPageInterface;
+    public function setContentFirst(?string $contentFirst): LandingPageInterface;
 
     /**
      * @param string|null $contentLast
@@ -269,43 +269,43 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @param string|null $tweakwiseFilterTemplate
      * @return LandingPageInterface
      */
-    public function setTweakwiseFilterTemplate( ?string $tweakwiseFilterTemplate): LandingPageInterface;
+    public function setTweakwiseFilterTemplate(?string $tweakwiseFilterTemplate): LandingPageInterface;
 
     /**
      * @param string|null $tweakwiseSortTemplate
      * @return LandingPageInterface
      */
-    public function setTweakwiseSortTemplate( ?string $tweakwiseSortTemplate): LandingPageInterface;
+    public function setTweakwiseSortTemplate(?string $tweakwiseSortTemplate): LandingPageInterface;
 
     /**
      * @param array|null $storeIds
      * @return LandingPageInterface
      */
-    public function setStoreIds( array $storeIds): LandingPageInterface;
+    public function setStoreIds(array $storeIds): LandingPageInterface;
 
     /**
      * @param string|null $overviewPageId
      * @return LandingPageInterface
      */
-    public function setOverviewPageId( ?string $overviewPageId): LandingPageInterface;
+    public function setOverviewPageId(?string $overviewPageId): LandingPageInterface;
 
     /**
      * @param string|null $overviewPageImage
      * @return LandingPageInterface
      */
-    public function setOverviewPageImage( ?string $overviewPageImage): LandingPageInterface;
+    public function setOverviewPageImage(?string $overviewPageImage): LandingPageInterface;
 
     /**
      * @param string|null $urlPath
      * @return LandingPageInterface
      */
-    public function setUrlPath( ?string $urlPath): LandingPageInterface;
+    public function setUrlPath(?string $urlPath): LandingPageInterface;
 
     /**
      * @param string|null $canonicalUrl
      * @return LandingPageInterface
      */
-    public function setCanonicalUrl( ?string $canonicalUrl): LandingPageInterface;
+    public function setCanonicalUrl(?string $canonicalUrl): LandingPageInterface;
 
     /**
      * @param bool $isFilterLinkAllowed
