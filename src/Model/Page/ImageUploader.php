@@ -97,9 +97,10 @@ class ImageUploader
 
     /**
      * @param string $filename
+     * @param bool   $relative
      * @return string
      */
-    public function getMediaUrl(string $filename): string
+    public function getMediaUrl(string $filename, bool $relative = false): string
     {
         /** @var Store $store */
         try {
@@ -107,6 +108,11 @@ class ImageUploader
         } catch (NoSuchEntityException $e) {
             $store = $this->storeManager->getDefaultStoreView();
         }
+
+        if ($relative) {
+            return self::MEDIA_PATH_OVERVIEW . '/' . $filename;
+        }
+
         return $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . self::MEDIA_PATH_OVERVIEW . '/' . $filename;
     }
 }
