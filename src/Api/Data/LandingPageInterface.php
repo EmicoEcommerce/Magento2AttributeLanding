@@ -124,13 +124,13 @@ interface LandingPageInterface extends ExtensibleDataInterface
 
     /**
      * Get tweakwise_filter_template
-     * @return string|null
+     * @return int|null
      */
     public function getTweakwiseFilterTemplate();
 
     /**
      * Get tweakwise_filter_template
-     * @return string|null
+     * @return int|null
      */
     public function getTweakwiseSortTemplate();
 
@@ -263,19 +263,19 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @param string|null $contentLast
      * @return LandingPageInterface
      */
-    public function setContentLast( ?string $contentLast): LandingPageInterface;
+    public function setContentLast(?string $contentLast): LandingPageInterface;
 
     /**
-     * @param string|null $tweakwiseFilterTemplate
+     * @param int|null $tweakwiseFilterTemplate
      * @return LandingPageInterface
      */
-    public function setTweakwiseFilterTemplate(?string $tweakwiseFilterTemplate): LandingPageInterface;
+    public function setTweakwiseFilterTemplate(?int $tweakwiseFilterTemplate): LandingPageInterface;
 
     /**
-     * @param string|null $tweakwiseSortTemplate
+     * @param int|null $tweakwiseSortTemplate
      * @return LandingPageInterface
      */
-    public function setTweakwiseSortTemplate(?string $tweakwiseSortTemplate): LandingPageInterface;
+    public function setTweakwiseSortTemplate(?int $tweakwiseSortTemplate): LandingPageInterface;
 
     /**
      * @param array|null $storeIds
