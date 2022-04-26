@@ -375,10 +375,10 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Set tweakwise_filter_template
-     * @param int $tweakwiseFilterTemplate
+     * @param string $tweakwiseFilterTemplate
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setTweakwiseFilterTemplate(?int $tweakwiseFilterTemplate): LandingPageInterface
+    public function setTweakwiseFilterTemplate(?string $tweakwiseFilterTemplate): LandingPageInterface
     {
         return $this->setData(self::TWEAKWISE_FILTER_TEMPLATE, $tweakwiseFilterTemplate);
     }
@@ -394,10 +394,10 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Set tweakwise_filter_template
-     * @param int $tweakwiseSortTemplate
+     * @param string $tweakwiseSortTemplate
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setTweakwiseSortTemplate(?int $tweakwiseSortTemplate): LandingPageInterface
+    public function setTweakwiseSortTemplate(?string $tweakwiseSortTemplate): LandingPageInterface
     {
         return $this->setData(self::TWEAKWISE_SORT_TEMPLATE, $tweakwiseSortTemplate);
     }

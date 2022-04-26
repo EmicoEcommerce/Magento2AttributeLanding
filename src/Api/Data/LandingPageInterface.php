@@ -266,16 +266,16 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public function setContentLast(?string $contentLast): LandingPageInterface;
 
     /**
-     * @param int|null $tweakwiseFilterTemplate
+     * @param string|null $tweakwiseFilterTemplate
      * @return LandingPageInterface
      */
-    public function setTweakwiseFilterTemplate(?int $tweakwiseFilterTemplate): LandingPageInterface;
+    public function setTweakwiseFilterTemplate(?string $tweakwiseFilterTemplate): LandingPageInterface;
 
     /**
-     * @param int|null $tweakwiseSortTemplate
+     * @param string|null $tweakwiseSortTemplate
      * @return LandingPageInterface
      */
-    public function setTweakwiseSortTemplate(?int $tweakwiseSortTemplate): LandingPageInterface;
+    public function setTweakwiseSortTemplate(?string $tweakwiseSortTemplate): LandingPageInterface;
 
     /**
      * @param array|null $storeIds
