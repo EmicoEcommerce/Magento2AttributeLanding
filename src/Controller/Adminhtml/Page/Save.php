@@ -121,9 +121,29 @@ class Save extends Action
             unset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE]);
         }
         $filterAttributes = $data[LandingPageInterface::FILTER_ATTRIBUTES] ?? [];
+        $filterAttributes = $this->sanitizeFilterAttributes($filterAttributes);
         $landingPage->setFilterAttributes(serialize($filterAttributes));
 
         unset($data[LandingPageInterface::FILTER_ATTRIBUTES]);
         $this->dataObjectHelper->populateWithArray($landingPage, $data, LandingPageInterface::class);
+    }
+
+    /**
+     * @param array $filterAttributes
+     * @return array
+     */
+    protected function sanitizeFilterAttributes(array $filterAttributes): array
+    {
+        $allowedFields = ['attribute', 'value'];
+        $sanitizedAttributes = [];
+        foreach ($filterAttributes as $filterAttribute) {
+            foreach (array_keys($filterAttribute) as $field) {
+                if (!in_array($field, $allowedFields)) {
+                    unset($filterAttribute[$field]);
+                }
+            }
+            $sanitizedAttributes[] = $filterAttribute;
+        }
+        return $sanitizedAttributes;
     }
 }
