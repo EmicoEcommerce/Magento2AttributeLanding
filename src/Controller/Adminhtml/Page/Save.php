@@ -124,6 +124,10 @@ class Save extends Action
         $filterAttributes = $this->sanitizeFilterAttributes($filterAttributes);
         $landingPage->setFilterAttributes(serialize($filterAttributes));
 
+        if (empty($data[LandingPageInterface::OVERVIEW_PAGE_ID])) {
+            $data[LandingPageInterface::OVERVIEW_PAGE_ID] = null;
+        }
+
         unset($data[LandingPageInterface::FILTER_ATTRIBUTES]);
         $this->dataObjectHelper->populateWithArray($landingPage, $data, LandingPageInterface::class);
     }
