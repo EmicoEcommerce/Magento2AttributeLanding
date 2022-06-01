@@ -37,8 +37,9 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 $columnName,
                 'CASCADE',
             );
+        }
 
-            if ($connection->tableColumnExists($tableName, 'entity_id')) {
+        if ($connection->tableColumnExists($tableName, 'entity_id')) {
             //open source version
             $connection->addForeignKey(
                 'EMICO_ATTRLANDING_PAGE_CTGR_ID_CAT_CTGR_ENTT_ENTT_ID',
