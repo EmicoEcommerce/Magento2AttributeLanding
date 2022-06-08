@@ -111,7 +111,7 @@ class View extends Template
      */
     public function getContentFirst(): string
     {
-        return $this->getFilteredContent($this->getOverviewPage()->getContentFirst());
+        return $this->getFilteredContent($this->getOverviewPage()->getContentFirst() ?? '');
     }
 
     /**
@@ -119,7 +119,7 @@ class View extends Template
      */
     public function getContentLast(): string
     {
-        return $this->getFilteredContent($this->getOverviewPage()->getContentLast());
+        return $this->getFilteredContent($this->getOverviewPage()->getContentLast() ?? '');
     }
 
     /**
