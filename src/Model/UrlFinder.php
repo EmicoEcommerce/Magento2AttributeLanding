@@ -95,7 +95,7 @@ class UrlFinder
             ['category|' . $categoryId],
             array_map(
                 function(FilterInterface $filter) {
-                    return $filter->getFacet() . '|' . $filter->getValue();
+                    return strtolower($filter->getFacet() . '|' . $filter->getValue());
                 },
                 $filters
             )
