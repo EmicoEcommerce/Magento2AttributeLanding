@@ -120,7 +120,7 @@ class SeoObserver implements ObserverInterface
             return $landingPage->getCanonicalUrl();
         }
 
-        return $this->storeManager->getStore()->getUrl($landingPage->getUrlPath());
+        return $this->storeManager->getStore()->getUrl('', ['_direct' => $landingPage->getUrlPath()]);
     }
 
     /**
