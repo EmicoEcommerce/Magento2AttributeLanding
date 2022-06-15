@@ -101,6 +101,7 @@
 		</field>
 		<field formElement="select" name="category_id" sortOrder="30">
 			<argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Emico\AttributeLanding\Ui\Component\Product\Form\Categories\Options</item>
 				<item name="config" xsi:type="array">
 					<item name="componentType" xsi:type="string">field</item>
 					<item name="component" xsi:type="string">Magento_Catalog/js/components/new-category</item>
