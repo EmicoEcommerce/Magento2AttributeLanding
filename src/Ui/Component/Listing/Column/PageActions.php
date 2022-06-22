@@ -10,6 +10,16 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
      */
     protected $urlBuilder;
 
+    /**
+     * @var \Magento\Catalog\Model\CategoryRepository
+     */
+    public $categoryRepostory;
+
+    /**
+     * @var \Magento\Store\Model\StoreRepository
+     */
+    public $storeRepository;
+
     const URL_PATH_DETAILS = 'emico_attributelanding/page/details';
     const URL_PATH_EDIT = 'emico_attributelanding/page/edit';
     const URL_PATH_DELETE = 'emico_attributelanding/page/delete';
@@ -25,11 +35,16 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
     public function __construct(
         \Magento\Framework\View\Element\UiComponent\ContextInterface $context,
         \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory,
+        \Magento\Catalog\Model\CategoryRepository $categoryRepository,
+        \Magento\Store\Model\StoreRepository $storeRepository,
         \Magento\Framework\UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
     ) {
+        $this->storeRepository = $storeRepository;
+        $this->categoryRepository = $categoryRepository;
         $this->urlBuilder = $urlBuilder;
+
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
@@ -77,6 +92,25 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
                             ]
                         ]
                     ];
+                }
+
+                if (isset($item['category_id'])) {
+                    $category = $this->categoryRepository->get($item['category_id']);
+                    $item['category'] = $category->getName();
+                }
+
+                if (!empty($item['store_ids'])) {
+                    $store_ids = explode(',', $item['store_ids']);
+                    $stores = $this->storeRepository->getList();
+                    $item['stores'] = '';
+                    foreach ($stores as $store) {
+                        $id = $store->getId();
+                        if (in_array($store->getId(), $store_ids)) {
+                            $item['stores'] .= $store->getName() . ', ';
+                        }
+                    }
+                } else {
+                    $item['stores'] = 'All Store Views';
                 }
             }
         }
