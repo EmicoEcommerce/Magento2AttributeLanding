@@ -6,7 +6,7 @@
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" comment="Creation Time" default="CURRENT_TIMESTAMP" />
         <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" comment="Update Time" default="CURRENT_TIMESTAMP" />
         <column xsi:type="varchar" name="url_path" nullable="false" comment="Url Path"/>
-        <column xsi:type="int" name="category_id" unsigned="true" nullable="true" comment="Category Id" length="10"/>
+        <column xsi:type="int" name="category_id" unsigned="true" nullable="true" comment="Category Id" padding="10"/>
         <column xsi:type="varchar" name="heading" nullable="true" comment="H2 Heading"/>
         <column xsi:type="text" name="header_image" nullable="true" comment="Header Image"/>
         <column xsi:type="varchar" name="meta_title" nullable="true" comment="Meta Title"/>
