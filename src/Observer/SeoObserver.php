@@ -12,16 +12,18 @@ use Emico\AttributeLanding\Model\LandingPageContext;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Block\Category\View as LandingPageView;
 use Emico\AttributeLanding\Block\OverviewPage\View as OverviewPageView;
+use Magento\Framework\App\Request\Http as MagentoHttpRequest;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Magento\Framework\View\Page\Config;
+use Magento\Framework\View\Page\Config as PageConfig;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Theme\Block\Html\Title;
+use Emico\AttributeLanding\Model\Config;
 
 class SeoObserver implements ObserverInterface
 {
     /**
-     * @var Config
+     * @var PageConfig
      */
     private $pageConfig;
 
@@ -41,22 +43,31 @@ class SeoObserver implements ObserverInterface
     private $storeManager;
 
     /**
+     * @var MagentoHttpRequest
+     */
+    protected $request;
+
+    /**
      * MetaTagsObserver constructor.
-     * @param Config $pageConfig
+     * @param PageConfig $pageConfig
      * @param LandingPageContext $landingPageContext
      * @param CategoryRepositoryInterface $categoryRepository
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        Config $pageConfig,
+        PageConfig $pageConfig,
+        Config $config,
         LandingPageContext $landingPageContext,
         CategoryRepositoryInterface $categoryRepository,
-        StoreManagerInterFace $storeManager
+        StoreManagerInterFace $storeManager,
+        MagentoHttpRequest $request
     ) {
         $this->pageConfig = $pageConfig;
+        $this->config = $config;
         $this->landingPageContext = $landingPageContext;
         $this->categoryRepository = $categoryRepository;
         $this->storeManager = $storeManager;
+        $this->request = $request;
     }
 
     /**
@@ -120,7 +131,16 @@ class SeoObserver implements ObserverInterface
             return $landingPage->getCanonicalUrl();
         }
 
-        return $this->storeManager->getStore()->getUrl($landingPage->getUrlPath());
+        if ($this->config->isCanonicalSelfReferencingEnabled()) {
+            $params['_current'] = true;
+            $params['_use_rewrite'] = true;
+            $params['_escape'] = false;
+            $params['query'] = $this->request->getQuery();
+
+            return $this->storeManager->getStore()->getUrl($landingPage->getUrlPath(), $params);
+        }
+
+        return $this->storeManager->getStore()->getUrl('', ['_direct' => $landingPage->getUrlPath()]);
     }
 
     /**
