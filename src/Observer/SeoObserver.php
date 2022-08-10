@@ -23,9 +23,9 @@ use Emico\AttributeLanding\Model\Config;
 class SeoObserver implements ObserverInterface
 {
     /**
-     * @var PageConfig
+     * @var PageConfig $pageConfig
      */
-    private $pageConfig;
+    private PageConfig $pageConfig;
 
     /**
      * @var LandingPageContext
@@ -43,9 +43,10 @@ class SeoObserver implements ObserverInterface
     private $storeManager;
 
     /**
-     * @var MagentoHttpRequest
+     * @var MagentoHttpRequest $request
      */
-    protected $request;
+
+    protected MagentoHttpRequest $request;
 
     /**
      * MetaTagsObserver constructor.
