@@ -17,7 +17,7 @@ class OverviewPageActions extends Column
     const URL_PATH_EDIT = 'emico_attributelanding/overviewpage/edit';
     const URL_PATH_DELETE = 'emico_attributelanding/overviewpage/delete';
 
-    public $storeRepository;
+    public StoreRepository $storeRepository;
 
     /**
      * @param ContextInterface $context
@@ -76,14 +76,20 @@ class OverviewPageActions extends Column
                     ];
                 }
 
-                if (!empty($item['store_ids'])) {
+                if (!empty($item['store_ids']) && is_string($item['store_ids'])) {
                     $store_ids = explode(',', $item['store_ids']);
-                    $stores = $this->storeRepository->getList();
-                    $item['stores'] = '';
-                    foreach ($stores as $store) {
-                        $id = $store->getId();
-                        if (in_array($store->getId(), $store_ids)) {
-                            $item['stores'] .= $store->getName() . ', ';
+                    if (!empty($store_ids) && is_array($store_ids)) {
+                        $stores = $this->storeRepository->getList();
+                        $item['stores'] = '';
+                        foreach ($stores as $store) {
+                            $id = $store->getId();
+                            if (in_array($id, $store_ids)) {
+                                if ($id === "0") {
+                                    $item['stores'] .= 'All Store Views' . ', ';
+                                } else {
+                                    $item['stores'] .= $store->getName() . ', ';
+                                }
+                            }
                         }
                     }
                 } else {

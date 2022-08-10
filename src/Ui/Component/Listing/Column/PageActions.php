@@ -3,6 +3,9 @@
 
 namespace Emico\AttributeLanding\Ui\Component\Listing\Column;
 
+use Magento\Catalog\Model\CategoryRepository;
+use Magento\Store\Model\StoreRepository;
+
 class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
 {
     /**
@@ -13,12 +16,12 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
     /**
      * @var \Magento\Catalog\Model\CategoryRepository
      */
-    public $categoryRepostory;
+    public CategoryRepository $categoryRepostory;
 
     /**
      * @var \Magento\Store\Model\StoreRepository
      */
-    public $storeRepository;
+    public StoreRepository $storeRepository;
 
     const URL_PATH_DETAILS = 'emico_attributelanding/page/details';
     const URL_PATH_EDIT = 'emico_attributelanding/page/edit';
@@ -99,14 +102,20 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
                     $item['category'] = $category->getName();
                 }
 
-                if (!empty($item['store_ids'])) {
+                if (!empty($item['store_ids']) && is_string($item['store_ids'])) {
                     $store_ids = explode(',', $item['store_ids']);
-                    $stores = $this->storeRepository->getList();
-                    $item['stores'] = '';
-                    foreach ($stores as $store) {
-                        $id = $store->getId();
-                        if (in_array($store->getId(), $store_ids)) {
-                            $item['stores'] .= $store->getName() . ', ';
+                    if (!empty($store_ids) && is_array($store_ids)) {
+                        $stores = $this->storeRepository->getList();
+                        $item['stores'] = '';
+                        foreach ($stores as $store) {
+                            $id = $store->getId();
+                            if (in_array($id, $store_ids)) {
+                                if ($id === "0") {
+                                    $item['stores'] .= 'All Store Views' . ', ';
+                                } else {
+                                    $item['stores'] .= $store->getName() . ', ';
+                                }
+                            }
                         }
                     }
                 } else {
