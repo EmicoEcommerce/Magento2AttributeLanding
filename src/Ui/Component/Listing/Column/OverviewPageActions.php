@@ -6,7 +6,7 @@ namespace Emico\AttributeLanding\Ui\Component\Listing\Column;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
-use Magento\Store\Model\StoreRepository;
+use Magento\Store\Api\StoreRepositoryInterface;
 use Magento\Ui\Component\Listing\Columns\Column;
 
 class OverviewPageActions extends Column
@@ -17,7 +17,7 @@ class OverviewPageActions extends Column
     const URL_PATH_EDIT = 'emico_attributelanding/overviewpage/edit';
     const URL_PATH_DELETE = 'emico_attributelanding/overviewpage/delete';
 
-    public StoreRepository $storeRepository;
+    public StoreRepositoryInterface $storeRepository;
 
     /**
      * @param ContextInterface $context
@@ -29,7 +29,7 @@ class OverviewPageActions extends Column
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        StoreRepository $storeRepository,
+        StoreRepositoryInterface $storeRepository,
         UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
