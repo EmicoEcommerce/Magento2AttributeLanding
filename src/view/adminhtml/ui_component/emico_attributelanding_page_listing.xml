@@ -99,6 +99,32 @@
                 <label translate="true">Url path</label>
             </settings>
         </column>
+        <column name="category" sortOrder="42">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Category</label>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+        <column name="stores" sortOrder="44">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Stores</label>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+        <column name="created_at" sortOrder="47">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Created at</label>
+            </settings>
+        </column>
+        <column name="updated_at" sortOrder="48">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Updated at</label>
+            </settings>
+        </column>
         <actionsColumn class="Emico\AttributeLanding\Ui\Component\Listing\Column\PageActions" name="actions" sortOrder="50">
             <settings>
                 <indexField>page_id</indexField>

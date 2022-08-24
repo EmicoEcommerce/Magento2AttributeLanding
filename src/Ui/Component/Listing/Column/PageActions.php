@@ -3,12 +3,25 @@
 
 namespace Emico\AttributeLanding\Ui\Component\Listing\Column;
 
+use Magento\Catalog\Model\CategoryRepository;
+use Magento\Store\Api\StoreRepositoryInterface;
+
 class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
 {
     /**
      * @var \Magento\Framework\UrlInterface
      */
     protected $urlBuilder;
+
+    /**
+     * @var \Magento\Catalog\Model\CategoryRepository
+     */
+    public CategoryRepository $categoryRepostory;
+
+    /**
+     * @var StoreRepositoryInterface|\Magento\Store\Model\StoreRepository
+     */
+    public StoreRepositoryInterface $storeRepository;
 
     const URL_PATH_DETAILS = 'emico_attributelanding/page/details';
     const URL_PATH_EDIT = 'emico_attributelanding/page/edit';
@@ -18,6 +31,8 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
     /**
      * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
      * @param \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory
+     * @param CategoryRepository $categoryRepository
+     * @param StoreRepositoryInterface $storeRepository
      * @param \Magento\Framework\UrlInterface $urlBuilder
      * @param array $components
      * @param array $data
@@ -25,11 +40,16 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
     public function __construct(
         \Magento\Framework\View\Element\UiComponent\ContextInterface $context,
         \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory,
+        \Magento\Catalog\Model\CategoryRepository $categoryRepository,
+        StoreRepositoryInterface $storeRepository,
         \Magento\Framework\UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
     ) {
+        $this->storeRepository = $storeRepository;
+        $this->categoryRepository = $categoryRepository;
         $this->urlBuilder = $urlBuilder;
+
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
@@ -77,6 +97,31 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
                             ]
                         ]
                     ];
+                }
+
+                if (isset($item['category_id'])) {
+                    $category = $this->categoryRepository->get($item['category_id']);
+                    $item['category'] = $category->getName();
+                }
+
+                if (!empty($item['store_ids']) && is_string($item['store_ids'])) {
+                    $store_ids = explode(',', $item['store_ids']);
+                    if (!empty($store_ids) && is_array($store_ids)) {
+                        $stores = $this->storeRepository->getList();
+                        $item['stores'] = '';
+                        foreach ($stores as $store) {
+                            $id = $store->getId();
+                            if (in_array($id, $store_ids)) {
+                                if ($id === "0") {
+                                    $item['stores'] .= 'All Store Views' . ', ';
+                                } else {
+                                    $item['stores'] .= $store->getName() . ', ';
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    $item['stores'] = 'All Store Views';
                 }
             }
         }
