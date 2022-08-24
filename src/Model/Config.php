@@ -68,4 +68,13 @@ class Config
     {
         return (string) $this->getStoreConfig(CategoryUrlPathGenerator::XML_PATH_CATEGORY_URL_SUFFIX, $store);
     }
+
+    /**
+     * @param Store|null $store
+     * @return bool
+     */
+    public function isCanonicalSelfReferencingEnabled(Store $store = null): bool
+    {
+        return (bool) $this->config->isSetFlag('emico_attributelanding/general/canonical_self_referencing', ScopeInterface::SCOPE_STORE, $store);
+    }
 }

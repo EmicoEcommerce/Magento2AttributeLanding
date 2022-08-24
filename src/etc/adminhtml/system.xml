@@ -29,6 +29,11 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <backend_model>Emico\AttributeLanding\Model\System\Config\AppendUrlSuffix</backend_model>
                 </field>
+                <field id="canonical_self_referencing" translate="label,comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Canonical link self referencing</label>
+                    <comment>Make canonical link self referencing</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
             </group>
         </section>
     </system>

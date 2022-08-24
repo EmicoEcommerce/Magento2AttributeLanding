@@ -12,6 +12,7 @@
         <emico_attributelanding>
             <general>
                 <allow_crosslink>1</allow_crosslink>
+                <canonical_self_referencing>0</canonical_self_referencing>
             </general>
         </emico_attributelanding>
     </default>
