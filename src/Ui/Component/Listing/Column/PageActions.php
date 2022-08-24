@@ -4,7 +4,7 @@
 namespace Emico\AttributeLanding\Ui\Component\Listing\Column;
 
 use Magento\Catalog\Model\CategoryRepository;
-use Magento\Store\Model\StoreRepository;
+use Magento\Store\Api\StoreRepositoryInterface;
 
 class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
 {
@@ -19,9 +19,9 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
     public CategoryRepository $categoryRepostory;
 
     /**
-     * @var \Magento\Store\Model\StoreRepository
+     * @var StoreRepositoryInterface|\Magento\Store\Model\StoreRepository
      */
-    public StoreRepository $storeRepository;
+    public StoreRepositoryInterface $storeRepository;
 
     const URL_PATH_DETAILS = 'emico_attributelanding/page/details';
     const URL_PATH_EDIT = 'emico_attributelanding/page/edit';
@@ -31,6 +31,8 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
     /**
      * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
      * @param \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory
+     * @param CategoryRepository $categoryRepository
+     * @param StoreRepositoryInterface $storeRepository
      * @param \Magento\Framework\UrlInterface $urlBuilder
      * @param array $components
      * @param array $data
@@ -39,7 +41,7 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
         \Magento\Framework\View\Element\UiComponent\ContextInterface $context,
         \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory,
         \Magento\Catalog\Model\CategoryRepository $categoryRepository,
-        \Magento\Store\Model\StoreRepository $storeRepository,
+        StoreRepositoryInterface $storeRepository,
         \Magento\Framework\UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
