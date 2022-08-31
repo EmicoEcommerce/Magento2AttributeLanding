@@ -1,3 +1,7 @@
+# This package is abandoned and no longer maintained. For the replacement package see tweakwise/magento2-attributelanding package instead.
+
+---
+
 ## Description
 
 Create Landingpages based on predefined filters and categories.
