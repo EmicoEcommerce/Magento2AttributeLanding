@@ -70,4 +70,12 @@
             </argument>
         </arguments>
     </type>
+
+	<type name="Magento\Framework\Console\CommandListInterface">
+		<arguments>
+			<argument name="commands" xsi:type="array">
+				<item name="emico_attributelanding_regenerate_rewrites" xsi:type="object">Emico\AttributeLanding\Console\Command\RegenerateUrlRewrites</item>
+			</argument>
+		</arguments>
+	</type>
 </config>
