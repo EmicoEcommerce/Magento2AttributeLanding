@@ -69,6 +69,8 @@ class View extends Action
 
         $this->landingPageContext->setOverviewPage($overviewPage);
 
-        return $this->resultPageFactory->create();
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->getLayout()->getUpdate()->addHandle('emico_attributelanding_overviewpage_view_' . $overviewPage->getName());
+        return $resultPage;
     }
 }
