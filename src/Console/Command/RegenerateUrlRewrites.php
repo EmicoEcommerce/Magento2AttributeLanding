@@ -30,7 +30,7 @@ class RegenerateUrlRewrites extends Command
         LandingPageRepositoryInterface $landingPageRepository,
         OverviewPageRepositoryInterface $overviewPageRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
-        UrlRewriteService $urlRewriteService,
+        UrlRewriteService $urlRewriteService
     ) {
         parent::__construct();
         $this->landingPageRepository = $landingPageRepository;
