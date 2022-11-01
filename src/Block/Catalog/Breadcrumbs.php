@@ -32,6 +32,11 @@ class Breadcrumbs extends CatalogBreadcrumbs
     private $overviewPageRepository;
 
     /**
+     * @var \Magento\Framework\UrlInterface
+     */
+    private \Magento\Framework\UrlInterface $urlInterface;
+
+    /**
      * @param Context $context
      * @param Data $catalogData
      * @param LandingPageContext $landingPageContext
@@ -43,11 +48,13 @@ class Breadcrumbs extends CatalogBreadcrumbs
         Data $catalogData,
         LandingPageContext $landingPageContext,
         OverviewPageRepositoryInterface $overviewPageRepository,
+        \Magento\Framework\UrlInterface $urlInterface,
         array $data = []
     ) {
         parent::__construct($context, $catalogData, $data);
         $this->landingPageContext = $landingPageContext;
         $this->overviewPageRepository = $overviewPageRepository;
+        $this->urlInterface = $urlInterface;
     }
 
     /**
@@ -96,7 +103,7 @@ class Breadcrumbs extends CatalogBreadcrumbs
                 [
                     'label' => __($overviewPage->getName()),
                     'title' => __($overviewPage->getName()),
-                    'link' => $overviewPage->getUrlPath()
+                    'link' => $this->urlInterface->getUrl( $overviewPage->getUrlPath() )
                 ]
             );
         }
