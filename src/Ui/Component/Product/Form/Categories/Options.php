@@ -52,10 +52,10 @@ class Options extends \Magento\Catalog\Ui\Component\Product\Form\Categories\Opti
 
             //remove root category and add root category label
             foreach ($this->categoriesTree as $rootCategory) {
-                foreach($rootCategory['optgroup'] as &$subCategory) {
-                    $subCategory['label'] .= ' ('.$rootCategory['label'].')';
-                }
-                if (isset( $rootCategory['optgroup'])) {
+                if (isset($rootCategory['optgroup'])) {
+                    foreach ($rootCategory['optgroup'] as &$subCategory) {
+                        $subCategory['label'] .= ' (' . $rootCategory['label'] . ')';
+                    }
                     $categoriesWithoutRoot = array_merge($categoriesWithoutRoot, $rootCategory['optgroup']);
                 }
             }
