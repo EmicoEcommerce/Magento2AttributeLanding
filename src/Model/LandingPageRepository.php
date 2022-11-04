@@ -20,6 +20,7 @@ use Magento\Framework\Exception\CouldNotDeleteException;
 use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
 use Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterfaceFactory;
+use Magento\Store\Model\StoreManagerInterface;
 
 class LandingPageRepository implements LandingPageRepositoryInterface
 {
@@ -58,6 +59,8 @@ class LandingPageRepository implements LandingPageRepositoryInterface
      */
     private $searchCriteriaBuilder;
 
+    private StoreManagerInterface $storeManager;
+
     /**
      * @param ResourcePage $resource
      * @param LandingPageInterfaceFactory $dataPageFactory
@@ -74,7 +77,8 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         PageSearchResultsInterfaceFactory $searchResultsFactory,
         CollectionProcessorInterface $collectionProcessor,
         JoinProcessorInterface $extensionAttributesJoinProcessor,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        StoreManagerInterface $storeManager
     ) {
         $this->resource = $resource;
         $this->pageCollectionFactory = $pageCollectionFactory;
@@ -83,6 +87,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         $this->collectionProcessor = $collectionProcessor;
         $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -171,8 +176,10 @@ class LandingPageRepository implements LandingPageRepositoryInterface
      */
     public function findAllActive(): array
     {
+        $storeId = $this->storeManager->getStore()->getId();
+
         $searchCriteria = $this->searchCriteriaBuilder
-            ->addFilter(LandingPageInterface::ACTIVE, 1)
+            ->addFilter(LandingPageInterface::STORE_IDS, ['in' => $storeId])
             ->create();
 
         $result = $this->getList($searchCriteria);
