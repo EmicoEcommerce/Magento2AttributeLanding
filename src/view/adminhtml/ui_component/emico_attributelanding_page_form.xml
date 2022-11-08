@@ -242,7 +242,7 @@
 			<formElements>
 				<select>
 					<settings>
-						<options class="Emico\Tweakwise\Model\Config\Source\FilterTemplate" />
+						<options class="Tweakwise\Magento2Tweakwise\Model\Config\Source\FilterTemplate" />
 					</settings>
 				</select>
 			</formElements>
@@ -266,7 +266,7 @@
 			<formElements>
 				<select>
 					<settings>
-						<options class="Emico\Tweakwise\Model\Config\Source\SortTemplate" />
+						<options class="Tweakwise\Magento2Tweakwise\Model\Config\Source\SortTemplate" />
 					</settings>
 				</select>
 			</formElements>
