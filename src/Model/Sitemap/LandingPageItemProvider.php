@@ -61,7 +61,7 @@ class LandingPageItemProvider
         foreach ($landingPages as $landingPage) {
 
             yield $this->itemFactory->create([
-                'url' => $landingPage->getUrlPath(),
+                'url' => $landingPage->getUrlRewriteRequestPath(),
                 'updatedAt' => $landingPage->getUpdatedAt(),
                 'priority' => $this->configReader->getPriority($storeId),
                 'changeFrequency' => $this->configReader->getChangeFrequency($storeId),
