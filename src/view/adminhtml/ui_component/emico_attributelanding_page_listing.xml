@@ -23,6 +23,9 @@
     </settings>
     <dataSource component="Magento_Ui/js/grid/provider" name="emico_attributelanding_page_listing_data_source">
         <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">page_id</param>
+            </storageConfig>
             <updateUrl path="mui/index/render"/>
         </settings>
         <aclResource>Emico_AttributeLanding::page_management</aclResource>
