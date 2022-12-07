@@ -179,7 +179,8 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         $storeId = $this->storeManager->getStore()->getId();
 
         $searchCriteria = $this->searchCriteriaBuilder
-            ->addFilter(LandingPageInterface::STORE_IDS, ['in' => $storeId])
+            ->addFilter(LandingPageInterface::ACTIVE, 1)
+            ->addFilter(LandingPageInterface::STORE_IDS, [$storeId, 0], 'in')
             ->create();
 
         $result = $this->getList($searchCriteria);
