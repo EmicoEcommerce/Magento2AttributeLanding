@@ -69,8 +69,8 @@ class OverviewPageActions extends Column
                             ),
                             'label' => __('Delete'),
                             'confirm' => [
-                                'title' => __('Delete "${ $.$data.title }"'),
-                                'message' => __('Are you sure you wan\'t to delete a "${ $.$data.title }" record?')
+                                'title' => __('Delete overviewpage'),
+                                'message' => __('Are you sure you wan\'t to delete this overviewpage?')
                             ]
                         ]
                     ];
