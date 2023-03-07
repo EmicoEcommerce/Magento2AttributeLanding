@@ -206,6 +206,7 @@
 			<settings>
 				<dataType>text</dataType>
 				<label translate="true">Hide selected filters</label>
+                <notice>Always yes for root categories</notice>
 				<dataScope>hide_selected_filters</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>

@@ -9,6 +9,8 @@ namespace Emico\AttributeLanding\Model;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
+use Emico\AttributeLanding\Ui\Component\Product\Form\Categories\Options;
+use Magento\Catalog\Model\CategoryManagement;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
@@ -78,7 +80,8 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         CollectionProcessorInterface $collectionProcessor,
         JoinProcessorInterface $extensionAttributesJoinProcessor,
         SearchCriteriaBuilder $searchCriteriaBuilder,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        Options $options
     ) {
         $this->resource = $resource;
         $this->pageCollectionFactory = $pageCollectionFactory;
@@ -88,6 +91,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->storeManager = $storeManager;
+        $this->options = $options;
     }
 
     /**
@@ -96,6 +100,20 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     public function save(LandingPageInterface $page): LandingPageInterface
     {
         try {
+            $tree = $this->options->getCategoriesTree();
+            $rootCategories = [];
+
+            //set hide filters for root categories
+            if (!empty($tree)) {
+                foreach ($tree as $rootCategory) {
+                    $rootCategories[] = $rootCategory['value'];
+                }
+            }
+
+            if (in_array($page->getData('category_id'), $rootCategories)) {
+                $page->setData('hide_selected_filters', "1");
+            }
+
             /** @var LandingPage $page */
             $this->resource->save($page);
         } catch (\Exception $exception) {
