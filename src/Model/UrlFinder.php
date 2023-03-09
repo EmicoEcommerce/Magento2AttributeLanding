@@ -13,6 +13,7 @@ use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\CacheInterface;
 use Magento\Framework\Serialize\SerializerInterface;
+use Magento\Store\Model\StoreManager;
 
 class UrlFinder
 {
@@ -54,12 +55,14 @@ class UrlFinder
         LandingPageRepositoryInterface $landingPageRepository,
         CacheInterface $cache,
         SerializerInterface $serializer,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        StoreManager $storeManager
     ) {
         $this->landingPageRepository = $landingPageRepository;
         $this->cache = $cache;
         $this->serializer = $serializer;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -75,11 +78,16 @@ class UrlFinder
             $this->landingPageLookup = $this->loadPageLookupArray();
         }
 
-        if (!isset($this->landingPageLookup[$filterHash])) {
-            return null;
+        if (!isset($this->landingPageLookup[$this->storeManager->getStore()->getId()][$filterHash])) {
+            //check if hash is set for all stores
+            if (isset($this->landingPageLookup[0][$filterHash])) {
+                return $this->landingPageLookup[0][$filterHash];
+            } else {
+                return null;
+            }
         }
 
-        return $this->landingPageLookup[$filterHash];
+        return $this->landingPageLookup[$this->storeManager->getStore()->getId()][$filterHash];
     }
 
     /**
@@ -120,9 +128,19 @@ class UrlFinder
             ->create();
 
         $landingPageLookup = [];
+        $landingPageStores = [];
         foreach ($this->landingPageRepository->getList($searchCriteria)->getItems() as $landingPage) {
             $hash = $this->createHashForFilters($landingPage->getFilters(), $landingPage->getCategoryId());
-            $landingPageLookup[$hash] = $landingPage->getUrlRewriteRequestPath();
+
+            $storeIds = $landingPage->getData('store_ids');
+
+            if (!empty($storeIds) || $storeIds == "0") {
+                $landingPageStores = explode(',', $storeIds);
+            }
+
+            foreach ($landingPageStores as $landingPageStore) {
+                $landingPageLookup[$landingPageStore][$hash] = $landingPage->getUrlRewriteRequestPath();
+            }
         }
         $this->cache->save($this->serializer->serialize($landingPageLookup), self::CACHE_KEY);
         return $landingPageLookup;
