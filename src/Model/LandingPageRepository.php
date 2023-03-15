@@ -61,7 +61,15 @@ class LandingPageRepository implements LandingPageRepositoryInterface
      */
     private $searchCriteriaBuilder;
 
+    /**
+     * @var StoreManagerInterface
+     */
     private StoreManagerInterface $storeManager;
+
+    /**
+     * @var Options
+     */
+    private Options $options;
 
     /**
      * @param ResourcePage $resource
@@ -71,6 +79,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
      * @param CollectionProcessorInterface $collectionProcessor
      * @param JoinProcessorInterface $extensionAttributesJoinProcessor
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param Options $options
      */
     public function __construct(
         ResourcePage $resource,

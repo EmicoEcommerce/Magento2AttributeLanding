@@ -28,6 +28,11 @@ class SeoObserver implements ObserverInterface
     private PageConfig $pageConfig;
 
     /**
+     * @var Config $config
+     */
+    private Config $config;
+
+    /**
      * @var LandingPageContext
      */
     private $landingPageContext;
@@ -51,6 +56,7 @@ class SeoObserver implements ObserverInterface
     /**
      * MetaTagsObserver constructor.
      * @param PageConfig $pageConfig
+     * @param Config $config
      * @param LandingPageContext $landingPageContext
      * @param CategoryRepositoryInterface $categoryRepository
      * @param StoreManagerInterface $storeManager
