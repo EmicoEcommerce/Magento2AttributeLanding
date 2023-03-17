@@ -44,11 +44,6 @@ class UrlFinder
     private $searchCriteriaBuilder;
 
     /**
-     * @var StoreManager
-     */
-    private $storeManager;
-
-    /**
      * UrlFinder constructor.
      * @param LandingPageRepositoryInterface $landingPageRepository
      * @param CacheInterface $cache
