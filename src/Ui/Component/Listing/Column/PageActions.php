@@ -16,7 +16,7 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
     /**
      * @var \Magento\Catalog\Model\CategoryRepository
      */
-    public CategoryRepository $categoryRepostory;
+    public CategoryRepository $categoryRepository;
 
     /**
      * @var StoreRepositoryInterface|\Magento\Store\Model\StoreRepository
