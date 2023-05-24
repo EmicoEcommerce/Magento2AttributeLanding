@@ -203,11 +203,8 @@ class LandingPageRepository implements LandingPageRepositoryInterface
      */
     public function findAllActive(): array
     {
-        $storeId = $this->storeManager->getStore()->getId();
-
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter(LandingPageInterface::ACTIVE, 1)
-            ->addFilter(LandingPageInterface::STORE_IDS, [$storeId, 0], 'in')
             ->create();
 
         $result = $this->getList($searchCriteria);
