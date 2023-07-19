@@ -1,7 +1,7 @@
 define([
     'Magento_Ui/js/form/element/ui-select',
     'jquery'
-], function (Select) {
+], function (Select, $) {
     'use strict';
 
     return Select.extend({
@@ -54,10 +54,9 @@ define([
         onUpdate: function(value){
             setTimeout(function() {
                 if((value == '')||(value == undefined)) {
-                    document.querySelector('.filter_attributes').hide();
-
+                    $('.filter_attributes').hide();
                 } else {
-                    document.querySelector('.filter_attributes').show();
+                    $('.filter_attributes').show();
                 }
             }, 1000);
         },

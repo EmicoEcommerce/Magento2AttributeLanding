@@ -104,7 +104,7 @@
                 <item name="options" xsi:type="object">Emico\AttributeLanding\Ui\Component\Product\Form\Categories\Options</item>
 				<item name="config" xsi:type="array">
 					<item name="componentType" xsi:type="string">field</item>
-					<item name="component" xsi:type="string">Emico_AttributeLanding/js/form/element/filter-attributes</item>
+					<item name="component" xsi:type="string">Emico_AttributeLanding/js/form/element/category-select</item>
 					<item name="elementTmpl" xsi:type="string">ui/grid/filters/elements/ui-select</item>
 					<item name="filterOptions" xsi:type="boolean">true</item>
 					<item name="showCheckbox" xsi:type="boolean">false</item>
@@ -165,6 +165,7 @@
 							<item name="fit" xsi:type="boolean">false</item>
 							<item name="label" xsi:type="string" translate="true">Attribute</item>
 							<item name="dataType" xsi:type="string">text</item>
+                            <item name="template" xsi:type="string">Emico_AttributeLanding/dynamic-rows</item>
 						</item>
 					</argument>
                     <formElements>
