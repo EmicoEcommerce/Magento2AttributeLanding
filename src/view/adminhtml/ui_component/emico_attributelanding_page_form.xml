@@ -187,13 +187,6 @@
 							<item name="dataType" xsi:type="string">text</item>
 						</item>
 					</argument>
-                    <formElements>
-                        <select>
-                            <settings>
-                                <options class="Tweakwise\Magento2Tweakwise\Model\Config\Source\FacetAttributeTemplate" />
-                            </settings>
-                        </select>
-                    </formElements>
 				</field>
 				<actionDelete name="action_delete">
 					<argument name="data" xsi:type="array">
