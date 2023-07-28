@@ -32,6 +32,7 @@ define([
             });
 
             this._bindEvents(name);
+            element.trigger('change');
         },
 
         _bindEvents(name) {
@@ -39,21 +40,23 @@ define([
                 var name = evt.target.name;
                 var facetValue = evt.target.value;
                 var category_id = registery.get('emico_attributelanding_page_form.emico_attributelanding_page_form.general.category_id').value();
-                var select = $('select[name="' + name.replace('[attribute]', '[value]') + '"]');
-                var selectedValue = select.val();
+                var input = $('input[name="' + name.replace('[attribute]', '[value]') + '"]');
+                var select = $('select[name="' + name.replace('[attribute]', '[value-tmp]') + '"]');
 
-                console.log(selectedValue);
+                input.hide();
 
                 var facetUrl = url.build('/tweakwise/ajax/facetattributes/category/' + category_id + '/facetkey/' + facetValue);
                 $.getJSON(facetUrl, function( data ) {
                     select.empty();
                     data.data.forEach(value => {
-                        select.append($("<option></option>").attr("value", value.value).text(value.label));
+                        if(value.value != input.val()) {
+                            select.append($("<option></option>").attr("value", value.value).text(value.label));
+                        } else {
+                            select.append($("<option></option>").attr("value", value.value).text(value.label).attr("selected", "selected"));
+                        }
                     });
                 });
             });
-
-            $('select[name="' + name + '"]').trigger('change');
         }
     });
 

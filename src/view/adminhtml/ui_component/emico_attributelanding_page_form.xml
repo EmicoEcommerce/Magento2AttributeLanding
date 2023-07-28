@@ -165,7 +165,7 @@
 							<item name="fit" xsi:type="boolean">false</item>
 							<item name="label" xsi:type="string" translate="true">Attribute</item>
 							<item name="dataType" xsi:type="string">text</item>
-                            <item name="template" xsi:type="string">Emico_AttributeLanding/dynamic-rows</item>
+                            <item name="template" xsi:type="string">Emico_AttributeLanding/attributes</item>
 						</item>
 					</argument>
                     <formElements>
@@ -176,18 +176,27 @@
                         </select>
                     </formElements>
 				</field>
-				<field formElement="select" name="value">
+				<field formElement="input" name="value">
 					<argument name="data" xsi:type="array">
 						<item name="config" xsi:type="array">
 							<item name="prefixName" xsi:type="string">value</item>
 							<item name="prefixElementName" xsi:type="string">option_</item>
-							<item name="dataScope" xsi:type="string">value</item>
 							<item name="fit" xsi:type="boolean">false</item>
-							<item name="label" xsi:type="string" translate="true">Value</item>
 							<item name="dataType" xsi:type="string">text</item>
+                            <item name="dataScope" xsi:type="string">value</item>
 						</item>
 					</argument>
 				</field>
+                <field formElement="select" name="value-tmp">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                            <item name="label" xsi:type="string" translate="true">Value</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="template" xsi:type="string">Emico_AttributeLanding/attribute_values</item>
+                        </item>
+                    </argument>
+                </field>
 				<actionDelete name="action_delete">
 					<argument name="data" xsi:type="array">
 						<item name="config" xsi:type="array">
