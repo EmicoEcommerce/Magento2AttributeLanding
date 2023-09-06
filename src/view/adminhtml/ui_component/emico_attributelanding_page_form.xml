@@ -158,22 +158,25 @@
 						<item name="dataScope" xsi:type="string">filter_attributes</item>
 					</item>
 				</argument>
-				<field formElement="select" name="attribute">
+                <field formElement="input" name="attribute">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="prefixName" xsi:type="string">attribute</item>
+                            <item name="prefixElementName" xsi:type="string">option_</item>
+                            <item name="fit" xsi:type="boolean">false</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="dataScope" xsi:type="string">attribute</item>
+                        </item>
+                    </argument>
+                </field>
+				<field formElement="select" name="attribute-tmp">
 					<argument name="data" xsi:type="array">
 						<item name="config" xsi:type="array">
-							<item name="dataScope" xsi:type="string">attribute</item>
 							<item name="fit" xsi:type="boolean">false</item>
 							<item name="label" xsi:type="string" translate="true">Attribute</item>
 							<item name="dataType" xsi:type="string">text</item>
 						</item>
 					</argument>
-                    <formElements>
-                        <select>
-                            <settings>
-                                <options class="Tweakwise\Magento2Tweakwise\Model\Config\Source\FacetTemplate" />
-                            </settings>
-                        </select>
-                    </formElements>
 				</field>
 				<field formElement="select" name="value">
 					<argument name="data" xsi:type="array">
