@@ -3,31 +3,31 @@
 	<route method="POST" url="/V1/emico-attributelanding/page">
 		<service class="Emico\AttributeLanding\Api\LandingPageRepositoryInterface" method="save"/>
 		<resources>
-			<resource ref="Emico_AttributeLanding::Page_save"/>
+			<resource ref="Emico_AttributeLanding::page_management"/>
 		</resources>
 	</route>
 	<route method="GET" url="/V1/emico-attributelanding/page/search">
 		<service class="Emico\AttributeLanding\Api\LandingPageRepositoryInterface" method="getList"/>
 		<resources>
-			<resource ref="Emico_AttributeLanding::Page_view"/>
+			<resource ref="Emico_AttributeLanding::page_management"/>
 		</resources>
 	</route>
 	<route method="GET" url="/V1/emico-attributelanding/page/:pageId">
 		<service class="Emico\AttributeLanding\Api\LandingPageRepositoryInterface" method="getById"/>
 		<resources>
-			<resource ref="Emico_AttributeLanding::Page_view"/>
+			<resource ref="Emico_AttributeLanding::page_management"/>
 		</resources>
 	</route>
 	<route method="PUT" url="/V1/emico-attributelanding/page/:pageId">
 		<service class="Emico\AttributeLanding\Api\LandingPageRepositoryInterface" method="save"/>
 		<resources>
-			<resource ref="Emico_AttributeLanding::Page_update"/>
+			<resource ref="Emico_AttributeLanding::page_management"/>
 		</resources>
 	</route>
 	<route method="DELETE" url="/V1/emico-attributelanding/page/:pageId">
 		<service class="Emico\AttributeLanding\Api\LandingPageRepositoryInterface" method="deleteById"/>
 		<resources>
-			<resource ref="Emico_AttributeLanding::Page_delete"/>
+			<resource ref="Emico_AttributeLanding::page_management"/>
 		</resources>
 	</route>
 </routes>
