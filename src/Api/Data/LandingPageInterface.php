@@ -159,7 +159,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public function getFilters(): array;
 
     /**
-     * @return array[]
+     * @return mixed
      */
     public function getUnserializedFilterAttributes(): array;
 
