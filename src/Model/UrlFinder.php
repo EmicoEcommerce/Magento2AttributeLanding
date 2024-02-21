@@ -77,22 +77,34 @@ class UrlFinder
      */
     public function findUrlByFilters(array $filters, int $categoryId = null)
     {
+        $result = null;
         $filterHash = $this->createHashForFilters($filters, $categoryId);
 
         if ($this->landingPageLookup === null) {
             $this->landingPageLookup = $this->loadPageLookupArray();
         }
 
+        $storePrefix = $this->storeManager->getStore()->getBaseUrl();
+
         if (!isset($this->landingPageLookup[$this->storeManager->getStore()->getId()][$filterHash])) {
             //check if hash is set for all stores
             if (isset($this->landingPageLookup[0][$filterHash])) {
-                return $this->landingPageLookup[0][$filterHash];
+                $result = $this->landingPageLookup[0][$filterHash];
             } else {
                 return null;
             }
         }
 
-        return $this->landingPageLookup[$this->storeManager->getStore()->getId()][$filterHash];
+        if (empty($result)) {
+            $result = $this->landingPageLookup[$this->storeManager->getStore()->getId()][$filterHash];
+        }
+
+        if (strpos($result, 'http') === false) {
+            //add store url if link doesn't start with http
+            $result = $storePrefix . $result;
+        }
+
+        return $result;
     }
 
     /**
