@@ -5,7 +5,12 @@
 			<resource id="Magento_Backend::admin">
                 <resource id="Magento_Backend::content">
                     <resource id="Emico_AttributeLanding::landingpages" sortOrder="50" title="Attribute landing pages">
-                        <resource id="Emico_AttributeLanding::page_management" sortOrder="10" title="Manage pages"/>
+                        <resource id="Emico_AttributeLanding::page_management" sortOrder="10" title="Manage pages">
+                            <resource id="Emico_AttributeLanding::Page_view" title="View" sortOrder="10" />
+                            <resource id="Emico_AttributeLanding::Page_update" title="Update" sortOrder="20" />
+                            <resource id="Emico_AttributeLanding::Page_save" title="Create" sortOrder="30" />
+                            <resource id="Emico_AttributeLanding::Page_delete" title="Delete" sortOrder="30" />
+                        </resource>
                         <resource id="Emico_AttributeLanding::overviewpage_management" sortOrder="20" title="Manage overview pages"/>
                     </resource>
                 </resource>
