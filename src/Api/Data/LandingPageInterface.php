@@ -218,10 +218,10 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public function setName(?string $name): LandingPageInterface;
 
     /**
-     * @param string|null $categoryId
+     * @param int|null $categoryId
      * @return LandingPageInterface
      */
-    public function setCategoryId( ?string $categoryId): LandingPageInterface;
+    public function setCategoryId( ?int $categoryId): LandingPageInterface;
 
     /**
      * @param string|null $heading
