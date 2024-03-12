@@ -167,7 +167,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get category_id
-     * @return string|null
+     * @return int|null
      */
     public function getCategoryId()
     {
@@ -176,10 +176,10 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Set category_id
-     * @param string $categoryId
+     * @param int $categoryId
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setCategoryId( ?string $categoryId): LandingPageInterface
+    public function setCategoryId( ?int $categoryId): LandingPageInterface
     {
         return $this->setData(self::CATEGORY_ID, $categoryId);
     }
