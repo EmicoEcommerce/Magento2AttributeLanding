@@ -1,8 +1,90 @@
 parameters:
-    git_dir: .
-    bin_dir: vendor/bin
-    tasks:
-        phpcs:
-            standard: [PHPCompatibility]
-            triggered_by: [php]
+  # Default settings for php testing suite tasks
+  composer.strict: true
 
+  jsonlint.detect_key_conflicts: true
+
+  xmllint.load_from_net: true
+  xmllint.x_include: true
+  xmllint.dtd_validation: true
+  xmllint.scheme_validation: true
+  xmllint.triggered_by: [xml]
+  xmllint.ignore_patterns:
+    # Uses an incomplete definition, which conflicts when <exclude-pattern>
+    # is defined.
+    - /^phpcs.xml$/
+    - /^phpmd.xml$/
+    - /^phpunit.xml$/
+    - /^pdepend.xml$/
+
+  yamllint.parse_constant: true
+
+  phpcs.standard: ./phpcs.xml
+  phpcs.triggered_by: [php,phtml]
+
+  phplint.exclude: ['vendor']
+  phplint.jobs: ~
+  phplint.short_open_tag: false
+  phplint.ignore_patterns: [ ]
+  phplint.triggered_by: ['php']
+
+  phpmd.exclude: []
+  phpmd.ruleset:
+    - ./phpmd.xml
+  phpmd.triggered_by: [php]
+
+  phpstan.autoload_file: ~
+  phpstan.configuration: ./phpstan.neon
+  phpstan.level: 4
+  phpstan.triggered_by: [php]
+
+  phpunit.config_file: ./phpunit.xml
+
+  securitychecker.lockfile: ./composer.lock
+  securitychecker.run_always: true
+
+  git_blacklist.keywords:
+    - "die("
+    - "dd("
+    - "var_dump("
+    - "console.log("
+    - "print_r("
+    - "phpinfo("
+    - "exit("
+    - "exit;"
+    - "<<<<<<<"
+    - ">>>>>>>"
+    - "======="
+    - "<?php echo"
+  git_blacklist.triggered_by: [ 'php', 'js' ]
+  git_blacklist.whitelist_patterns: []
+  git_blacklist.regexp_type: G
+  git_blacklist.match_word: true
+  git_blacklist.ignore_patterns: []
+
+grumphp:
+  ascii:
+    failed: ~
+    succeeded: ~
+
+  parallel:
+    enabled: true
+
+  # Default tasks for testing suite
+  tasks:
+    xmllint:
+      load_from_net: '%xmllint.load_from_net%'
+      x_include: '%xmllint.x_include%'
+      dtd_validation: '%xmllint.dtd_validation%'
+      scheme_validation: '%xmllint.scheme_validation%'
+      triggered_by: '%xmllint.triggered_by%'
+      ignore_patterns: '%xmllint.ignore_patterns%'
+
+    phpcs:
+      standard: '%phpcs.standard%'
+      triggered_by: '%phpcs.triggered_by%'
+
+    phpmd:
+      exclude: '%phpmd.exclude%'
+      ruleset: '%phpmd.ruleset%'
+      triggered_by: '%phpmd.triggered_by%'
