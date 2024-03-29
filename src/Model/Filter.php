@@ -1,11 +1,11 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
 
 namespace Emico\AttributeLanding\Model;
-
 
 use Emico\AttributeLanding\Api\Data\FilterInterface;
 

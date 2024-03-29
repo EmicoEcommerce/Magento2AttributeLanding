@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author : Edwin Jacobs, email: ejacobs@emico.nl.
  * @copyright : Copyright Emico B.V. 2019.
@@ -12,18 +13,16 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 class Collection extends AbstractCollection
 {
-
     /**
      * @var string
      */
     protected $_idFieldName = 'page_id';
 
     /**
-     *
+     * @return void
      */
     protected function _construct()
     {
         $this->_init(OverviewPage::class, PageResourceModel::class);
     }
-
 }

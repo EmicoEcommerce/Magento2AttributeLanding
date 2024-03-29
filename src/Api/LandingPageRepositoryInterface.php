@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Api;
-
 
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;

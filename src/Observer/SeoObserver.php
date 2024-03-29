@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
@@ -50,7 +51,6 @@ class SeoObserver implements ObserverInterface
     /**
      * @var MagentoHttpRequest $request
      */
-
     protected MagentoHttpRequest $request;
 
     /**
@@ -146,6 +146,7 @@ class SeoObserver implements ObserverInterface
 
             return $this->storeManager->getStore()->getUrl($landingPage->getUrlPath(), $params);
         }
+
         return $this->storeManager->getStore()->getUrl('', ['_direct' => $landingPage->getUrlPath()]);
     }
 

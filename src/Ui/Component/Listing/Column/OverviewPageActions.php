@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Ui\Component\Listing\Column;
 
 use Magento\Framework\UrlInterface;
@@ -11,17 +10,18 @@ use Magento\Ui\Component\Listing\Columns\Column;
 
 class OverviewPageActions extends Column
 {
+    public const URL_PATH_DETAILS = 'emico_attributelanding/overviewpage/details';
 
-    const URL_PATH_DETAILS = 'emico_attributelanding/overviewpage/details';
     protected $urlBuilder;
-    const URL_PATH_EDIT = 'emico_attributelanding/overviewpage/edit';
-    const URL_PATH_DELETE = 'emico_attributelanding/overviewpage/delete';
+    private const URL_PATH_EDIT = 'emico_attributelanding/overviewpage/edit';
+    private const URL_PATH_DELETE = 'emico_attributelanding/overviewpage/delete';
 
     public StoreRepositoryInterface $storeRepository;
 
     /**
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
+     * @param StoreRepositoryInterface $storeRepository
      * @param UrlInterface $urlBuilder
      * @param array $components
      * @param array $data
@@ -44,6 +44,9 @@ class OverviewPageActions extends Column
      *
      * @param array $dataSource
      * @return array
+     *
+     * phpcs:disable Generic.Metrics.NestingLevel.TooHigh
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function prepareDataSource(array $dataSource)
     {

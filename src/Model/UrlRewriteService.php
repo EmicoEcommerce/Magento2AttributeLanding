@@ -17,10 +17,6 @@ use Magento\UrlRewrite\Model\UrlPersistInterface;
 use Magento\UrlRewrite\Service\V1\Data\UrlRewriteFactory;
 use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
 
-/**
- * Class UrlRewriteService
- * @package Emico\AttributeLanding\Model
- */
 class UrlRewriteService
 {
     /**
@@ -175,4 +171,3 @@ class UrlRewriteService
         return $landingPage->getStoreIds();
     }
 }
-

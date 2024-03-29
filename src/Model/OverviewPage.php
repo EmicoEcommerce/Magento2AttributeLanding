@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Model;
 
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
@@ -11,7 +10,6 @@ use Magento\Framework\Model\AbstractModel;
 
 class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRewriteGeneratorInterface
 {
-
     protected $_eventPrefix = 'emico_attributelanding_overviewpage';
 
     /**

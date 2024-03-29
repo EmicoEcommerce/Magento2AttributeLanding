@@ -9,7 +9,6 @@ use Magento\Backend\Model\View\Result\ForwardFactory;
 
 class NewAction extends Page
 {
-
     protected $resultForwardFactory;
 
     /**

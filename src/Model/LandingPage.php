@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Model;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
@@ -14,10 +13,14 @@ use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\Registry;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Serialize\SerializerInterface;
 
+/**
+ * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ */
 class LandingPage extends AbstractExtensibleModel implements LandingPageInterface, UrlRewriteGeneratorInterface
 {
-
     protected $_eventPrefix = 'emico_attributelanding_page';
 
     /**
@@ -26,13 +29,19 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     protected $config;
 
     /**
+     * @var SerializerInterface
+     */
+    private SerializerInterface $serializer;
+
+    /**
      * LandingPage constructor.
      * @param Context $context
      * @param Registry $registry
      * @param ExtensionAttributesFactory $extensionFactory
      * @param AttributeValueFactory $customAttributeFactory
      * @param Config $config
-     * @param AbstractResource $resource
+     * @param SerializerInterface $serializer
+     * @param AbstractResource|null $resource
      * @param AbstractDb|null $resourceCollection
      * @param array $data
      */
@@ -42,6 +51,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory,
         Config $config,
+        SerializerInterface $serializer,
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
         array $data = []
@@ -57,6 +67,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         );
 
         $this->config = $config;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -122,7 +133,8 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface $extensionAttributes
      * @return $this
      */
-    public function setExtensionAttributes(LandingPageExtensionInterface $extensionAttributes): LandingPageInterface {
+    public function setExtensionAttributes(LandingPageExtensionInterface $extensionAttributes): LandingPageInterface
+    {
         return $this->_setExtensionAttributes($extensionAttributes);
     }
 
@@ -140,7 +152,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param string $name
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setName( ?string $name): LandingPageInterface
+    public function setName(?string $name): LandingPageInterface
     {
         return $this->setData(self::NAME, $name);
     }
@@ -159,7 +171,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param string $urlPath
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setUrlPath( ?string $urlPath): LandingPageInterface
+    public function setUrlPath(?string $urlPath): LandingPageInterface
     {
         $urlPath = trim($urlPath, ' /');
         return $this->setData(self::URL_PATH, $urlPath);
@@ -179,7 +191,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param int $categoryId
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setCategoryId( ?int $categoryId): LandingPageInterface
+    public function setCategoryId(?int $categoryId): LandingPageInterface
     {
         return $this->setData(self::CATEGORY_ID, $categoryId);
     }
@@ -198,7 +210,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param string $heading
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setHeading( ?string $heading): LandingPageInterface
+    public function setHeading(?string $heading): LandingPageInterface
     {
         return $this->setData(self::HEADING, $heading);
     }
@@ -217,7 +229,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param string $headerImage
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setHeaderImage( ?string $headerImage): LandingPageInterface
+    public function setHeaderImage(?string $headerImage): LandingPageInterface
     {
         return $this->setData(self::HEADER_IMAGE, $headerImage);
     }
@@ -236,7 +248,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param string $metaTitle
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setMetaTitle( ?string $metaTitle): LandingPageInterface
+    public function setMetaTitle(?string $metaTitle): LandingPageInterface
     {
         return $this->setData(self::META_TITLE, $metaTitle);
     }
@@ -255,7 +267,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param string $metaKeywords
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setMetaKeywords( ?string $metaKeywords): LandingPageInterface
+    public function setMetaKeywords(?string $metaKeywords): LandingPageInterface
     {
         return $this->setData(self::META_KEYWORDS, $metaKeywords);
     }
@@ -274,7 +286,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param string $metaDescription
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setMetaDescription( ?string $metaDescription): LandingPageInterface
+    public function setMetaDescription(?string $metaDescription): LandingPageInterface
     {
         return $this->setData(self::META_DESCRIPTION, $metaDescription);
     }
@@ -293,7 +305,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param string $contentFirst
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setContentFirst( ?string $contentFirst): LandingPageInterface
+    public function setContentFirst(?string $contentFirst): LandingPageInterface
     {
         return $this->setData(self::CONTENT_FIRST, $contentFirst);
     }
@@ -312,7 +324,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param string $contentLast
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setContentLast( ?string $contentLast): LandingPageInterface
+    public function setContentLast(?string $contentLast): LandingPageInterface
     {
         return $this->setData(self::CONTENT_LAST, $contentLast);
     }
@@ -331,7 +343,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param string $filterAttributes
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setFilterAttributes( ?string $filterAttributes): LandingPageInterface
+    public function setFilterAttributes(?string $filterAttributes): LandingPageInterface
     {
         return $this->setData(self::FILTER_ATTRIBUTES, $filterAttributes);
     }
@@ -344,7 +356,8 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         if (null === $this->getFilterAttributes()) {
             return [];
         }
-        return unserialize($this->getFilterAttributes());
+
+        return $this->serializer->unserialize($this->getFilterAttributes());
     }
 
     /**
@@ -361,6 +374,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         foreach ($unserializedFilters as $unserializedFilter) {
             $filters[] = new Filter($unserializedFilter['attribute'], $unserializedFilter['value']);
         }
+
         return $filters;
     }
 
@@ -469,11 +483,12 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param int|null $overviewPageId
      * @return LandingPageInterface
      */
-    public function setOverviewPageId( ?string $overviewPageId): LandingPageInterface
+    public function setOverviewPageId(?string $overviewPageId): LandingPageInterface
     {
         if ($overviewPageId === '') {
             $overviewPageId = null;
         }
+
         return $this->setData(LandingPageInterface::OVERVIEW_PAGE_ID, $overviewPageId);
     }
 
@@ -489,13 +504,14 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param string|null $overviewPageImage
      * @return LandingPageInterface
      */
-    public function setOverviewPageImage( ?string $overviewPageImage): LandingPageInterface
+    public function setOverviewPageImage(?string $overviewPageImage): LandingPageInterface
     {
         return $this->setData(LandingPageInterface::OVERVIEW_PAGE_IMAGE, $overviewPageImage);
     }
 
     /**
      * @return bool
+     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
     public function getIsFilterLinkAllowed(): bool
     {
@@ -506,13 +522,14 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param bool $isFilterLinkAllowed
      * @return LandingPageInterface
      */
-    public function setIsFilterLinkAllowed( bool $isFilterLinkAllowed = true): LandingPageInterface
+    public function setIsFilterLinkAllowed(bool $isFilterLinkAllowed = true): LandingPageInterface
     {
         return $this->setData(LandingPageInterface::FILTER_LINK_ALLOWED, $isFilterLinkAllowed);
     }
 
     /**
      * @return bool
+     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
     public function getHideSelectedFilters(): bool
     {

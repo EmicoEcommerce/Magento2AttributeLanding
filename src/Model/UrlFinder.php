@@ -1,11 +1,11 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
  */
 
 namespace Emico\AttributeLanding\Model;
-
 
 use Emico\AttributeLanding\Api\Data\FilterInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
@@ -17,7 +17,7 @@ use Magento\Store\Model\StoreManager;
 
 class UrlFinder
 {
-    const CACHE_KEY = 'attributelanding.lookup.filter_url';
+    public const CACHE_KEY = 'attributelanding.lookup.filter_url';
 
     /**
      * @var LandingPageRepositoryInterface
@@ -111,6 +111,8 @@ class UrlFinder
      * @param array $filters
      * @param int|null $categoryId
      * @return string
+     *
+     * phpcs:disable Magento2.Security.InsecureFunction.FoundWithAlternative
      */
     protected function createHashForFilters(array $filters, int $categoryId = null): string
     {
@@ -119,7 +121,7 @@ class UrlFinder
         $hashParts = array_merge(
             ['category|' . $categoryId],
             array_map(
-                function(FilterInterface $filter) {
+                function (FilterInterface $filter) {
                     return strtolower($filter->getFacet() . '|' . $filter->getValue());
                 },
                 $filters
@@ -159,6 +161,7 @@ class UrlFinder
                 $landingPageLookup[$landingPageStore][$hash] = $landingPage->getUrlRewriteRequestPath();
             }
         }
+
         $this->cache->save($this->serializer->serialize($landingPageLookup), self::CACHE_KEY);
         return $landingPageLookup;
     }

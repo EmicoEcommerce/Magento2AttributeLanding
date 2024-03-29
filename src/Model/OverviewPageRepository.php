@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Model;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
@@ -74,7 +73,9 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param OverviewPageInterface $page
+     * @return OverviewPageInterface
+     * @throws CouldNotSaveException
      */
     public function save(OverviewPageInterface $page): OverviewPageInterface
     {
@@ -82,11 +83,14 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
             /** @var LandingPage $page */
             $this->resource->save($page);
         } catch (\Exception $exception) {
-            throw new CouldNotSaveException(__(
-                'Could not save the page: %1',
-                $exception->getMessage()
-            ));
+            throw new CouldNotSaveException(
+                __(
+                    'Could not save the page: %1',
+                    $exception->getMessage()
+                )
+            );
         }
+
         return $page;
     }
 
@@ -103,6 +107,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
         if (!$page->getPageId()) {
             throw new NoSuchEntityException(__('Page with id "%d" does not exist.', $pageId));
         }
+
         return $page;
     }
 
@@ -124,7 +129,9 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param OverviewPageInterface $page
+     * @return bool
+     * @throws CouldNotDeleteException
      */
     public function delete(OverviewPageInterface $page): bool
     {
@@ -132,11 +139,14 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
             /** @var LandingPage $page */
             $this->resource->delete($page);
         } catch (\Exception $exception) {
-            throw new CouldNotDeleteException(__(
-                'Could not delete the Page: %1',
-                $exception->getMessage()
-            ));
+            throw new CouldNotDeleteException(
+                __(
+                    'Could not delete the Page: %1',
+                    $exception->getMessage()
+                )
+            );
         }
+
         return true;
     }
 

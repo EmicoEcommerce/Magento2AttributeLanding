@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
@@ -79,6 +80,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
      * @param CollectionProcessorInterface $collectionProcessor
      * @param JoinProcessorInterface $extensionAttributesJoinProcessor
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param StoreManagerInterface $storeManager
      * @param Options $options
      */
     public function __construct(
@@ -104,7 +106,9 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param LandingPageInterface $page
+     * @return LandingPageInterface
+     * @throws CouldNotSaveException
      */
     public function save(LandingPageInterface $page): LandingPageInterface
     {
@@ -126,11 +130,14 @@ class LandingPageRepository implements LandingPageRepositoryInterface
             /** @var LandingPage $page */
             $this->resource->save($page);
         } catch (\Exception $exception) {
-            throw new CouldNotSaveException(__(
-                'Could not save the page: %1',
-                $exception->getMessage()
-            ));
+            throw new CouldNotSaveException(
+                __(
+                    'Could not save the page: %1',
+                    $exception->getMessage()
+                )
+            );
         }
+
         return $page;
     }
 
@@ -147,6 +154,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         if (!$page->getPageId()) {
             throw new NoSuchEntityException(__('Page with id "%d" does not exist.', $pageId));
         }
+
         return $page;
     }
 
@@ -173,7 +181,9 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param LandingPageInterface $page
+     * @return bool
+     * @throws CouldNotDeleteException
      */
     public function delete(LandingPageInterface $page): bool
     {
@@ -181,11 +191,14 @@ class LandingPageRepository implements LandingPageRepositoryInterface
             /** @var LandingPage $page */
             $this->resource->delete($page);
         } catch (\Exception $exception) {
-            throw new CouldNotDeleteException(__(
-                'Could not delete the Page: %1',
-                $exception->getMessage()
-            ));
+            throw new CouldNotDeleteException(
+                __(
+                    'Could not delete the Page: %1',
+                    $exception->getMessage()
+                )
+            );
         }
+
         return true;
     }
 

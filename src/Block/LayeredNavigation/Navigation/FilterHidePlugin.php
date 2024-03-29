@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
@@ -6,13 +7,11 @@
 
 namespace Emico\AttributeLanding\Block\LayeredNavigation\Navigation;
 
-
 use Emico\AttributeLanding\Model\FilterHider\FilterHiderInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Magento\LayeredNavigation\Block\Navigation;
 
 /**
- * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
 
@@ -41,8 +40,8 @@ class FilterHidePlugin
 
     /**
      * @param Navigation $subject
-     * @param $filters
-     * @return mixed
+     * @param array $filters
+     * @return array
      */
     public function afterGetFilters(Navigation $subject, array $filters)
     {

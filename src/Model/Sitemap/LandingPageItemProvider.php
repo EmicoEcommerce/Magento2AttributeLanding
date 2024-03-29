@@ -1,11 +1,11 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
  */
 
 namespace Emico\AttributeLanding\Model\Sitemap;
-
 
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Magento\Framework\App\ObjectManager;
@@ -59,13 +59,14 @@ class LandingPageItemProvider
         $landingPages = $this->landingPageRepository->findAllActive();
 
         foreach ($landingPages as $landingPage) {
-
-            yield $this->itemFactory->create([
+            yield $this->itemFactory->create(
+                [
                 'url' => $landingPage->getUrlRewriteRequestPath(),
                 'updatedAt' => $landingPage->getUpdatedAt(),
                 'priority' => $this->configReader->getPriority($storeId),
                 'changeFrequency' => $this->configReader->getChangeFrequency($storeId),
-            ]);
+                ]
+            );
         }
     }
 }
