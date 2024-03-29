@@ -1,7 +1,7 @@
 name: Testing Suite
 on: [push]
 jobs:
-  PHP:
+  linter:
     strategy:
       matrix:
         image: [
@@ -15,7 +15,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Testing Suite
         run: |
+          composer2 config http-basic.repo.magento.com ${{ secrets.MAGENTO_USERNAME }} ${{ secrets.MAGENTO_PASSWORD }}
           composer2 install --dev --prefer-dist --no-scripts --no-progress --optimize-autoloader --no-interaction -vvv
           composer2 show
-          composer2 exec -v grumphp run
+          vendor/bin/grumphp run --no-interaction
         shell: bash
