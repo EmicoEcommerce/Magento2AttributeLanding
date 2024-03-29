@@ -7,10 +7,8 @@ use Emico\AttributeLanding\Controller\Adminhtml\OverviewPage;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\ForwardFactory;
 
-
 class NewAction extends OverviewPage
 {
-
     protected $resultForwardFactory;
 
     /**

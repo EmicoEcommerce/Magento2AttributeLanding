@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
@@ -11,7 +12,6 @@ use Magento\Catalog\Model\Layer\Filter\Item;
 use Magento\Catalog\Model\Layer\Filter\FilterInterface;
 
 /**
- * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
 
@@ -24,8 +24,11 @@ class MagentoFilterHider implements FilterHiderInterface
      * @return bool
      * @todo Make implementation
      */
-    public function shouldHideFilter(LandingPageInterface $landingPage, FilterInterface $filter, Item $filterItem = null): bool
-    {
+    public function shouldHideFilter(
+        LandingPageInterface $landingPage,
+        FilterInterface $filter,
+        Item $filterItem = null
+    ): bool {
         return false;
     }
 }

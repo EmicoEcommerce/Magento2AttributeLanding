@@ -22,8 +22,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RegenerateUrlRewrites extends Command
 {
     private LandingPageRepositoryInterface $landingPageRepository;
+
     private SearchCriteriaBuilder $searchCriteriaBuilder;
+
     private UrlRewriteService $urlRewriteService;
+
     private OverviewPageRepositoryInterface $overviewPageRepository;
 
     public function __construct(
@@ -68,7 +71,7 @@ class RegenerateUrlRewrites extends Command
                     sprintf('Regenerating urls for %s (%s)', $page->getName(), $page->getId())
                 );
                 $this->urlRewriteService->generateRewrite($page);
-                $counter += 1;
+                $counter++;
             } catch (Exception $e) {
                 $output->writeln(
                     sprintf(

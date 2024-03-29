@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author : Edwin Jacobs, email: ejacobs@emico.nl.
  * @copyright : Copyright Emico B.V. 2019.
@@ -70,7 +71,9 @@ class View extends Action
         $this->landingPageContext->setOverviewPage($overviewPage);
 
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getLayout()->getUpdate()->addHandle('emico_attributelanding_overviewpage_view_' . $overviewPage->getName());
+        $resultPage->getLayout()
+            ->getUpdate()
+            ->addHandle('emico_attributelanding_overviewpage_view_' . $overviewPage->getName());
         return $resultPage;
     }
 }

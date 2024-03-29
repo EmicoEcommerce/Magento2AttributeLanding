@@ -6,7 +6,6 @@
 
 namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
-
 use Emico\AttributeLanding\Model\Page\ImageUploader;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\Json;

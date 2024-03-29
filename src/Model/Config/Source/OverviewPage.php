@@ -1,11 +1,11 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
  */
 
 namespace Emico\AttributeLanding\Model\Config\Source;
-
 
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\OverviewPageRepositoryInterface;
@@ -19,6 +19,7 @@ class OverviewPage implements ArrayInterface
      * @var OverviewPageRepositoryInterface
      */
     private $overviewPageRepository;
+
     /**
      * @var SearchCriteriaBuilder
      */
@@ -29,8 +30,10 @@ class OverviewPage implements ArrayInterface
      * @param OverviewPageRepositoryInterface $overviewPageRepository
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      */
-    public function __construct(OverviewPageRepositoryInterface $overviewPageRepository, SearchCriteriaBuilder $searchCriteriaBuilder)
-    {
+    public function __construct(
+        OverviewPageRepositoryInterface $overviewPageRepository,
+        SearchCriteriaBuilder $searchCriteriaBuilder
+    ) {
         $this->overviewPageRepository = $overviewPageRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
@@ -57,6 +60,7 @@ class OverviewPage implements ArrayInterface
                 'label' => $overviewPage->getName()
             ];
         }
+
         return $options;
     }
 }

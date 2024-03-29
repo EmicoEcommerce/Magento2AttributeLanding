@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
@@ -13,29 +14,29 @@ interface LandingPageInterface extends ExtensibleDataInterface
     /**
      * Field constants
      */
-    const META_TITLE = 'meta_title';
-    const CONTENT_LAST = 'content_last';
-    const ACTIVE = 'active';
-    const HEADING = 'heading';
-    const CONTENT_FIRST = 'content_first';
-    const FILTER_ATTRIBUTES = 'filter_attributes';
-    const NAME = 'name';
-    const URL_PATH = 'url_path';
-    const META_KEYWORDS = 'meta_keywords';
-    const TWEAKWISE_FILTER_TEMPLATE = 'tweakwise_filter_template';
-    const TWEAKWISE_SORT_TEMPLATE = 'tweakwise_sort_template';
-    const HEADER_IMAGE = 'header_image';
-    const CATEGORY_ID = 'category_id';
-    const PAGE_ID = 'page_id';
-    const META_DESCRIPTION = 'meta_description';
-    const STORE_IDS = 'store_ids';
-    const OVERVIEW_PAGE_ID = 'overview_page_id';
-    const OVERVIEW_PAGE_IMAGE = 'overview_page_image';
-    const FILTER_LINK_ALLOWED = 'is_filter_link_allowed';
-    const HIDE_SELECTED_FILTERS = 'hide_selected_filters';
-    const CANONICAL_URL = 'canonical_url';
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
+    public const META_TITLE = 'meta_title';
+    public const CONTENT_LAST = 'content_last';
+    public const ACTIVE = 'active';
+    public const HEADING = 'heading';
+    public const CONTENT_FIRST = 'content_first';
+    public const FILTER_ATTRIBUTES = 'filter_attributes';
+    public const NAME = 'name';
+    public const URL_PATH = 'url_path';
+    public const META_KEYWORDS = 'meta_keywords';
+    public const TWEAKWISE_FILTER_TEMPLATE = 'tweakwise_filter_template';
+    public const TWEAKWISE_SORT_TEMPLATE = 'tweakwise_sort_template';
+    public const HEADER_IMAGE = 'header_image';
+    public const CATEGORY_ID = 'category_id';
+    public const PAGE_ID = 'page_id';
+    public const META_DESCRIPTION = 'meta_description';
+    public const STORE_IDS = 'store_ids';
+    public const OVERVIEW_PAGE_ID = 'overview_page_id';
+    public const OVERVIEW_PAGE_IMAGE = 'overview_page_image';
+    public const FILTER_LINK_ALLOWED = 'is_filter_link_allowed';
+    public const HIDE_SELECTED_FILTERS = 'hide_selected_filters';
+    public const CANONICAL_URL = 'canonical_url';
+    public const CREATED_AT = 'created_at';
+    public const UPDATED_AT = 'updated_at';
 
     /**
      * Set an extension attributes object.
@@ -151,7 +152,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @param string $filterAttributes
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setFilterAttributes( ?string $filterAttributes): LandingPageInterface;
+    public function setFilterAttributes(?string $filterAttributes): LandingPageInterface;
 
     /**
      * @return \Emico\AttributeLanding\Api\Data\FilterInterface[]
@@ -175,11 +176,13 @@ interface LandingPageInterface extends ExtensibleDataInterface
 
     /**
      * @return bool
+     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
     public function getIsFilterLinkAllowed(): bool;
 
     /**
      * @return bool
+     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
     public function getHideSelectedFilters(): bool;
 
@@ -197,7 +200,6 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return string
      */
     public function getUpdatedAt(): string;
-
 
     /**
      * @param string|null $pageId
@@ -221,7 +223,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @param int|null $categoryId
      * @return LandingPageInterface
      */
-    public function setCategoryId( ?int $categoryId): LandingPageInterface;
+    public function setCategoryId(?int $categoryId): LandingPageInterface;
 
     /**
      * @param string|null $heading

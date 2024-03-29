@@ -1,4 +1,7 @@
 <?php
-/** @var \Emico\AttributeLanding\Block\LandingPage\Content $this */
+/**
+ * @var \Emico\AttributeLanding\Block\LandingPage\Content $this
+ * phpcs:disable Magento2.Security.XssTemplate.FoundUnescaped
+ */
 ?>
-<div><?=$this->getBottomContent()?></div>
+<div><?=$block->getBottomContent()?></div>

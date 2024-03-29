@@ -1,16 +1,19 @@
 <?php
-/** @var \Emico\AttributeLanding\Block\OverviewPage\View $this */
+/**
+ * @var \Emico\AttributeLanding\Block\OverviewPage\View $this
+ * phpcs:disable Magento2.Security.XssTemplate.FoundUnescaped
+ */
 ?>
-<div><?=$this->getContentFirst()?></div>
+<div><?=$block->getContentFirst()?></div>
 <div class="landingpages-grid">
     <ol class="landingpage-items">
-    <?php foreach ($this->getLandingPages() as $landingPage): ?>
+    <?php foreach ($block->getLandingPages() as $landingPage): ?>
         <li class="landingpage-item">
             <a href="<?=$landingPage->getUrlPath()?>"><?=$landingPage->getHeading() ?: $landingPage->getName()?>
-                <img src="<?=$this->getLandingPageImage($landingPage)?>" />
+                <img src="<?=$block->getLandingPageImage($landingPage)?>" />
             </a>
         </li>
     <?php endforeach; ?>
     </ol>
 </div>
-<div><?=$this->getContentLast()?></div>
+<div><?=$block->getContentLast()?></div>

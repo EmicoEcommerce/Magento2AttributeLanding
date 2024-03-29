@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Model\OverviewPage;
 
 use Emico\AttributeLanding\Model\OverviewPage;
@@ -60,11 +59,13 @@ class DataProvider extends AbstractDataProvider
         if (isset($this->loadedData)) {
             return $this->loadedData;
         }
+
         $items = $this->collection->getItems();
         foreach ($items as $model) {
             /** @var OverviewPage $model */
             $this->loadedData[$model->getPageId()] = $model->getData();
         }
+
         $data = $this->dataPersistor->get('emico_attributelanding_overviewpage');
         
         if (!empty($data)) {

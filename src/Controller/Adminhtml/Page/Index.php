@@ -10,7 +10,6 @@ use Magento\Framework\View\Result\PageFactory;
 
 class Index extends Page
 {
-
     protected $resultPageFactory;
 
     /**

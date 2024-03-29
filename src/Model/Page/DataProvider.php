@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
@@ -33,7 +34,6 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
      * @var ImageUploader
      */
     private $imageUploader;
-
 
     /**
      * Constructor
@@ -73,6 +73,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         if ($this->loadedData !== null) {
             return $this->loadedData;
         }
+
         $items = $this->collection->getItems();
         foreach ($items as $model) {
             /** @var LandingPage $model */
@@ -86,10 +87,12 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                     ]
                 ];
             }
+
             $modelData[LandingPageInterface::FILTER_ATTRIBUTES] = $model->getUnserializedFilterAttributes();
 
             $this->loadedData[$model->getPageId()] = $modelData;
         }
+
         $data = $this->dataPersistor->get('emico_attributelanding_page');
         
         if (!empty($data)) {
