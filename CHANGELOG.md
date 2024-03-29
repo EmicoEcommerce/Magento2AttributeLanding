@@ -1,3 +1,15 @@
+# [5.0.0-beta.1](https://github.com/EmicoEcommerce/Magento2AttributeLanding/compare/v4.1.5-beta.1...v5.0.0-beta.1) (2024-03-29)
+
+
+### Bug Fixes
+
+* Applied phpcs and phpmd rules ([cb09c7b](https://github.com/EmicoEcommerce/Magento2AttributeLanding/commit/cb09c7ba54b712035615eaed91be050259ef293b))
+
+
+### BREAKING CHANGES
+
+* Code is refactored based on phpcs and phpmd rules.
+
 ## [4.1.5-beta.1](https://github.com/EmicoEcommerce/Magento2AttributeLanding/compare/v4.1.4...v4.1.5-beta.1) (2024-03-29)
 
 
