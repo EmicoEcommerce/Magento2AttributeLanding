@@ -14,7 +14,6 @@ use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Serialize\SerializerInterface;
 
 class Save extends Action
 {
@@ -39,17 +38,11 @@ class Save extends Action
     private $landingPageFactory;
 
     /**
-     * @var SerializerInterface
-     */
-    private SerializerInterface $serializer;
-
-    /**
      * @param Context $context
      * @param DataPersistorInterface $dataPersistor
      * @param DataObjectHelper $dataObjectHelper
      * @param LandingPageRepositoryInterface $landingPageRepository
      * @param LandingPageInterfaceFactory $landingPageFactory
-     * @param SerializerInterface $serializer
      */
     public function __construct(
         Context $context,
@@ -57,14 +50,12 @@ class Save extends Action
         DataObjectHelper $dataObjectHelper,
         LandingPageRepositoryInterface $landingPageRepository,
         LandingPageInterfaceFactory $landingPageFactory,
-        SerializerInterface $serializer
     ) {
         $this->dataPersistor = $dataPersistor;
         parent::__construct($context);
         $this->landingPageRepository = $landingPageRepository;
         $this->dataObjectHelper = $dataObjectHelper;
         $this->landingPageFactory = $landingPageFactory;
-        $this->serializer = $serializer;
     }
 
     /**
@@ -120,6 +111,7 @@ class Save extends Action
     /**
      * @param LandingPageInterface $landingPage
      * @param array $data
+     * phpcs:disable Magento2.Security.InsecureFunction.FoundWithAlternative
      */
     protected function hydrateLandingPage(LandingPageInterface $landingPage, array $data)
     {
@@ -132,7 +124,7 @@ class Save extends Action
         }
         $filterAttributes = $data[LandingPageInterface::FILTER_ATTRIBUTES] ?? [];
         $filterAttributes = $this->sanitizeFilterAttributes($filterAttributes);
-        $landingPage->setFilterAttributes($this->serializer->serialize($filterAttributes));
+        $landingPage->setFilterAttributes(serialize($filterAttributes));
 
         if (empty($data[LandingPageInterface::OVERVIEW_PAGE_ID])) {
             $data[LandingPageInterface::OVERVIEW_PAGE_ID] = null;
