@@ -13,7 +13,6 @@ use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\Registry;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
-use Magento\Framework\Serialize\SerializerInterface;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
@@ -29,18 +28,12 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     protected $config;
 
     /**
-     * @var SerializerInterface
-     */
-    private SerializerInterface $serializer;
-
-    /**
      * LandingPage constructor.
      * @param Context $context
      * @param Registry $registry
      * @param ExtensionAttributesFactory $extensionFactory
      * @param AttributeValueFactory $customAttributeFactory
      * @param Config $config
-     * @param SerializerInterface $serializer
      * @param AbstractResource|null $resource
      * @param AbstractDb|null $resourceCollection
      * @param array $data
@@ -51,7 +44,6 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory,
         Config $config,
-        SerializerInterface $serializer,
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
         array $data = []
@@ -67,7 +59,6 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         );
 
         $this->config = $config;
-        $this->serializer = $serializer;
     }
 
     /**
@@ -350,6 +341,8 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * @return mixed
+     *
+     * phpcs:disable Magento2.Security.InsecureFunction.FoundWithAlternative
      */
     public function getUnserializedFilterAttributes(): array
     {
@@ -357,7 +350,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             return [];
         }
 
-        return $this->serializer->unserialize($this->getFilterAttributes());
+        return unserialize($this->getFilterAttributes());
     }
 
     /**
