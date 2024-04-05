@@ -1,3 +1,10 @@
+# [5.0.0-beta.2](https://github.com/EmicoEcommerce/Magento2AttributeLanding/compare/v5.0.0-beta.1...v5.0.0-beta.2) (2024-04-05)
+
+
+### Bug Fixes
+
+* Fixed serialize issue ([615d4e0](https://github.com/EmicoEcommerce/Magento2AttributeLanding/commit/615d4e00288a005a979928a967cf294f9fec3609))
+
 # [5.0.0-beta.1](https://github.com/EmicoEcommerce/Magento2AttributeLanding/compare/v4.1.5-beta.1...v5.0.0-beta.1) (2024-03-29)
 
 
