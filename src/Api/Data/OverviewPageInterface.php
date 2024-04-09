@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
@@ -11,20 +12,20 @@ interface OverviewPageInterface
     /**
      * Field constants
      */
-    const META_TITLE = 'meta_title';
-    const ACTIVE = 'active';
-    const HEADING = 'heading';
-    const CONTENT_FIRST = 'content_first';
-    const CONTENT_LAST = 'content_last';
-    const NAME = 'name';
-    const URL_PATH = 'url_path';
-    const META_KEYWORDS = 'meta_keywords';
-    const CATEGORY_ID = 'category_id';
-    const PAGE_ID = 'page_id';
-    const META_DESCRIPTION = 'meta_description';
-    const STORE_IDS = 'store_ids';
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
+    public const META_TITLE = 'meta_title';
+    public const ACTIVE = 'active';
+    public const HEADING = 'heading';
+    public const CONTENT_FIRST = 'content_first';
+    public const CONTENT_LAST = 'content_last';
+    public const NAME = 'name';
+    public const URL_PATH = 'url_path';
+    public const META_KEYWORDS = 'meta_keywords';
+    public const CATEGORY_ID = 'category_id';
+    public const PAGE_ID = 'page_id';
+    public const META_DESCRIPTION = 'meta_description';
+    public const STORE_IDS = 'store_ids';
+    public const CREATED_AT = 'created_at';
+    public const UPDATED_AT = 'updated_at';
 
     /**
      * Get page_id

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
 
 namespace Emico\AttributeLanding\Model\Page;
-
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Exception;
@@ -22,7 +22,7 @@ use Psr\Log\LoggerInterface;
 
 class ImageUploader
 {
-    const MEDIA_PATH_OVERVIEW = 'attributelanding/overview';
+    private const MEDIA_PATH_OVERVIEW = 'attributelanding/overview';
 
     /**
      * @var StoreManager

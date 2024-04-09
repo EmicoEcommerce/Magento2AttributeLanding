@@ -1,4 +1,5 @@
 <?php
+
 namespace Emico\AttributeLanding\Ui\Component\Product\Form\Categories;
 
 use Magento\Framework\Data\OptionSourceInterface;

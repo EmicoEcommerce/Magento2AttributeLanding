@@ -18,7 +18,6 @@ use Emico\AttributeLanding\Model\UrlRewriteService;
  * Update landing page url rewrites if category url suffix changes
  *
  * Class CategoryUrlSuffixObserver
- * @package Emico\AttributeLanding\Observer
  */
 class CategoryUrlSuffixObserver implements ObserverInterface
 {

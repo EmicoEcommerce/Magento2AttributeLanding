@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
@@ -29,9 +30,9 @@ class Config
     }
 
     /**
-     * @param Store|null $store
      * @param string $path
-     * @return mixed|null|string
+     * @param Store|null $store
+     * @return mixed|string|null
      */
     protected function getStoreConfig(string $path, Store $store = null)
     {
@@ -75,6 +76,10 @@ class Config
      */
     public function isCanonicalSelfReferencingEnabled(Store $store = null): bool
     {
-        return (bool) $this->config->isSetFlag('emico_attributelanding/general/canonical_self_referencing', ScopeInterface::SCOPE_STORE, $store);
+        return (bool) $this->config->isSetFlag(
+            'emico_attributelanding/general/canonical_self_referencing',
+            ScopeInterface::SCOPE_STORE,
+            $store
+        );
     }
 }

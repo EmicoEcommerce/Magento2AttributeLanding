@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
@@ -11,6 +12,7 @@ use Emico\AttributeLanding\Model\FilterHider\FilterHiderInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Magento\Catalog\Model\Layer\Filter\Item;
 use Magento\Catalog\Model\Layer\State;
+use Magento\Framework\Exception\LocalizedException;
 
 class Plugin
 {
@@ -37,8 +39,9 @@ class Plugin
 
     /**
      * @param State $subject
-     * @param $result
+     * @param Item[] $result
      * @return mixed
+     * @throws LocalizedException
      */
     public function afterGetFilters(State $subject, $result)
     {

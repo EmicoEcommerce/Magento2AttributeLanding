@@ -26,6 +26,7 @@ class Save extends Action
      * @var LandingPageRepositoryInterface
      */
     private $landingPageRepository;
+
     /**
      * @var DataObjectHelper
      */
@@ -48,7 +49,7 @@ class Save extends Action
         DataPersistorInterface $dataPersistor,
         DataObjectHelper $dataObjectHelper,
         LandingPageRepositoryInterface $landingPageRepository,
-        LandingPageInterfaceFactory $landingPageFactory
+        LandingPageInterfaceFactory $landingPageFactory,
     ) {
         $this->dataPersistor = $dataPersistor;
         parent::__construct($context);
@@ -110,6 +111,7 @@ class Save extends Action
     /**
      * @param LandingPageInterface $landingPage
      * @param array $data
+     * phpcs:disable Magento2.Security.InsecureFunction.FoundWithAlternative
      */
     protected function hydrateLandingPage(LandingPageInterface $landingPage, array $data)
     {

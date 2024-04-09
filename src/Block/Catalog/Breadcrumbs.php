@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
@@ -17,6 +18,7 @@ use Emico\AttributeLanding\Api\OverviewPageRepositoryInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Magento\Catalog\Block\Breadcrumbs as CatalogBreadcrumbs;
 use Magento\Catalog\Helper\Data;
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Template\Context;
 
 class Breadcrumbs extends CatalogBreadcrumbs
@@ -32,15 +34,16 @@ class Breadcrumbs extends CatalogBreadcrumbs
     private $overviewPageRepository;
 
     /**
-     * @var \Magento\Framework\UrlInterface
+     * @var UrlInterface
      */
-    private \Magento\Framework\UrlInterface $urlInterface;
+    private UrlInterface $urlInterface;
 
     /**
      * @param Context $context
      * @param Data $catalogData
      * @param LandingPageContext $landingPageContext
      * @param OverviewPageRepositoryInterface $overviewPageRepository
+     * @param UrlInterface $urlInterface
      * @param array $data
      */
     public function __construct(
@@ -48,7 +51,7 @@ class Breadcrumbs extends CatalogBreadcrumbs
         Data $catalogData,
         LandingPageContext $landingPageContext,
         OverviewPageRepositoryInterface $overviewPageRepository,
-        \Magento\Framework\UrlInterface $urlInterface,
+        UrlInterface $urlInterface,
         array $data = []
     ) {
         parent::__construct($context, $catalogData, $data);
@@ -103,7 +106,7 @@ class Breadcrumbs extends CatalogBreadcrumbs
                 [
                     'label' => __($overviewPage->getName()),
                     'title' => __($overviewPage->getName()),
-                    'link' => $this->urlInterface->getUrl( $overviewPage->getUrlPath() )
+                    'link' => $this->urlInterface->getUrl($overviewPage->getUrlPath())
                 ]
             );
         }

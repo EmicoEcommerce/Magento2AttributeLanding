@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author : Edwin Jacobs, email: ejacobs@emico.nl.
  * @copyright : Copyright Emico B.V. 2019.
@@ -112,6 +113,7 @@ class View extends Action
         if (!$categoryId) {
             return;
         }
+
         $category = $this->categoryRepository->get($categoryId);
         $this->coreRegistry->register('current_category', $category);
     }

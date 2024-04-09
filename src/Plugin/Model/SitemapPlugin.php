@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
@@ -47,19 +48,25 @@ class SitemapPlugin
         $sitemapPages = [];
         foreach ($this->landingPageRepository->findAllActive() as $landingPage) {
             $id = 'landingpage' . $landingPage->getPageId();
-            $page = new DataObject([
+            $page = new DataObject(
+                [
                 'id' => $id,
                 'url' => $landingPage->getUrlPath(),
                 'updated_at' => $landingPage->getUpdatedAt()
-            ]);
+                ]
+            );
 
             $sitemapPages[$id] = $page;
         }
 
-        $subject->addSitemapItem(new DataObject([
-            'changefreq' => $this->helper->getCategoryChangefreq($storeId),
-            'priority' => $this->helper->getCategoryPriority($storeId),
-            'collection' => $sitemapPages,
-        ]));
+        $subject->addSitemapItem(
+            new DataObject(
+                [
+                'changefreq' => $this->helper->getCategoryChangefreq($storeId),
+                'priority' => $this->helper->getCategoryPriority($storeId),
+                'collection' => $sitemapPages,
+                ]
+            )
+        );
     }
 }
