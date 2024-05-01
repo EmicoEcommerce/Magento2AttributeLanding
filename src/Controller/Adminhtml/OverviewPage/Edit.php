@@ -79,7 +79,9 @@ class Edit extends OverviewPage
             $id ? __('Edit overview page') : __('New overview page')
         );
 
-        $resultPage->getConfig()->getTitle()->prepend($id ? __('Edit overview page %1', $landingPage->getPageId()) : __('New overview page'));
+        $resultPage->getConfig()->getTitle()->prepend($id ? __(
+            'Edit overview page %1', $landingPage->getPageId()) : __('New overview page')
+        );
 
         return $resultPage;
     }

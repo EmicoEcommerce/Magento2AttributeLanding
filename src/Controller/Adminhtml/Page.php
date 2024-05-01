@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Controller\Adminhtml;
 
 use Magento\Backend\App\Action;

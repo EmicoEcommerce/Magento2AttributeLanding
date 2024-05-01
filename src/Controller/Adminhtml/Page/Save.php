@@ -153,6 +153,7 @@ class Save extends Action
 
             $sanitizedAttributes[] = $filterAttribute;
         }
+        
         return $sanitizedAttributes;
     }
 }
