@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
 use Emico\AttributeLanding\Controller\Adminhtml\Page;

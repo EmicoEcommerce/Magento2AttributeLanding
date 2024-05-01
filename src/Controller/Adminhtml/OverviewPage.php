@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Controller\Adminhtml;
 
 use Magento\Backend\App\Action;
@@ -9,10 +8,12 @@ use Magento\Backend\Model\View\Result\Page;
 
 abstract class OverviewPage extends Action
 {
-    const ADMIN_MENU_RESOURCE = 'Emico_AttributeLanding::overviewpage_management';
+    public const ADMIN_MENU_RESOURCE = 'Emico_AttributeLanding::overviewpage_management';
 
     /**
      * @param Context $context
+     *
+     * phpcs:disable Generic.CodeAnalysis.UselessOverridingMethod.Found
      */
     public function __construct(
         Context $context

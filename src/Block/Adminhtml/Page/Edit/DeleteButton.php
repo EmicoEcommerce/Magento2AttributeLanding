@@ -1,11 +1,11 @@
 <?php
+
 namespace Emico\AttributeLanding\Block\Adminhtml\Page\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 class DeleteButton extends GenericButton implements ButtonProviderInterface
 {
-
     /**
      * @return array
      */
@@ -22,6 +22,7 @@ class DeleteButton extends GenericButton implements ButtonProviderInterface
                 'sort_order' => 20,
             ];
         }
+
         return $data;
     }
 

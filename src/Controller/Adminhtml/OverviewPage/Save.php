@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Controller\Adminhtml\OverviewPage;
 
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
