@@ -12,6 +12,8 @@ abstract class OverviewPage extends Action
 
     /**
      * @param Context $context
+     *
+     * phpcs:disable Generic.CodeAnalysis.UselessOverridingMethod.Found
      */
     public function __construct(
         Context $context

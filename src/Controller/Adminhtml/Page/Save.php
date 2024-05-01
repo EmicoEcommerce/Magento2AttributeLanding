@@ -118,10 +118,12 @@ class Save extends Action
         if (!isset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE])) {
             $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] = null;
         } elseif (isset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['file'])) {
-            $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] = $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['file'];
+            $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] =
+                $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['file'];
         } else {
             unset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE]);
         }
+
         $filterAttributes = $data[LandingPageInterface::FILTER_ATTRIBUTES] ?? [];
         $filterAttributes = $this->sanitizeFilterAttributes($filterAttributes);
         $landingPage->setFilterAttributes(serialize($filterAttributes));

@@ -7,7 +7,7 @@ use Magento\Backend\App\Action;
 
 abstract class Page extends Action
 {
-    const ADMIN_MENU_RESOURCE = 'Emico_AttributeLanding::page_management';
+    public const ADMIN_MENU_RESOURCE = 'Emico_AttributeLanding::page_management';
 
     /**
      * Init page
