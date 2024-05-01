@@ -2,7 +2,7 @@
     "name": "emico/m2-attributelanding",
     "description": "Attribute landing pages for Magento 2",
     "require": {
-        "php": ">=8.0 <8.3",
+        "php": "^8.0",
         "magento/module-sitemap": "^100.2||^100.4",
         "magento/module-catalog": "^102.0||^103.0||^104.0"
     },

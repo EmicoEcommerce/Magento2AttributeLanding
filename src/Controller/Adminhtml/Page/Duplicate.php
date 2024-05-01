@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
@@ -78,7 +77,6 @@ class Duplicate extends Page
             $this->messageManager->addNoticeMessage('Your page has been duplicated');
             $this->messageManager->addWarningMessage('Do not forget to change the URL path');
             return $resultRedirect->setPath('*/*/edit', ['page_id' => $newLandingPage->getId()]);
-
         } catch (NoSuchEntityException $exception) {
             $this->messageManager->addErrorMessage(__('This Page no longer exists.'));
 

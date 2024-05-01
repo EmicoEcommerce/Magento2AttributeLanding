@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterfaceFactory;
@@ -81,7 +80,9 @@ class Edit extends Page
             $id ? __('Edit page') : __('New page')
         );
 
-        $resultPage->getConfig()->getTitle()->prepend($id ? __('Edit page %1', $landingPage->getPageId()) : __('New page'));
+        $resultPage->getConfig()->getTitle()->prepend(
+            $id ? __('Edit page %1', $landingPage->getPageId()) : __('New page')
+        );
 
         return $resultPage;
     }

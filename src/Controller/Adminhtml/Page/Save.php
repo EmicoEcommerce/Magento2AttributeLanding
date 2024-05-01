@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
@@ -111,6 +110,7 @@ class Save extends Action
     /**
      * @param LandingPageInterface $landingPage
      * @param array $data
+     *
      * phpcs:disable Magento2.Security.InsecureFunction.FoundWithAlternative
      */
     protected function hydrateLandingPage(LandingPageInterface $landingPage, array $data)
@@ -118,10 +118,12 @@ class Save extends Action
         if (!isset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE])) {
             $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] = null;
         } elseif (isset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['file'])) {
-            $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] = $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['file'];
+            $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] =
+                $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['file'];
         } else {
             unset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE]);
         }
+
         $filterAttributes = $data[LandingPageInterface::FILTER_ATTRIBUTES] ?? [];
         $filterAttributes = $this->sanitizeFilterAttributes($filterAttributes);
         $landingPage->setFilterAttributes(serialize($filterAttributes));
@@ -148,8 +150,10 @@ class Save extends Action
                     unset($filterAttribute[$field]);
                 }
             }
+
             $sanitizedAttributes[] = $filterAttribute;
         }
+
         return $sanitizedAttributes;
     }
 }

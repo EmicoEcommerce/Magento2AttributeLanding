@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Block\Adminhtml\OverviewPage\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
