@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
@@ -22,7 +23,6 @@ class UploadImage extends \Magento\Backend\App\Action
     /**
      * UploadImage constructor.
      * @param Context $context
-     * @param LoggerInterface $logger
      * @param ImageUploader $imageUploader
      */
     public function __construct(

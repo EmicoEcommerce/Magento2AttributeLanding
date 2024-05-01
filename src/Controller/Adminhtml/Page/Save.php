@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
@@ -111,6 +110,7 @@ class Save extends Action
     /**
      * @param LandingPageInterface $landingPage
      * @param array $data
+     *
      * phpcs:disable Magento2.Security.InsecureFunction.FoundWithAlternative
      */
     protected function hydrateLandingPage(LandingPageInterface $landingPage, array $data)
@@ -148,6 +148,7 @@ class Save extends Action
                     unset($filterAttribute[$field]);
                 }
             }
+
             $sanitizedAttributes[] = $filterAttribute;
         }
         return $sanitizedAttributes;
