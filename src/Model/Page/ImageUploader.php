@@ -22,7 +22,7 @@ use Psr\Log\LoggerInterface;
 
 class ImageUploader
 {
-    private const MEDIA_PATH_OVERVIEW = 'attributelanding/overview';
+    public const MEDIA_PATH_OVERVIEW = 'attributelanding/overview';
 
     /**
      * @var StoreManager
