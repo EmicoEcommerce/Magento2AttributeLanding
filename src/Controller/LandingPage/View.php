@@ -18,6 +18,7 @@ use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Result\PageFactory;
+use Magento\Store\Model\StoreManagerInterface;
 
 class View extends Action
 {
@@ -69,7 +70,8 @@ class View extends Action
         Registry $registry,
         LandingPageRepositoryInterface $landingPageRepository,
         CategoryRepositoryInterface $categoryRepository,
-        FilterApplierInterface $filterApplier
+        FilterApplierInterface $filterApplier,
+        private readonly StoreManagerInterface $storeManager
     ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->coreRegistry = $registry;
@@ -95,6 +97,13 @@ class View extends Action
 
         if (!$landingPage->isActive()) {
             throw new NotFoundException(__('Page not active'));
+        }
+
+        $storeId = $this->storeManager->getStore()->getId();
+        $landingPageStoreIds = $landingPage->getStoreIds();
+
+        if ((!in_array($storeId, $landingPage->getStoreIds())) && (!in_array(0, $landingPage->getStoreIds()))) {
+            throw new NotFoundException(__('Page not active for this store'));
         }
 
         $this->landingPageContext->setLandingPage($landingPage);
