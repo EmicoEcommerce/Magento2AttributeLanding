@@ -53,11 +53,6 @@ class View extends Action
     private $landingPageContext;
 
     /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
      * Constructor
      *
      * @param Context $context
@@ -76,14 +71,13 @@ class View extends Action
         LandingPageRepositoryInterface $landingPageRepository,
         CategoryRepositoryInterface $categoryRepository,
         FilterApplierInterface $filterApplier,
-        StoreManagerInterface $storeManager
+        private readonly StoreManagerInterface $storeManager
     ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->coreRegistry = $registry;
         $this->landingPageRepository = $landingPageRepository;
         $this->categoryRepository = $categoryRepository;
         $this->filterApplier = $filterApplier;
-        $this->storeManager = $storeManager;
         parent::__construct($context);
         $this->landingPageContext = $landingPageContext;
     }
