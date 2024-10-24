@@ -109,6 +109,7 @@ class View extends Action
         $this->landingPageContext->setLandingPage($landingPage);
         $this->setCategoryInRegistry($landingPage);
         $this->filterApplier->applyFilters($landingPage);
+        $this->setFiltersInRegistry($landingPage->getFilters(), $pageId);
         return $this->resultPageFactory->create();
     }
 
@@ -125,5 +126,10 @@ class View extends Action
 
         $category = $this->categoryRepository->get($categoryId);
         $this->coreRegistry->register('current_category', $category);
+    }
+
+    protected function setFiltersInRegistry(array $filters, $pageId)
+    {
+        $this->coreRegistry->register('alp_filters' . $pageId, $filters);
     }
 }
