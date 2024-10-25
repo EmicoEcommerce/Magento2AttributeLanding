@@ -109,7 +109,7 @@ class View extends Action
         $this->landingPageContext->setLandingPage($landingPage);
         $this->setCategoryInRegistry($landingPage);
         $this->filterApplier->applyFilters($landingPage);
-        $this->setFiltersInRegistry($landingPage->getFilters(), $pageId);
+        $this->setFiltersInRegistry($landingPage->getFilters(), (int) $pageId);
         return $this->resultPageFactory->create();
     }
 
@@ -128,8 +128,13 @@ class View extends Action
         $this->coreRegistry->register('current_category', $category);
     }
 
-    protected function setFiltersInRegistry(array $filters, $pageId)
+    /**
+     * @param array $filters
+     * @param int $pageId
+     * @return void
+     */
+    protected function setFiltersInRegistry(array $filters, int $pageId): void
     {
-        $this->coreRegistry->register('alp_filters' . $pageId, $filters);
+        $this->coreRegistry->register(sprintf('alp_filters_%s', $pageId), $filters);
     }
 }
