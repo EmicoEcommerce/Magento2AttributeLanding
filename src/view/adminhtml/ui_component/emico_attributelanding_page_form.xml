@@ -359,7 +359,7 @@
 						</item>
 						<item name="files_browser_window_url" xsi:type="boolean">false</item>
 						<item name="height" xsi:type="string">100px</item>
-						<item name="toggle_button" xsi:type="boolean">false</item>
+						<item name="toggle_button" xsi:type="boolean">true</item>
 						<item name="add_variables" xsi:type="boolean">false</item>
 						<item name="add_directives" xsi:type="boolean">true</item>
 						<item name="pagebuilder_button" xsi:type="boolean">true</item>
@@ -396,7 +396,7 @@
 						</item>
 						<item name="files_browser_window_url" xsi:type="boolean">false</item>
 						<item name="height" xsi:type="string">100px</item>
-						<item name="toggle_button" xsi:type="boolean">false</item>
+						<item name="toggle_button" xsi:type="boolean">true</item>
 						<item name="add_variables" xsi:type="boolean">false</item>
 						<item name="add_directives" xsi:type="boolean">true</item>
 						<item name="pagebuilder_button" xsi:type="boolean">true</item>
