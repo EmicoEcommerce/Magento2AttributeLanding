@@ -410,6 +410,25 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
+     * Get tweakwise_builder_template
+     * @return string|null
+     */
+    public function getTweakwiseBuilderTemplate(): ?string
+    {
+        return $this->getData(self::TWEAKWISE_BUILDER_TEMPLATE);
+    }
+
+    /**
+     * Set tweakwise_builder_template
+     * @param string $tweakwiseBuilderTemplate
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     */
+    public function setTweakwiseBuilderTemplate(?string $tweakwiseBuilderTemplate): LandingPageInterface
+    {
+        return $this->setData(self::TWEAKWISE_BUILDER_TEMPLATE, $tweakwiseBuilderTemplate);
+    }
+
+    /**
      * Get active stores IDs
      * @return int[]
      */
