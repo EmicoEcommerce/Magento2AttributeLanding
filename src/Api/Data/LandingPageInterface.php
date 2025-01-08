@@ -287,7 +287,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public function setTweakwiseSortTemplate(?string $tweakwiseSortTemplate): LandingPageInterface;
 
     /**
-     * @param string|null $filterAttributes
+     * @param string|null $tweakwiseBuilderTemplate
      * @return LandingPageInterface
      */
     public function setTweakwiseBuilderTemplate(?string $tweakwiseBuilderTemplate): LandingPageInterface;
