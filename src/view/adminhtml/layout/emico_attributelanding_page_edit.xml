@@ -3,8 +3,11 @@
 	<update handle="styles"/>
 	<update handle="editor"/>
 	<body>
+        <referenceContainer name="page-main-actions">
+            <block class="Magento\Store\Block\Switcher" name="store_switcher" template="Magento_Store::switcher.phtml"/>
+        </referenceContainer>
 		<referenceContainer name="content">
-			<uiComponent name="emico_attributelanding_page_form"/>
-		</referenceContainer>
+            <uiComponent name="emico_attributelanding_page_form"/>
+        </referenceContainer>
 	</body>
 </page>

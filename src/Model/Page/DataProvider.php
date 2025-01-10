@@ -12,6 +12,7 @@ use Emico\AttributeLanding\Model\LandingPage;
 use Emico\AttributeLanding\Model\ResourceModel\Page\Collection;
 use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
@@ -54,6 +55,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         CollectionFactory $collectionFactory,
         DataPersistorInterface $dataPersistor,
         ImageUploader $imageUploader,
+        protected StoreManagerInterface $storeManager,
         array $meta = [],
         array $data = []
     ) {
@@ -76,7 +78,6 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 
         $items = $this->collection->getItems();
         foreach ($items as $model) {
-            /** @var LandingPage $model */
 
             $modelData = $model->getData();
             if ($model->getOverviewPageImage()) {
@@ -94,14 +95,14 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         }
 
         $data = $this->dataPersistor->get('emico_attributelanding_page');
-        
+
         if (!empty($data)) {
             $model = $this->collection->getNewEmptyItem();
             $model->setData($data);
             $this->loadedData[$model->getPageId()] = $model->getData();
             $this->dataPersistor->clear('emico_attributelanding_page');
         }
-        
+
         return $this->loadedData;
     }
 }

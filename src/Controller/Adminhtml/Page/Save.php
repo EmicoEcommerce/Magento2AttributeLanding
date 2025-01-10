@@ -74,6 +74,10 @@ class Save extends Action
         }
 
         $id = $this->getRequest()->getParam('page_id');
+
+        //get the current admin store scope
+        $storeId = $this->getRequest()->getParam('store');
+
         if (!$id) {
             $page = $this->landingPageFactory->create();
         } else {

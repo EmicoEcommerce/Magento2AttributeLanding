@@ -40,10 +40,26 @@
 		<settings>
 			<label translate="true">General</label>
 		</settings>
+        <field formElement="hidden" name="store" sortOrder="5">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">Page</item>
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <dataScope>store</dataScope>
+            </settings>
+        </field>
 		<field formElement="checkbox" name="active" sortOrder="10">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>
@@ -70,6 +86,10 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>
@@ -87,7 +107,11 @@
 					<item name="source" xsi:type="string">Page</item>
 					<item name="tooltip" xsi:type="array">
 						<item name="description" xsi:type="string">This is the url path under which this page will be available. Leading and ending '/' and whitespace characters will be trimmed.</item>
-					</item>
+                    </item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>
@@ -116,6 +140,10 @@
 					<item name="listens" xsi:type="array">
 						<item name="${ $.namespace }.${ $.namespace }:responseData" xsi:type="string">setParsed</item>
 					</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 
@@ -155,6 +183,10 @@
 						<item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/record</item>
 						<item name="componentType" xsi:type="string">container</item>
 						<item name="dataScope" xsi:type="string">filter_attributes</item>
+                        <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                        <item name="showInDefault" xsi:type="boolean">1</item>
+                        <item name="showInWebsite" xsi:type="boolean">1</item>
+                        <item name="showInStore" xsi:type="boolean">1</item>
 					</item>
 				</argument>
 				<field formElement="input" name="attribute">
@@ -201,6 +233,10 @@
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
 					<item name="default" xsi:type="number">1</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>
@@ -229,6 +265,10 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 
@@ -253,6 +293,10 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 
@@ -273,35 +317,15 @@
 			</formElements>
 		</field>
 
-		<field name="store_ids" formElement="multiselect" sortOrder="70">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">Page</item>
-					<item name="default" xsi:type="number">0</item>
-				</item>
-			</argument>
-			<settings>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">true</rule>
-				</validation>
-				<dataType>int</dataType>
-				<label translate="true">Active stores</label>
-				<dataScope>store_ids</dataScope>
-			</settings>
-			<formElements>
-				<multiselect>
-					<settings>
-						<options class="Magento\Cms\Ui\Component\Listing\Column\Cms\Options"/>
-					</settings>
-				</multiselect>
-			</formElements>
-		</field>
-
 		<field formElement="checkbox" name="is_filter_link_allowed" sortOrder="80">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
 					<item name="default" xsi:type="number">1</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>
@@ -333,6 +357,10 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>
@@ -364,6 +392,10 @@
 						<item name="add_directives" xsi:type="boolean">true</item>
 						<item name="pagebuilder_button" xsi:type="boolean">true</item>
 					</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>
@@ -401,6 +433,10 @@
 						<item name="add_directives" xsi:type="boolean">true</item>
 						<item name="pagebuilder_button" xsi:type="boolean">true</item>
 					</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>
@@ -427,6 +463,10 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>
@@ -443,6 +483,10 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>
@@ -459,6 +503,10 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>
@@ -475,6 +523,10 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>
