@@ -132,10 +132,20 @@ class UrlRewriteService
                 ? $page->getUrlRewriteRequestPath()
                 : $page->getUrlPath() . $suffix;
 
-            $requestPath = trim($requestPath, '/');
-
             $urlRewrite->setRequestPath($requestPath);
             $urlRewritesToPersist[] = $urlRewrite;
+
+            //if requestpath ends with an /, generate an new urlrewrite without the /
+            if (substr($requestPath, -1) === '/') {
+                $urlRewrite = $this->urlRewriteFactory->create();
+                $urlRewrite
+                    ->setEntityType($page->getUrlRewriteEntityType())
+                    ->setEntityId($page->getUrlRewriteEntityId())
+                    ->setTargetPath($page->getUrlRewriteTargetPath())
+                    ->setStoreId($storeId);
+                $urlRewrite->setRequestPath(substr($requestPath, 0, -1));
+                $urlRewritesToPersist[] = $urlRewrite;
+            }
         }
 
         $this->urlPersist->replace($urlRewritesToPersist);
