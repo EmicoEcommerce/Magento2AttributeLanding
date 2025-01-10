@@ -12,6 +12,7 @@ use Emico\AttributeLanding\Model\LandingPage;
 use Emico\AttributeLanding\Model\ResourceModel\Page\Collection;
 use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Framework\App\Request\Http;
 use Magento\Store\Model\StoreManagerInterface;
 
 class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
@@ -55,7 +56,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         CollectionFactory $collectionFactory,
         DataPersistorInterface $dataPersistor,
         ImageUploader $imageUploader,
-        protected StoreManagerInterface $storeManager,
+        private Http $request,
         array $meta = [],
         array $data = []
     ) {
@@ -75,6 +76,8 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         if ($this->loadedData !== null) {
             return $this->loadedData;
         }
+
+        $storeId = $this->request->getParam('store');
 
         $items = $this->collection->getItems();
         foreach ($items as $model) {

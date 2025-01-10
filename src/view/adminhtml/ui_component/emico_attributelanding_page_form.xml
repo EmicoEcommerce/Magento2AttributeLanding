@@ -40,7 +40,7 @@
 		<settings>
 			<label translate="true">General</label>
 		</settings>
-        <field formElement="hidden" name="store" sortOrder="5">
+        <field formElement="hidden" name="store_id" sortOrder="5">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">Page</item>
@@ -48,8 +48,8 @@
                 </item>
             </argument>
             <settings>
-                <dataType>text</dataType>
-                <dataScope>store</dataScope>
+                <dataType>hidden</dataType>
+                <dataScope>store_id</dataScope>
             </settings>
         </field>
 		<field formElement="checkbox" name="active" sortOrder="10">

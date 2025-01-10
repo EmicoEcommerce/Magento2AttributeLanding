@@ -3,8 +3,12 @@
 	<update handle="styles"/>
 	<update handle="editor"/>
 	<body>
-        <referenceContainer name="page-main-actions">
-            <block class="Magento\Store\Block\Switcher" name="store_switcher" template="Magento_Store::switcher.phtml"/>
+        <referenceContainer name="page.main.actions">
+            <block class="Magento\Backend\Block\Store\Switcher" name="store_switcher" as="store_switcher" template="Magento_Backend::store/switcher.phtml">
+                <action method="setUseConfirm">
+                    <argument name="params" xsi:type="string">0</argument>
+                </action>
+            </block>
         </referenceContainer>
 		<referenceContainer name="content">
             <uiComponent name="emico_attributelanding_page_form"/>

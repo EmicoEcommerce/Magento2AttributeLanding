@@ -34,7 +34,7 @@
                     referenceTable="emico_attributelanding_overviewpage" referenceColumn="page_id" onDelete="SET NULL"/>
     </table>
     <!-- Scoped Table: landingpage_store -->
-    <table name="emico_landingpage_store" resource="default" engine="innodb" comment="Landing Page Store Table">
+    <table name="emico_attributelanding_page_store" resource="default" engine="innodb" comment="Landing Page Store Table">
         <column name="id" xsi:type="int" nullable="false" identity="true" unsigned="true" comment="ID" />
         <column name="page_id" xsi:type="int" nullable="false" unsigned="true" comment="Landing Page ID" />
         <column name="store_id" xsi:type="smallint" nullable="false" unsigned="true" comment="Store ID" />
@@ -58,8 +58,8 @@
         <column xsi:type="int" name="tweakwise_sort_template" nullable="true" comment="Tweakwise sort template"/>
         <constraint xsi:type="primary" referenceId="PRIMARY"><column name="id"/></constraint>
         <constraint xsi:type="unique" referenceId="UNQ_LANDINGPAGE_STORE_PAGE_ID_STORE_ID"><column name="page_id"/><column name="store_id"/></constraint>
-        <constraint xsi:type="foreign" referenceId="FK_LANDINGPAGE_STORE_LANDINGPAGE_ID" table="emico_attributelanding_store" column="page_id" referenceTable="emico_attributelanding_page" referenceColumn="page_id" onDelete="CASCADE" />
-        <constraint xsi:type="foreign" referenceId="FK_LANDINGPAGE_STORE_STORE_ID" table="emico_attributelanding_store" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_LANDINGPAGE_STORE_LANDINGPAGE_ID" table="emico_attributelanding_page_store" column="page_id" referenceTable="emico_attributelanding_page" referenceColumn="page_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_LANDINGPAGE_STORE_STORE_ID" table="emico_attributelanding_page_store" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
     </table>
     <table name="emico_attributelanding_overviewpage" resource="default" engine="innodb" comment="Overview pages">
         <column xsi:type="int" name="page_id" unsigned="true" nullable="false" identity="true" comment="Autoincrement ID" />

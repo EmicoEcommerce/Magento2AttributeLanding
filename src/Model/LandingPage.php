@@ -6,6 +6,7 @@ use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Emico\AttributeLanding\Model\ResourceModel\Page as PageResourceModel;
+use Emico\AttributeLanding\Model\ResourceModel\PageStore as PageStoreResourceModel;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Framework\Data\Collection\AbstractDb;
@@ -70,6 +71,11 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     {
         $this->_init(PageResourceModel::class);
         parent::_construct();
+    }
+
+    public function getDataByStoreId(int $storeId)
+    {
+
     }
 
     /**
