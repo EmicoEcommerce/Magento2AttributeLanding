@@ -9,6 +9,7 @@ namespace Emico\AttributeLanding\Model\Page;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Model\LandingPage;
+use Emico\AttributeLanding\Model\LandingPageRepository;
 use Emico\AttributeLanding\Model\ResourceModel\Page\Collection;
 use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
@@ -57,6 +58,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         DataPersistorInterface $dataPersistor,
         ImageUploader $imageUploader,
         private Http $request,
+        private LandingPageRepository $landingPageRepository,
         array $meta = [],
         array $data = []
     ) {
@@ -83,6 +85,8 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         foreach ($items as $model) {
 
             $modelData = $model->getData();
+            //merge $modelData with landingpageRepository getbyIdWithStore
+            $modelData = array_merge($modelData, $this->landingPageRepository->getByIdWithStore($model->getPageId(), $storeId)->getData());
             if ($model->getOverviewPageImage()) {
                 $modelData[LandingPageInterface::OVERVIEW_PAGE_IMAGE] = [
                     [

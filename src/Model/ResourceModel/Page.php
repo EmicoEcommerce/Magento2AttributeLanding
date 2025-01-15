@@ -16,4 +16,15 @@ class Page extends AbstractDb
     {
         $this->_init('emico_attributelanding_page', LandingPageInterface::PAGE_ID);
     }
+
+
+    public function getLandingPageStoreData($landingPageId, $storeId)
+    {
+        $connection = $this->getConnection();
+        $select = $connection->select()
+            ->from($this->getTable('emico_attributelanding_page_store'))
+            ->where('page_id = ?', $landingPageId)
+            ->where('store_id = ?', $storeId);
+        return $connection->fetchRow($select);
+    }
 }

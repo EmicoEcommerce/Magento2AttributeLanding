@@ -29,7 +29,6 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public const CATEGORY_ID = 'category_id';
     public const PAGE_ID = 'page_id';
     public const META_DESCRIPTION = 'meta_description';
-    public const STORE_IDS = 'store_ids';
     public const OVERVIEW_PAGE_ID = 'overview_page_id';
     public const OVERVIEW_PAGE_IMAGE = 'overview_page_image';
     public const FILTER_LINK_ALLOWED = 'is_filter_link_allowed';
@@ -134,12 +133,6 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return int|null
      */
     public function getTweakwiseSortTemplate();
-
-    /**
-     * Get active stores IDs
-     * @return int[]
-     */
-    public function getStoreIds(): array;
 
     /**
      * Get filter_attributes
@@ -278,12 +271,6 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return LandingPageInterface
      */
     public function setTweakwiseSortTemplate(?string $tweakwiseSortTemplate): LandingPageInterface;
-
-    /**
-     * @param array|null $storeIds
-     * @return LandingPageInterface
-     */
-    public function setStoreIds(array $storeIds): LandingPageInterface;
 
     /**
      * @param string|null $overviewPageId

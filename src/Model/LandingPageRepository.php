@@ -159,6 +159,22 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     }
 
     /**
+     * @param int $pageId
+     * @param int $storeId
+     * @return LandingPageInterface
+     * @throws NoSuchEntityException
+     */
+    public function getByIdWithStore(int $pageId, int $storeId): LandingPageInterface
+    {
+        $landingPage = $this->getById($pageId);
+
+        $storeData = $this->resource->getLandingPageStoreData($pageId, $storeId);
+        $landingPage->setData($storeData);
+
+        return $landingPage;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getList(SearchCriteriaInterface $criteria)
