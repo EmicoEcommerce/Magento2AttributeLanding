@@ -140,7 +140,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * Get tweakwise_builder_template
      * @return int|null
      */
-    public function getTweakwiseBuilderTemplate();
+    public function getTweakwiseBuilderTemplate(): ?int;
 
     /**
      * Get active stores IDs
