@@ -12,13 +12,22 @@ use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 class Page extends AbstractDb
 {
-    protected function _construct()
+    /**
+     * @return void
+     */
+    protected function _construct(): void
     {
         $this->_init('emico_attributelanding_page', LandingPageInterface::PAGE_ID);
     }
 
 
-    public function getLandingPageStoreData($landingPageId, $storeId)
+    /**
+     * @param $landingPageId
+     * @param $storeId
+     *
+     * @return array
+     */
+    public function getLandingPageStoreData($landingPageId, $storeId): array
     {
         $connection = $this->getConnection();
         $select = $connection->select()
@@ -26,5 +35,30 @@ class Page extends AbstractDb
             ->where('page_id = ?', $landingPageId)
             ->where('store_id = ?', $storeId);
         return $connection->fetchRow($select);
+    }
+
+    /**
+     * @param       $landingPageId
+     * @param       $storeId
+     * @param array $data
+     *
+     * @return void
+     */
+    public function saveLandingPageStoreData($landingPageId, $storeId, array $data): void
+    {
+        $connection = $this->getConnection();
+        $table = $this->getTable('emico_attributelanding_page_store');
+        $where = [
+            'page_id = ?' => $landingPageId,
+            'store_id = ?' => $storeId
+        ];
+
+        if ($this->getLandingPageStoreData($landingPageId, $storeId)) {
+            $connection->update($table, $data, $where);
+        } else {
+            $data['page_id'] = $landingPageId;
+            $data['store_id'] = $storeId;
+            $connection->insert($table, $data);
+        }
     }
 }

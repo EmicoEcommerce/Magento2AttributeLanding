@@ -129,6 +129,8 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
             /** @var LandingPage $page */
             $this->resource->save($page);
+            $this->resource->saveLandingPageStoreData($page->getPageId(), $storeId, $page->getData());
+
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
                 __(

@@ -36,6 +36,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public const CANONICAL_URL = 'canonical_url';
     public const CREATED_AT = 'created_at';
     public const UPDATED_AT = 'updated_at';
+    public const STORE_ID = 'store_id';
 
     /**
      * Set an extension attributes object.
@@ -55,6 +56,12 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return int|null
      */
     public function getPageId();
+
+    /**
+     * Get store_id
+     * @return int|null
+     */
+    public function getStoreId();
 
     /**
      * Get active
