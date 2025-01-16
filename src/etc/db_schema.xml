@@ -24,6 +24,7 @@
         <column xsi:type="varchar" name="canonical_url" nullable="true" comment="Canonical URL"/>
         <column xsi:type="boolean" name="hide_selected_filters" nullable="true" default="1" comment="Whether to hide selected filters"/>
         <column xsi:type="int" name="tweakwise_sort_template" nullable="true" comment="Tweakwise sort template"/>
+        <column xsi:type="int" name="tweakwise_builder_template" nullable="true" comment="Tweakwise builder template"/>
         <constraint xsi:type="primary" referenceId="PRIMARY"><column name="page_id"/></constraint>
         <index referenceId="EMICO_ATTRIBUTELANDING_PAGE_URL_PATH" indexType="btree"><column name="url_path"/></index>
         <constraint xsi:type="foreign" referenceId="EMICO_ATTRLANDING_PAGE_CTGR_ID_CAT_CTGR_ENTT_ENTT_ID"
