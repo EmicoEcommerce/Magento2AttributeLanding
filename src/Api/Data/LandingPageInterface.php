@@ -25,6 +25,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public const META_KEYWORDS = 'meta_keywords';
     public const TWEAKWISE_FILTER_TEMPLATE = 'tweakwise_filter_template';
     public const TWEAKWISE_SORT_TEMPLATE = 'tweakwise_sort_template';
+    public const TWEAKWISE_BUILDER_TEMPLATE = 'tweakwise_builder_template';
     public const HEADER_IMAGE = 'header_image';
     public const CATEGORY_ID = 'category_id';
     public const PAGE_ID = 'page_id';
@@ -134,6 +135,12 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return int|null
      */
     public function getTweakwiseSortTemplate();
+
+    /**
+     * Get tweakwise_builder_template
+     * @return int|null
+     */
+    public function getTweakwiseBuilderTemplate(): ?int;
 
     /**
      * Get active stores IDs
@@ -278,6 +285,12 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return LandingPageInterface
      */
     public function setTweakwiseSortTemplate(?string $tweakwiseSortTemplate): LandingPageInterface;
+
+    /**
+     * @param string|null $tweakwiseBuilderTemplate
+     * @return LandingPageInterface
+     */
+    public function setTweakwiseBuilderTemplate(?string $tweakwiseBuilderTemplate): LandingPageInterface;
 
     /**
      * @param array|null $storeIds
