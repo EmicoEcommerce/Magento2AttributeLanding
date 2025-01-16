@@ -138,7 +138,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
 
     /**
      * Get tweakwise_builder_template
-     * @return int|null
+     * @return string|null
      */
     public function getTweakwiseBuilderTemplate(): ?string;
 
