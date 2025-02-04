@@ -40,7 +40,7 @@
 		<settings>
 			<label translate="true">General</label>
 		</settings>
-        <field formElement="hidden" name="store_id" sortOrder="5">
+        <field name="store_id" formElement="hidden" sortOrder="5">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">Page</item>
@@ -48,9 +48,20 @@
                 </item>
             </argument>
             <settings>
-                <dataType>hidden</dataType>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Store</label>
                 <dataScope>store_id</dataScope>
             </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Cms\Ui\Component\Listing\Column\Cms\Options"/>
+                    </settings>
+                </select>
+            </formElements>
         </field>
 		<field formElement="checkbox" name="active" sortOrder="10">
 			<argument name="data" xsi:type="array">

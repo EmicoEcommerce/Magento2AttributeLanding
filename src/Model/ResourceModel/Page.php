@@ -27,14 +27,18 @@ class Page extends AbstractDb
      *
      * @return array
      */
-    public function getLandingPageStoreData($landingPageId, $storeId): array
+    public function getLandingPageStoreData($landingPageId, $storeId = 0): array
     {
         $connection = $this->getConnection();
         $select = $connection->select()
             ->from($this->getTable('emico_attributelanding_page_store'))
             ->where('page_id = ?', $landingPageId)
             ->where('store_id = ?', $storeId);
-        return $connection->fetchRow($select);
+       if ($result = $connection->fetchRow($select)) {
+            return $result;
+       }
+
+       return [];
     }
 
     /**
@@ -53,7 +57,10 @@ class Page extends AbstractDb
             'store_id = ?' => $storeId
         ];
 
-        if ($this->getLandingPageStoreData($landingPageId, $storeId)) {
+        unset($data[LandingPageInterface::OVERVIEW_PAGE_ID]);
+        unset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE]);
+
+        if (!empty($this->getLandingPageStoreData($landingPageId, $storeId))) {
             $connection->update($table, $data, $where);
         } else {
             $data['page_id'] = $landingPageId;

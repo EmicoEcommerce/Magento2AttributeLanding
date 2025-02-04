@@ -109,13 +109,6 @@
                 <sortable>false</sortable>
             </settings>
         </column>
-        <column name="stores" sortOrder="44">
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Stores</label>
-                <sortable>false</sortable>
-            </settings>
-        </column>
         <column name="created_at" sortOrder="47">
             <settings>
                 <filter>text</filter>

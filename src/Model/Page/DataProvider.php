@@ -79,7 +79,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             return $this->loadedData;
         }
 
-        $storeId = $this->request->getParam('store');
+        $storeId = $this->request->getParam('store', 0);
 
         $items = $this->collection->getItems();
         foreach ($items as $model) {
@@ -97,11 +97,13 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             }
 
             $modelData[LandingPageInterface::FILTER_ATTRIBUTES] = $model->getUnserializedFilterAttributes();
+            $modelData[LandingPageInterface::STORE_ID] = $storeId;
 
             $this->loadedData[$model->getPageId()] = $modelData;
         }
 
         $data = $this->dataPersistor->get('emico_attributelanding_page');
+        $data['store_id'] = $storeId;
 
         if (!empty($data)) {
             $model = $this->collection->getNewEmptyItem();

@@ -119,26 +119,28 @@ class UrlRewriteService
 
         $urlRewritesToPersist = [];
 
-        foreach ($this->getActiveStoreIds($page) as $storeId) {
-            /** @var UrlRewrite $urlRewrite */
-            $urlRewrite = $this->urlRewriteFactory->create();
-            $urlRewrite
-                ->setEntityType($page->getUrlRewriteEntityType())
-                ->setEntityId($page->getUrlRewriteEntityId())
-                ->setTargetPath($page->getUrlRewriteTargetPath())
-                ->setStoreId($storeId);
+        /** @var UrlRewrite $urlRewrite **/
+        if ($page->getStoreId() == 0) {
+            $stores = $this->storeManager->getStores();
+            foreach ($stores as $store) {
+                //check for other store views
+                $storePage = $this->landingPageRepository->getByIdWithStore($page->getPageId(), $store->getId());
 
-            $requestPath = ($suffix === null)
-                ? $page->getUrlRewriteRequestPath()
-                : $page->getUrlPath() . $suffix;
+                if (!empty($storePage)) {
+                    $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
+                } else {
+                    $urlRewrite = $this->createUrlRewrite($page, $store->getId(), $suffix);
+                }
 
-            $requestPath = trim($requestPath, '/');
-
-            $urlRewrite->setRequestPath($requestPath);
+                $urlRewritesToPersist[] = $urlRewrite;
+            }
+        } else {
+            $urlRewrite = $this->createUrlRewrite($page, $page->getStoreId(), $suffix);
             $urlRewritesToPersist[] = $urlRewrite;
         }
 
         $this->urlPersist->replace($urlRewritesToPersist);
+
     }
 
     /**
@@ -155,21 +157,24 @@ class UrlRewriteService
         );
     }
 
-    /**
-     * @param UrlRewriteGeneratorInterface $landingPage
-     * @return int[]
-     */
-    protected function getActiveStoreIds(UrlRewriteGeneratorInterface $landingPage): array
+    private function createUrlRewrite(UrlRewriteGeneratorInterface $page, int $storeId, string $suffix = null): UrlRewrite
     {
-        if (\in_array('0', $landingPage->getStoreIds(), false) !== false) {
-            return array_map(
-                static function (StoreInterface $store) {
-                    return $store->getId();
-                },
-                $this->storeManager->getStores()
-            );
-        }
+        /** @var UrlRewrite $urlRewrite **/
+        $urlRewrite = $this->urlRewriteFactory->create();
+        $urlRewrite
+            ->setEntityType($page->getUrlRewriteEntityType())
+            ->setEntityId($page->getUrlRewriteEntityId())
+            ->setTargetPath($page->getUrlRewriteTargetPath())
+            ->setStoreId($storeId);
 
-        return $landingPage->getStoreIds();
+        $requestPath = ($suffix === null)
+            ? $page->getUrlRewriteRequestPath()
+            : $page->getUrlPath() . $suffix;
+
+        $requestPath = trim($requestPath, '/');
+
+        $urlRewrite->setRequestPath($requestPath);
+
+        return $urlRewrite;
     }
 }

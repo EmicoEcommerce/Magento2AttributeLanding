@@ -413,18 +413,18 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Get active stores IDs
      * @return int[]
      */
-    public function getStoreIds(): array
+    public function getStoreId(): int
     {
-        return explode(',', $this->getData(self::STORE_IDS));
+        return $this->getData(self::STORE_ID);
     }
 
     /**
      * @param int[] $storeIds
      * @return LandingPageInterface
      */
-    public function setStoreIds(array $storeIds): LandingPageInterface
+    public function setStoreId(?int $storeId): LandingPageInterface
     {
-        return $this->setData(self::STORE_IDS, implode(',', $storeIds));
+        return $this->setData(self::STORE_ID, $storeId);
     }
 
     /**

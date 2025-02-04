@@ -129,7 +129,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
             /** @var LandingPage $page */
             $this->resource->save($page);
-            $this->resource->saveLandingPageStoreData($page->getPageId(), $storeId, $page->getData());
+            $this->resource->saveLandingPageStoreData($page->getPageId(), $page->getStoreId(), $page->getData());
 
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
@@ -171,6 +171,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         $landingPage = $this->getById($pageId);
 
         $storeData = $this->resource->getLandingPageStoreData($pageId, $storeId);
+        unset($storeData['id']);
         $landingPage->setData($storeData);
 
         return $landingPage;

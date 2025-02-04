@@ -68,6 +68,7 @@ class Save extends Action
         /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
+        unset($data['id']);
 
         if (!$data) {
             return $resultRedirect->setPath('*/*/');
@@ -75,14 +76,11 @@ class Save extends Action
 
         $id = $this->getRequest()->getParam('page_id');
 
-        //get the current admin store scope
-        $storeId = $this->getRequest()->getParam('store');
-
         if (!$id) {
             $page = $this->landingPageFactory->create();
         } else {
             try {
-                $page = $this->landingPageRepository->getById($id);
+                $page = $this->landingPageRepository->getByIdWithStore($id, $data[LandingPageInterface::STORE_ID]);
             } catch (NoSuchEntityException $exception) {
                 $this->messageManager->addErrorMessage(__('This Page no longer exists.'));
                 return $resultRedirect->setPath('*/*/');
