@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\Module\Setup\Patch\Data;
+namespace Emico\AttributeLanding\Setup\Patch\Data;
 
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
@@ -70,7 +70,8 @@ class ConvertLandingpageEntries implements DataPatchInterface
             'name' => $landingPage['name'],
             'canonical_url' => $landingPage['canonical_url'],
             'hide_selected_filters' => $landingPage['hide_selected_filters'],
-            'tweakwise_sort_template' => $landingPage['tweakwise_sort_template']
+            'tweakwise_sort_template' => $landingPage['tweakwise_sort_template'],
+            'tweakwise_builder_template' => $landingPage['tweakwise_builder_template'],
         ];
 
         $connection->insert($table, $data);

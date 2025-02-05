@@ -57,6 +57,7 @@
         <column xsi:type="varchar" name="canonical_url" nullable="true" comment="Canonical URL"/>
         <column xsi:type="boolean" name="hide_selected_filters" nullable="true" default="1" comment="Whether to hide selected filters"/>
         <column xsi:type="int" name="tweakwise_sort_template" nullable="true" comment="Tweakwise sort template"/>
+        <column xsi:type="int" name="tweakwise_builder_template" nullable="true" comment="Tweakwise builder template"/>
         <constraint xsi:type="primary" referenceId="PRIMARY"><column name="id"/></constraint>
         <constraint xsi:type="unique" referenceId="UNQ_LANDINGPAGE_STORE_PAGE_ID_STORE_ID"><column name="page_id"/><column name="store_id"/></constraint>
         <constraint xsi:type="foreign" referenceId="FK_LANDINGPAGE_STORE_LANDINGPAGE_ID" table="emico_attributelanding_page_store" column="page_id" referenceTable="emico_attributelanding_page" referenceColumn="page_id" onDelete="CASCADE" />

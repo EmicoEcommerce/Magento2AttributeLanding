@@ -68,4 +68,22 @@ class Page extends AbstractDb
             $connection->insert($table, $data);
         }
     }
+
+    /**
+     * Get all store data for a given landing page ID.
+     *
+     * @param int $pageId
+     * @return array
+     */
+    public function getAllLandingPageStoreData(int $pageId): array
+    {
+        $connection = $this->getConnection();
+        $select = $connection->select()
+            ->from($this->getTable('emico_attributelanding_page_store'))
+            ->where('page_id = :page_id');
+
+        $bind = ['page_id' => (int)$pageId];
+
+        return $connection->fetchAll($select, $bind);
+    }
 }
