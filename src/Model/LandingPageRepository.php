@@ -171,8 +171,13 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         $landingPage = $this->getById($pageId);
 
         $storeData = $this->resource->getLandingPageStoreData($pageId, $storeId);
-        unset($storeData['id']);
-        $landingPage->setData($storeData);
+
+        if (!empty($storeData)) {
+            unset($storeData['id']);
+            $landingPage->setData($storeData);
+        } else {
+            $landingPage->setData(LandingPageInterface::STORE_ID, $storeId);
+        }
 
         return $landingPage;
     }

@@ -151,15 +151,10 @@ class UrlFinder
         foreach ($this->landingPageRepository->getList($searchCriteria)->getItems() as $landingPage) {
             $hash = $this->createHashForFilters($landingPage->getFilters(), $landingPage->getCategoryId());
 
-            $storeIds = $landingPage->getData('store_ids');
+            $storeId = $landingPage->getData('store_id');
 
-            if (!empty($storeIds) || $storeIds == "0") {
-                $landingPageStores = explode(',', $storeIds);
-            }
 
-            foreach ($landingPageStores as $landingPageStore) {
-                $landingPageLookup[$landingPageStore][$hash] = $landingPage->getUrlRewriteRequestPath();
-            }
+            $landingPageLookup[$storeId][$hash] = $landingPage->getUrlRewriteRequestPath();
         }
 
         $this->cache->save($this->serializer->serialize($landingPageLookup), self::CACHE_KEY);
