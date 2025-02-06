@@ -10,6 +10,7 @@ namespace Emico\AttributeLanding\Model;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
+use Emico\AttributeLanding\Model\ResourceModel\Page;
 use Emico\AttributeLanding\Ui\Component\Product\Form\Categories\Options;
 use Magento\Catalog\Model\CategoryManagement;
 use Magento\Framework\Api\SearchCriteriaBuilder;
@@ -129,7 +130,6 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
             /** @var LandingPage $page */
             $this->resource->save($page);
-            $this->resource->saveLandingPageStoreData($page->getPageId(), $page->getStoreId(), $page->getData());
 
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
@@ -138,6 +138,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
                     $exception->getMessage()
                 )
             );
+            return $page;
         }
 
         return $page;
@@ -170,7 +171,13 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     {
         $landingPage = $this->getById($pageId);
 
+        $defaultData = $this->resource->getLandingPageStoreData($pageId, 0);
         $storeData = $this->resource->getLandingPageStoreData($pageId, $storeId);
+
+        if (!empty($defaultData)) {
+            unset($storeData['id']);
+            $landingPage->setData($defaultData);
+        }
 
         if (!empty($storeData)) {
             unset($storeData['id']);
@@ -180,6 +187,20 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         }
 
         return $landingPage;
+    }
+
+    public function getAllPagesById(int $pageId): array
+    {
+        $storeData = $this->resource->getAllLandingPageStoreData($pageId);
+        $pages = [];
+
+        foreach ($storeData as $data) {
+            $page = $this->dataPageFactory->create();
+            $page->setData($data);
+            $pages[] = $page;
+        }
+
+        return $pages;
     }
 
     /**
@@ -265,5 +286,10 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
         $result = $this->getList($searchCriteria);
         return $result->getItems();
+    }
+
+    public function saveLandingPageStoreData(LandingPageInterface $page): void
+    {
+        $this->resource->saveLandingPageStoreData($page->getPageId(), $page->getStoreId(), $page);
     }
 }

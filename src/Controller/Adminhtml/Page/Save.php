@@ -90,6 +90,7 @@ class Save extends Action
         try {
             $this->hydrateLandingPage($page, $data);
             $this->landingPageRepository->save($page);
+            $this->landingPageRepository->saveLandingPageStoreData($page->getPageId(), $page->getStoreId(), $page);
 
             $this->messageManager->addSuccessMessage(__('You saved the Page.'));
             $this->dataPersistor->clear('emico_attributelanding_page');

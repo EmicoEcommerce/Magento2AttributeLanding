@@ -119,25 +119,26 @@ class UrlRewriteService
 
         $urlRewritesToPersist = [];
 
-        /** @var UrlRewrite $urlRewrite **/
-        if ($page->getStoreId() == 0) {
-            $stores = $this->storeManager->getStores();
-            foreach ($stores as $store) {
-                //check for other store views
-                $storePage = $this->landingPageRepository->getByIdWithStore($page->getPageId(), $store->getId());
+        $allPages = $this->landingPageRepository->getAllPagesById($page->getPageId());
 
-                if (!empty($storePage)) {
-                    $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
-                } else {
-                    $urlRewrite = $this->createUrlRewrite($page, $store->getId(), $suffix);
+
+        foreach ($allPages as $storePage) {
+            if ($storePage->getStoreId() == 0) {
+                $stores = $this->storeManager->getStores();
+                foreach ($stores as $store) {
+                    if (!empty($storePage)) {
+                        if (!isset($urlRewritesToPersist[$store->getId()])) {
+                            $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
+                            $urlRewritesToPersist[$store->getId()] = $urlRewrite;
+                        }
+                    }
                 }
-
-                $urlRewritesToPersist[] = $urlRewrite;
+            } else {
+                $urlRewrite = $this->createUrlRewrite($storePage, $storePage->getStoreId(), $suffix);
+                $urlRewritesToPersist[$storePage->getStoreId()] = $urlRewrite;
             }
-        } else {
-            $urlRewrite = $this->createUrlRewrite($page, $page->getStoreId(), $suffix);
-            $urlRewritesToPersist[] = $urlRewrite;
         }
+        /** @var UrlRewrite $urlRewrite **/
 
         $this->urlPersist->replace($urlRewritesToPersist);
 
