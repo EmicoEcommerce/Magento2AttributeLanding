@@ -123,9 +123,17 @@ class UrlRewriteService
 
 
         foreach ($allPages as $storePage) {
+            if ($storePage->getStoreId() == $page->getStoreId()) {
+                $storePage = $page;
+            }
+
             if ($storePage->getStoreId() == 0) {
                 $stores = $this->storeManager->getStores();
                 foreach ($stores as $store) {
+                    if ($store->getId() == $page->getStoreId()) {
+                        $storePage = $page;
+                    }
+
                     if (!empty($storePage)) {
                         if (!isset($urlRewritesToPersist[$store->getId()])) {
                             $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);

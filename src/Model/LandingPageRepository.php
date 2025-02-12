@@ -25,6 +25,8 @@ use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory as PageCol
 use Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterfaceFactory;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\UrlRewrite\Model\UrlRewriteFactory;
+use Magento\UrlRewrite\Model\ResourceModel\UrlRewriteCollectionFactory;
 
 class LandingPageRepository implements LandingPageRepositoryInterface
 {
@@ -93,7 +95,8 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         JoinProcessorInterface $extensionAttributesJoinProcessor,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         StoreManagerInterface $storeManager,
-        Options $options
+        Options $options,
+        private UrlRewriteCollectionFactory $urlRewriteCollectionFactory
     ) {
         $this->resource = $resource;
         $this->pageCollectionFactory = $pageCollectionFactory;
@@ -130,7 +133,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
             /** @var LandingPage $page */
             $this->resource->save($page);
-
+            $this->resource->saveLandingPageStoreData($page);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
                 __(
@@ -175,7 +178,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         $storeData = $this->resource->getLandingPageStoreData($pageId, $storeId);
 
         if (!empty($defaultData)) {
-            unset($storeData['id']);
+            unset($defaultData['id']);
             $landingPage->setData($defaultData);
         }
 

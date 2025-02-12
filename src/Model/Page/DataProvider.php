@@ -85,7 +85,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         foreach ($items as $model) {
 
             $modelData = $model->getData();
-            //merge $modelData with landingpageRepository getbyIdWithStore
+            ////merge $modelData with landingpageRepository getbyIdWithStore
             $modelData = array_merge($modelData, $this->landingPageRepository->getByIdWithStore($model->getPageId(), $storeId)->getData());
             if ($model->getOverviewPageImage()) {
                 $modelData[LandingPageInterface::OVERVIEW_PAGE_IMAGE] = [

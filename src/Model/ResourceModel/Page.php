@@ -77,14 +77,14 @@ class Page extends AbstractDb
      *
      * @return void
      */
-    public function saveLandingPageStoreData($landingPageId, $storeId, $page): void
+    public function saveLandingPageStoreData(LandingPageInterface $page): void
     {
         $data = $page->getData();
         $connection = $this->getConnection();
         $table = $this->getTable('emico_attributelanding_page_store');
         $where = [
-            'page_id = ?' => $landingPageId,
-            'store_id = ?' => $storeId
+            'page_id = ?' => $page->getPageId(),
+            'store_id = ?' => $page->getStoreId()
         ];
 
         unset($data[LandingPageInterface::OVERVIEW_PAGE_ID]);
@@ -93,11 +93,12 @@ class Page extends AbstractDb
         unset($data[LandingPageInterface::UPDATED_AT]);
         unset($data['id']);
 
-        if (!empty($this->getLandingPageStoreData($landingPageId, $storeId))) {
+        if (!empty($this->getLandingPageStoreData($page->getPageId(), $page->getStoreId()))) {
             $connection->update($table, $data, $where);
         } else {
-            $data['page_id'] = $landingPageId;
-            $data['store_id'] = $storeId;
+            unset($data['id']);
+            $data['page_id'] = $page->getPageId();
+            $data['store_id'] = $page->getStoreId();
             $connection->insert($table, $data);
         }
 

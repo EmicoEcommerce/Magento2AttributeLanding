@@ -68,7 +68,6 @@ class Save extends Action
         /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
-        unset($data['id']);
 
         if (!$data) {
             return $resultRedirect->setPath('*/*/');
@@ -88,15 +87,15 @@ class Save extends Action
         }
 
         try {
+            $data['id'] = $id;
             $this->hydrateLandingPage($page, $data);
             $this->landingPageRepository->save($page);
-            $this->landingPageRepository->saveLandingPageStoreData($page->getPageId(), $page->getStoreId(), $page);
 
             $this->messageManager->addSuccessMessage(__('You saved the Page.'));
             $this->dataPersistor->clear('emico_attributelanding_page');
 
             if ($this->getRequest()->getParam('back')) {
-                return $resultRedirect->setPath('*/*/edit', ['page_id' => $page->getPageId()]);
+                return $resultRedirect->setPath('*/*/edit', ['page_id' => $page->getPageId(), 'store' => $page->getStoreId()]);
             }
 
             return $resultRedirect->setPath('*/*/');
@@ -107,7 +106,7 @@ class Save extends Action
         }
 
         $this->dataPersistor->set('emico_attributelanding_page', $data);
-        return $resultRedirect->setPath('*/*/edit', ['page_id' => $this->getRequest()->getParam('page_id')]);
+        return $resultRedirect->setPath('*/*/edit', ['page_id' => $page->getPageId(), 'store' => $page->getStoreId()]);
     }
 
     /**
