@@ -116,7 +116,6 @@ class UrlRewriteService
         // this needs to be removed in order to make it possible
         // to choose same url paths with different store views
         $this->removeExistingUrlRewrites($page);
-
         $urlRewritesToPersist = [];
 
         if ($page->getUrlRewriteEntityType() == 'landingpage') {
@@ -152,9 +151,7 @@ class UrlRewriteService
         }
 
         $test = $page->getUrlRewriteEntityType();
-
         $this->urlPersist->replace($urlRewritesToPersist);
-
     }
 
     /**
@@ -202,6 +199,7 @@ class UrlRewriteService
                 $this->storeManager->getStores()
             );
         }
+
         return $landingPage->getStoreIds();
     }
 }

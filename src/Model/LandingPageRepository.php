@@ -144,7 +144,6 @@ class LandingPageRepository implements LandingPageRepositoryInterface
                     $exception->getMessage()
                 )
             );
-            return $page;
         }
 
         return $page;

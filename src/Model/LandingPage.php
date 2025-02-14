@@ -429,8 +429,8 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
-     * Get active stores IDs
-     * @return int[]
+     * Get active store IDs
+     * @return int
      */
     public function getStoreId(): int
     {
@@ -438,7 +438,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
-     * @param int[] $storeIds
+     * @param int $storeId
      * @return LandingPageInterface
      */
     public function setStoreId(?int $storeId): LandingPageInterface

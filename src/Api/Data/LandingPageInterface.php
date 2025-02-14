@@ -62,7 +62,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * Get store_id
      * @return int|null
      */
-    public function getStoreId();
+    public function getStoreId(): int;
 
     /**
      * Get active
@@ -147,7 +147,6 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return string|null
      */
     public function getTweakwiseBuilderTemplate(): ?string;
-
 
     /**
      * Get filter_attributes

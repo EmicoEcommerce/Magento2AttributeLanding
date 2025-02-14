@@ -150,10 +150,7 @@ class UrlFinder
         $landingPageStores = [];
         foreach ($this->landingPageRepository->getList($searchCriteria)->getItems() as $landingPage) {
             $hash = $this->createHashForFilters($landingPage->getFilters(), $landingPage->getCategoryId());
-
             $storeId = $landingPage->getData('store_id');
-
-
             $landingPageLookup[$storeId][$hash] = $landingPage->getUrlRewriteRequestPath();
         }
 

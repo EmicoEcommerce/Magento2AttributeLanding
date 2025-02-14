@@ -22,6 +22,7 @@ class Page extends AbstractDb
         parent::__construct($context, $connectionName);
         $this->eventManager = $eventManager;
     }
+
     /**
      * @return void
      */
@@ -30,14 +31,13 @@ class Page extends AbstractDb
         $this->_init('emico_attributelanding_page', LandingPageInterface::PAGE_ID);
     }
 
-
     /**
-     * @param $landingPageId
-     * @param $storeId
+     * @param int $landingPageId
+     * @param int $storeId
      *
      * @return array
      */
-    public function getLandingPageStoreData($landingPageId, $storeId = 0): array
+    public function getLandingPageStoreData(int $landingPageId, int $storeId = 0): array
     {
         $connection = $this->getConnection();
         $select = $connection->select()
@@ -55,7 +55,6 @@ class Page extends AbstractDb
 
        return [];
     }
-
 
     /**
      * Get all store data for a given landing page ID.
@@ -76,10 +75,7 @@ class Page extends AbstractDb
     }
 
     /**
-     * @param       $landingPageId
-     * @param       $storeId
-     * @param array $data
-     *
+     * @param LandingPageInterface $page
      * @return void
      */
     public function saveLandingPageStoreData(LandingPageInterface $page): void

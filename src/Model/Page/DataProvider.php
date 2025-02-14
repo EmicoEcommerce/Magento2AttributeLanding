@@ -47,6 +47,8 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
      * @param CollectionFactory $collectionFactory
      * @param DataPersistorInterface $dataPersistor
      * @param ImageUploader $imageUploader
+     * @param Http $request
+     * @param LandingPageRepository $landingPageRepository
      * @param array $meta
      * @param array $data
      */
@@ -80,13 +82,15 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         }
 
         $storeId = $this->request->getParam('store', 0);
-
         $items = $this->collection->getItems();
-        foreach ($items as $model) {
 
+        foreach ($items as $model) {
             $modelData = $model->getData();
-            ////merge $modelData with landingpageRepository getbyIdWithStore
-            $modelData = array_merge($modelData, $this->landingPageRepository->getByIdWithStore($model->getPageId(), $storeId)->getData());
+            $modelData = array_merge(
+                $modelData,
+                $this->landingPageRepository->getByIdWithStore($model->getPageId(),
+                    $storeId)->getData()
+            );
             if ($model->getOverviewPageImage()) {
                 $modelData[LandingPageInterface::OVERVIEW_PAGE_IMAGE] = [
                     [
