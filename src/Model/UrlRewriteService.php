@@ -139,7 +139,12 @@ class UrlRewriteService
             }
 
             if ($storePage->getStoreId() == 0) {
-                $urlRewritesToPersist = $this->generateRewritesForAllStores($storePage, $page, $suffix, $urlRewritesToPersist);
+                $urlRewritesToPersist = $this->generateRewritesForAllStores(
+                    $storePage,
+                    $page,
+                    $suffix,
+                    $urlRewritesToPersist
+                );
             } else {
                 $urlRewrite = $this->createUrlRewrite($storePage, $storePage->getStoreId(), $suffix);
                 $urlRewritesToPersist[$storePage->getStoreId()] = $urlRewrite;
@@ -156,7 +161,13 @@ class UrlRewriteService
      *
      * @return array
      */
-    private function generateRewritesForAllStores(int $storePage, LandingPageInterface $page, ?string $suffix, array $urlRewritesToPersist): array
+    private function generateRewritesForAllStores
+    (
+        int $storePage,
+        LandingPageInterface $page,
+        ?string $suffix,
+        array $urlRewritesToPersist
+    ): array
     {
         $stores = $this->storeManager->getStores();
 
@@ -206,7 +217,8 @@ class UrlRewriteService
         );
     }
 
-    private function createUrlRewrite(
+    private function createUrlRewrite
+    (
         UrlRewriteGeneratorInterface $page,
         int $storeId,
         string $suffix = null
