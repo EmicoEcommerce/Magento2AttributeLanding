@@ -49,11 +49,12 @@ class Page extends AbstractDb
             )
             ->where('ps.page_id = ?', $landingPageId)
             ->where('store_id = ?', $storeId);
-       if ($result = $connection->fetchRow($select)) {
-            return $result;
-       }
 
-       return [];
+        if ($result = $connection->fetchRow($select)) {
+            return $result;
+        }
+
+        return [];
     }
 
     /**

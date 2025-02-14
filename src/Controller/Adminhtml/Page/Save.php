@@ -95,7 +95,8 @@ class Save extends Action
             $this->dataPersistor->clear('emico_attributelanding_page');
 
             if ($this->getRequest()->getParam('back')) {
-                return $resultRedirect->setPath('*/*/edit',
+                return $resultRedirect->setPath(
+                    '*/*/edit',
                     [
                         'page_id' => $page->getPageId(),
                         'store' => $page->getStoreId()
