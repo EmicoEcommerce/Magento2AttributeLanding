@@ -50,7 +50,9 @@ class Page extends AbstractDb
             ->where('ps.page_id = ?', $landingPageId)
             ->where('store_id = ?', $storeId);
 
-        if ($result = $connection->fetchRow($select)) {
+        $result = $connection->fetchRow($select);
+
+        if ($result) {
             return $result;
         }
 
