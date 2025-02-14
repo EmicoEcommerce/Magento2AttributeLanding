@@ -50,24 +50,21 @@ class ConvertLandingpageEntries implements DataPatchInterface
         $data = [
             'page_id' => $landingPage['page_id'],
             'store_id' => $storeId,
-            'active' => $landingPage['active'],
-            'url_path' => $landingPage['url_path'],
-            'category_id' => $landingPage['category_id'],
-            'heading' => $landingPage['heading'],
-            'header_image' => $landingPage['header_image'],
-            'meta_title' => $landingPage['meta_title'],
-            'meta_keywords' => $landingPage['meta_keywords'],
-            'meta_description' => $landingPage['meta_description'],
-            'content_first' => $landingPage['content_first'],
-            'content_last' => $landingPage['content_last'],
-            'filter_attributes' => $landingPage['filter_attributes'],
-            'tweakwise_filter_template' => $landingPage['tweakwise_filter_template'],
-            'is_filter_link_allowed' => $landingPage['is_filter_link_allowed'],
-            'canonical_url' => $landingPage['canonical_url'],
-            'hide_selected_filters' => $landingPage['hide_selected_filters'],
-            'tweakwise_sort_template' => $landingPage['tweakwise_sort_template'],
-            'tweakwise_builder_template' => $landingPage['tweakwise_builder_template'],
         ];
+
+        $fields = [
+            'active', 'url_path', 'category_id', 'heading', 'header_image', 'meta_title',
+            'meta_keywords', 'meta_description', 'content_first', 'content_last',
+            'filter_attributes', 'tweakwise_filter_template', 'is_filter_link_allowed',
+            'canonical_url', 'hide_selected_filters', 'tweakwise_sort_template',
+            'tweakwise_builder_template'
+        ];
+
+        foreach ($fields as $field) {
+            if (isset($landingPage[$field])) {
+                $data[$field] = $landingPage[$field];
+            }
+        }
 
         $connection->insert($table, $data);
     }
