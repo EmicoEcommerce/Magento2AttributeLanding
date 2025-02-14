@@ -109,7 +109,7 @@ class UrlRewriteService
      * @param UrlRewriteGeneratorInterface $page
      * @param string|null $suffix
      */
-    protected function generateRewrite(UrlRewriteGeneratorInterface $page, string $suffix = null)
+    public function generateRewrite(UrlRewriteGeneratorInterface $page, string $suffix = null)
     {
         $this->removeExistingUrlRewrites($page);
         $urlRewritesToPersist = [];
@@ -155,7 +155,7 @@ class UrlRewriteService
     }
 
     /**
-     * @param int $storePage
+     * @param LandingPageInterface $storePage
      * @param LandingPageInterface $page
      * @param stirng|null $suffix
      *
@@ -163,7 +163,7 @@ class UrlRewriteService
      */
     private function generateRewritesForAllStores
     (
-        int $storePage,
+        LandingPageInterface $storePage,
         LandingPageInterface $page,
         ?string $suffix,
         array $urlRewritesToPersist
