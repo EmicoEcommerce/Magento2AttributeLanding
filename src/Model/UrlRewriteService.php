@@ -166,8 +166,7 @@ class UrlRewriteService
         LandingPageInterface $page,
         ?string $suffix,
         array $urlRewritesToPersist
-    ): array
-    {
+    ): array {
         $stores = $this->storeManager->getStores();
 
         foreach ($stores as $store) {
@@ -220,8 +219,7 @@ class UrlRewriteService
         UrlRewriteGeneratorInterface $page,
         int $storeId,
         string $suffix = null
-    ): UrlRewrite
-    {
+    ): UrlRewrite {
         /** @var UrlRewrite $urlRewrite **/
         $urlRewrite = $this->urlRewriteFactory->create();
         $urlRewrite
