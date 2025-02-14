@@ -72,8 +72,7 @@ class ConvertLandingpageEntries implements DataPatchInterface
             LandingPageInterface::TWEAKWISE_SORT_TEMPLATE,
             LandingPageInterface::TWEAKWISE_BUILDER_TEMPLATE
         ];
-
-
+        
         foreach ($fields as $field) {
             if (isset($landingPage[$field])) {
                 $data[$field] = $landingPage[$field];
