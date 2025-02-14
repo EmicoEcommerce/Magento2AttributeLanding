@@ -83,17 +83,15 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 
         $storeId = $this->request->getParam('store', 0);
         $items = $this->collection->getItems();
-        $mergedData = [];
 
         foreach ($items as $model) {
             $modelData = $model->getData();
-            $modelData = array_merge(
-                $modelData,
-                $this->landingPageRepository->getByIdWithStore(
-                    $model->getPageId(),
-                    $storeId
-                )->getData()
-            );
+            $storeData = $this->landingPageRepository->getByIdWithStore($model->getPageId(), $storeId)->getData();
+
+            foreach ($storeData as $key => $value) {
+                $modelData[$key] = $value;
+            }
+
             if ($model->getOverviewPageImage()) {
                 $modelData[LandingPageInterface::OVERVIEW_PAGE_IMAGE] = [
                     [
@@ -106,10 +104,8 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             $modelData[LandingPageInterface::FILTER_ATTRIBUTES] = $model->getUnserializedFilterAttributes();
             $modelData[LandingPageInterface::STORE_ID] = $storeId;
 
-            $mergedData[$model->getPageId()] = $modelData;
+            $this->loadedData[$model->getPageId()] = $modelData;
         }
-
-        $this->loadedData = $mergedData;
 
         $data = $this->dataPersistor->get('emico_attributelanding_page');
         $data['store_id'] = $storeId;

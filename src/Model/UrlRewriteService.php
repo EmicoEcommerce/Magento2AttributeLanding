@@ -7,6 +7,7 @@
 
 namespace Emico\AttributeLanding\Model;
 
+use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
@@ -138,10 +139,7 @@ class UrlRewriteService
             }
 
             if ($storePage->getStoreId() == 0) {
-                $urlRewritesToPersist = array_merge(
-                    $urlRewritesToPersist,
-                    $this->generateRewritesForAllStores($storePage, $page, $suffix)
-                );
+                $urlRewritesToPersist = $this->generateRewritesForAllStores($storePage, $page, $suffix, $urlRewritesToPersist);
             } else {
                 $urlRewrite = $this->createUrlRewrite($storePage, $storePage->getStoreId(), $suffix);
                 $urlRewritesToPersist[$storePage->getStoreId()] = $urlRewrite;
@@ -152,15 +150,14 @@ class UrlRewriteService
     }
 
     /**
-     * @param $storePage
-     * @param $page
-     * @param $suffix
+     * @param int $storePage
+     * @param LandingPageInterface $page
+     * @param stirng|null $suffix
      *
      * @return array
      */
-    private function generateRewritesForAllStores($storePage, $page, $suffix): array
+    private function generateRewritesForAllStores(int $storePage, LandingPageInterface $page, ?string $suffix, array $urlRewritesToPersist): array
     {
-        $urlRewritesToPersist = [];
         $stores = $this->storeManager->getStores();
 
         foreach ($stores as $store) {
