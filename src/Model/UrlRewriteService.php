@@ -161,8 +161,7 @@ class UrlRewriteService
      *
      * @return array
      */
-    private function generateRewritesForAllStores
-    (
+    private function generateRewritesForAllStores(
         LandingPageInterface $storePage,
         LandingPageInterface $page,
         ?string $suffix,
@@ -217,8 +216,7 @@ class UrlRewriteService
         );
     }
 
-    private function createUrlRewrite
-    (
+    private function createUrlRewrite(
         UrlRewriteGeneratorInterface $page,
         int $storeId,
         string $suffix = null
