@@ -589,4 +589,57 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     {
         return $this->getData(LandingPageInterface::UPDATED_AT);
     }
+
+    public function getLandingPageDataWithoutStore(): array
+    {
+        $fields = [
+            LandingPageInterface::PAGE_ID,
+            LandingPageInterface::NAME,
+            LandingPageInterface::CREATED_AT,
+            LandingPageInterface::UPDATED_AT,
+            LandingPageInterface::OVERVIEW_PAGE_ID,
+            LandingPageInterface::OVERVIEW_PAGE_IMAGE,
+            LandingPageInterface::URL_PATH,
+            LandingPageInterface::STORE_ID,
+        ];
+
+        $return = [];
+
+        foreach ($fields as $field) {
+            $return[$field] = $this->getData($field);
+        }
+
+        return $return;
+    }
+
+    public function getLandingPageDataForStore(): array
+    {
+        $fields = [
+            LandingPageInterface::STORE_ID,
+            LandingPageInterface::URL_PATH,
+            LandingPageInterface::CATEGORY_ID,
+            LandingPageInterface::HEADING,
+            LandingPageInterface::HEADER_IMAGE,
+            LandingPageInterface::META_TITLE,
+            LandingPageInterface::META_KEYWORDS,
+            LandingPageInterface::META_DESCRIPTION,
+            LandingPageInterface::CONTENT_FIRST,
+            LandingPageInterface::CONTENT_LAST,
+            LandingPageInterface::FILTER_ATTRIBUTES,
+            LandingPageInterface::TWEAKWISE_FILTER_TEMPLATE,
+            LandingPageInterface::TWEAKWISE_SORT_TEMPLATE,
+            LandingPageInterface::TWEAKWISE_BUILDER_TEMPLATE,
+            LandingPageInterface::FILTER_LINK_ALLOWED,
+            LandingPageInterface::HIDE_SELECTED_FILTERS,
+            LandingPageInterface::CANONICAL_URL,
+        ];
+
+        $return = [];
+
+        foreach ($fields as $field) {
+            $return[$field] = $this->getData($field);
+        }
+
+        return $return;
+    }
 }

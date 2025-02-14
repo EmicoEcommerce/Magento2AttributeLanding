@@ -131,8 +131,11 @@ class LandingPageRepository implements LandingPageRepositoryInterface
                 $page->setData('hide_selected_filters', "1");
             }
 
+            $landingpage = $this->dataPageFactory->create();
+            $landingpage->setData($page->getLandingPageDataWithoutStore());
+
             /** @var LandingPage $page */
-            $this->resource->save($page);
+            $this->resource->save($landingpage);
             $this->resource->saveLandingPageStoreData($page);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(

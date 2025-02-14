@@ -119,34 +119,39 @@ class UrlRewriteService
 
         $urlRewritesToPersist = [];
 
-        $allPages = $this->landingPageRepository->getAllPagesById($page->getPageId());
+        if ($page->getUrlRewriteEntityType() == 'landingpage') {
+            $allPages = $this->landingPageRepository->getAllPagesById($page->getPageId());
+            foreach ($allPages as $storePage) {
+                if ($storePage->getStoreId() == $page->getStoreId()) {
+                    $storePage = $page;
+                }
 
+                if ($storePage->getStoreId() == 0) {
+                    $stores = $this->storeManager->getStores();
+                    foreach ($stores as $store) {
+                        if ($store->getId() == $page->getStoreId()) {
+                            $storePage = $page;
+                        }
 
-        foreach ($allPages as $storePage) {
-            if ($storePage->getStoreId() == $page->getStoreId()) {
-                $storePage = $page;
-            }
-
-            if ($storePage->getStoreId() == 0) {
-                $stores = $this->storeManager->getStores();
-                foreach ($stores as $store) {
-                    if ($store->getId() == $page->getStoreId()) {
-                        $storePage = $page;
-                    }
-
-                    if (!empty($storePage)) {
-                        if (!isset($urlRewritesToPersist[$store->getId()])) {
-                            $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
-                            $urlRewritesToPersist[$store->getId()] = $urlRewrite;
+                        if (!empty($storePage)) {
+                            if (!isset($urlRewritesToPersist[$store->getId()])) {
+                                $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
+                                $urlRewritesToPersist[$store->getId()] = $urlRewrite;
+                            }
                         }
                     }
+                } else {
+                    $urlRewrite = $this->createUrlRewrite($storePage, $storePage->getStoreId(), $suffix);
+                    $urlRewritesToPersist[$storePage->getStoreId()] = $urlRewrite;
                 }
-            } else {
-                $urlRewrite = $this->createUrlRewrite($storePage, $storePage->getStoreId(), $suffix);
-                $urlRewritesToPersist[$storePage->getStoreId()] = $urlRewrite;
+            }
+        } elseif ($page->getUrlRewriteEntityType() == 'landingpage_overview') {
+            foreach ($this->getActiveStoreIds($page) as $storeId) {
+                $urlRewritesToPersist[$storeId] = $this->createUrlRewrite($page, $storeId, $suffix);
             }
         }
-        /** @var UrlRewrite $urlRewrite **/
+
+        $test = $page->getUrlRewriteEntityType();
 
         $this->urlPersist->replace($urlRewritesToPersist);
 
@@ -185,5 +190,18 @@ class UrlRewriteService
         $urlRewrite->setRequestPath($requestPath);
 
         return $urlRewrite;
+    }
+
+    protected function getActiveStoreIds(UrlRewriteGeneratorInterface $landingPage): array
+    {
+        if (\in_array('0', $landingPage->getStoreIds(), false) !== false) {
+            return array_map(
+                static function (StoreInterface $store) {
+                    return $store->getId();
+                },
+                $this->storeManager->getStores()
+            );
+        }
+        return $landingPage->getStoreIds();
     }
 }
