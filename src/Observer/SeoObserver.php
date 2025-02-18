@@ -164,6 +164,5 @@ class SeoObserver implements ObserverInterface
 
         $category = $this->categoryRepository->get($landingPage->getCategoryId());
         $this->pageConfig->getAssetCollection()->remove($category->getUrl());
-
     }
 }
