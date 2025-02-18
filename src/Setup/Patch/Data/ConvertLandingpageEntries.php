@@ -10,14 +10,20 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 
 class ConvertLandingpageEntries implements DataPatchInterface
 {
+    /**
+     * ConvertLandingpageEntries constructor.
+     * @param ModuleDataSetupInterface $moduleDataSetup
+     * @param StoreManagerInterface $storeManager
+     */
     public function __construct(
-        private ModuleDataSetupInterface $moduleDataSetup,
-        private StoreManagerInterface $storeManager
+        private readonly ModuleDataSetupInterface $moduleDataSetup,
+        private readonly StoreManagerInterface $storeManager
     ) {
-        $this->moduleDataSetup = $moduleDataSetup;
-        $this->storeManager = $storeManager;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function apply(): void
     {
         $this->moduleDataSetup->startSetup();
@@ -46,6 +52,12 @@ class ConvertLandingpageEntries implements DataPatchInterface
         $this->moduleDataSetup->endSetup();
     }
 
+    /**
+     * @param AdapterInterface $connection
+     * @param string $table
+     * @param array $landingPage
+     * @param int $storeId
+     */
     private function insertLandingPageStore(AdapterInterface $connection, $table, $landingPage, $storeId): void
     {
         $data = [
@@ -66,13 +78,13 @@ class ConvertLandingpageEntries implements DataPatchInterface
             LandingPageInterface::CONTENT_LAST,
             LandingPageInterface::FILTER_ATTRIBUTES,
             LandingPageInterface::TWEAKWISE_FILTER_TEMPLATE,
-            LandingPageInterface::IS_FILTER_LINK_ALLOWED,
+            LandingPageInterface::FILTER_LINK_ALLOWED,
             LandingPageInterface::CANONICAL_URL,
             LandingPageInterface::HIDE_SELECTED_FILTERS,
             LandingPageInterface::TWEAKWISE_SORT_TEMPLATE,
             LandingPageInterface::TWEAKWISE_BUILDER_TEMPLATE
         ];
-        
+
         foreach ($fields as $field) {
             if (isset($landingPage[$field])) {
                 $data[$field] = $landingPage[$field];
@@ -82,11 +94,17 @@ class ConvertLandingpageEntries implements DataPatchInterface
         $connection->insert($table, $data);
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getDependencies(): array
     {
         return [];
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getAliases(): array
     {
         return [];

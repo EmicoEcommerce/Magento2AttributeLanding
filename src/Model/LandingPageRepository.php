@@ -10,9 +10,7 @@ namespace Emico\AttributeLanding\Model;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
-use Emico\AttributeLanding\Model\ResourceModel\Page;
 use Emico\AttributeLanding\Ui\Component\Product\Form\Categories\Options;
-use Magento\Catalog\Model\CategoryManagement;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
@@ -25,8 +23,6 @@ use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory as PageCol
 use Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterfaceFactory;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\UrlRewrite\Model\UrlRewriteFactory;
-use Magento\UrlRewrite\Model\ResourceModel\UrlRewriteCollectionFactory;
 
 class LandingPageRepository implements LandingPageRepositoryInterface
 {
@@ -96,7 +92,6 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         SearchCriteriaBuilder $searchCriteriaBuilder,
         StoreManagerInterface $storeManager,
         Options $options,
-        private UrlRewriteCollectionFactory $urlRewriteCollectionFactory
     ) {
         $this->resource = $resource;
         $this->pageCollectionFactory = $pageCollectionFactory;
@@ -194,6 +189,10 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         return $landingPage;
     }
 
+    /**
+     * @param int $pageId
+     * @return LandingPageInterface[]
+     */
     public function getAllPagesById(int $pageId): array
     {
         $storeData = $this->resource->getAllLandingPageStoreData($pageId);
@@ -293,6 +292,10 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         return $result->getItems();
     }
 
+    /**
+     * @param LandingPageInterface $page
+     * @return void
+     */
     public function saveLandingPageStoreData(LandingPageInterface $page): void
     {
         $this->resource->saveLandingPageStoreData($page->getPageId(), $page->getStoreId(), $page);

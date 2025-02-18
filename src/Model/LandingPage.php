@@ -429,7 +429,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
-     * Get active store IDs
+     * Get active store ID
      * @return int
      */
     public function getStoreId(): int
@@ -441,7 +441,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param int $storeId
      * @return LandingPageInterface
      */
-    public function setStoreId(?int $storeId): LandingPageInterface
+    public function setStoreId(int $storeId): LandingPageInterface
     {
         return $this->setData(self::STORE_ID, $storeId);
     }
@@ -590,6 +590,9 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         return $this->getData(LandingPageInterface::UPDATED_AT);
     }
 
+    /**
+     * @return array
+     */
     public function getLandingPageDataWithoutStore(): array
     {
         $fields = [
@@ -612,6 +615,9 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         return $return;
     }
 
+    /**
+     * @return array
+     */
     public function getLandingPageDataForStore(): array
     {
         $fields = [

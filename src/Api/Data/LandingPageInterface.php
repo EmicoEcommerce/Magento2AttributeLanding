@@ -60,7 +60,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
 
     /**
      * Get store_id
-     * @return int|null
+     * @return int
      */
     public function getStoreId(): int;
 
@@ -214,7 +214,11 @@ interface LandingPageInterface extends ExtensibleDataInterface
      */
     public function setPageId(?string $pageId): LandingPageInterface;
 
-    public function setStoreId(?int $storeId): LandingPageInterface;
+    /**
+     * @param int $storeId
+     * @return LandingPageInterface
+     */
+    public function setStoreId(int $storeId): LandingPageInterface;
 
     /**
      * @param string|null $active

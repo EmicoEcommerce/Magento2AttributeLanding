@@ -8,13 +8,11 @@
 namespace Emico\AttributeLanding\Model\Page;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
-use Emico\AttributeLanding\Model\LandingPage;
 use Emico\AttributeLanding\Model\LandingPageRepository;
 use Emico\AttributeLanding\Model\ResourceModel\Page\Collection;
 use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\App\Request\Http;
-use Magento\Store\Model\StoreManagerInterface;
 
 class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
@@ -59,8 +57,8 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         CollectionFactory $collectionFactory,
         DataPersistorInterface $dataPersistor,
         ImageUploader $imageUploader,
-        private Http $request,
-        private LandingPageRepository $landingPageRepository,
+        private readonly Http $request,
+        private readonly LandingPageRepository $landingPageRepository,
         array $meta = [],
         array $data = []
     ) {
