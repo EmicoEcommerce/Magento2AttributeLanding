@@ -434,7 +434,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function getStoreId(): int
     {
-        return $this->getData(self::STORE_ID);
+        return (int)$this->getData(self::STORE_ID);
     }
 
     /**
