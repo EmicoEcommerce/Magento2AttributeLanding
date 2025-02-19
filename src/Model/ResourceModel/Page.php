@@ -14,6 +14,13 @@ use Magento\Framework\Event\ManagerInterface as EventManager;
 
 class Page extends AbstractDb
 {
+    /**
+     * Page constructor.
+     *
+     * @param Context $context
+     * @param EventManager $eventManager
+     * @param null $connectionName
+     */
     public function __construct(
         private readonly Context $context,
         private readonly EventManager $eventManager,

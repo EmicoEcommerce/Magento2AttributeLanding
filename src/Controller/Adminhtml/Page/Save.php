@@ -68,12 +68,13 @@ class Save extends Action
         /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
+        $data[LandingPageInterface::STORE_ID] = (int)$data[LandingPageInterface::STORE_ID];
 
         if (!$data) {
             return $resultRedirect->setPath('*/*/');
         }
 
-        $id = $this->getRequest()->getParam('page_id');
+        $id = (int)$this->getRequest()->getParam('page_id');
 
         if (!$id) {
             $page = $this->landingPageFactory->create();

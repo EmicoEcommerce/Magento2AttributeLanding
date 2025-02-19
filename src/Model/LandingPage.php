@@ -78,7 +78,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function getPageId()
     {
-        return $this->getData(self::PAGE_ID);
+        return (int)$this->getData(self::PAGE_ID);
     }
 
     /**
@@ -606,13 +606,13 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             LandingPageInterface::STORE_ID,
         ];
 
-        $return = [];
+        $landingpageData = [];
 
         foreach ($fields as $field) {
-            $return[$field] = $this->getData($field);
+            $landingpageData[$field] = $this->getData($field);
         }
 
-        return $return;
+        return $landingpageData;
     }
 
     /**
@@ -640,12 +640,12 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             LandingPageInterface::CANONICAL_URL,
         ];
 
-        $return = [];
+        $landingpageData = [];
 
         foreach ($fields as $field) {
-            $return[$field] = $this->getData($field);
+            $landingpageData[$field] = $this->getData($field);
         }
 
-        return $return;
+        return $landingpageData;
     }
 }

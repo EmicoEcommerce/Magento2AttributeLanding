@@ -158,7 +158,7 @@ class SeoObserver implements ObserverInterface
      */
     protected function clearCurrentCanonical(LandingPageInterface $landingPage)
     {
-        if (empty($landingPage->getCategoryId())) {
+        if (!$landingPage->getCategoryId()) {
             return;
         }
 

@@ -91,7 +91,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         JoinProcessorInterface $extensionAttributesJoinProcessor,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         StoreManagerInterface $storeManager,
-        Options $options,
+        Options $options
     ) {
         $this->resource = $resource;
         $this->pageCollectionFactory = $pageCollectionFactory;
@@ -126,11 +126,11 @@ class LandingPageRepository implements LandingPageRepositoryInterface
                 $page->setData('hide_selected_filters', "1");
             }
 
-            $landingpage = $this->dataPageFactory->create();
-            $landingpage->setData($page->getLandingPageDataWithoutStore());
+            $parentLandingpage = $this->dataPageFactory->create();
+            $parentLandingpage->setData($page->getLandingPageDataWithoutStore());
 
             /** @var LandingPage $page */
-            $this->resource->save($landingpage);
+            $this->resource->save($parentLandingpage);
             $this->resource->saveLandingPageStoreData($page);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
@@ -171,20 +171,20 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     {
         $landingPage = $this->getById($pageId);
 
-        $defaultData = $this->resource->getLandingPageStoreData($pageId, 0);
         $storeData = $this->resource->getLandingPageStoreData($pageId, $storeId);
-
-        if (!empty($defaultData)) {
-            unset($defaultData['id']);
-            $landingPage->setData($defaultData);
-        }
 
         if (!empty($storeData)) {
             unset($storeData['id']);
             $landingPage->setData($storeData);
         } else {
+            $defaultData = $this->resource->getLandingPageStoreData($pageId, 0);
+            if (!empty($defaultData)) {
+                unset($defaultData['id']);
+                $landingPage->setData($defaultData);
+            }
             $landingPage->setData(LandingPageInterface::STORE_ID, $storeId);
         }
+
 
         return $landingPage;
     }
@@ -298,6 +298,6 @@ class LandingPageRepository implements LandingPageRepositoryInterface
      */
     public function saveLandingPageStoreData(LandingPageInterface $page): void
     {
-        $this->resource->saveLandingPageStoreData($page->getPageId(), $page->getStoreId(), $page);
+        $this->resource->saveLandingPageStoreData($page);
     }
 }

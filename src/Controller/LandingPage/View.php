@@ -92,8 +92,8 @@ class View extends Action
      */
     public function execute(): ResultInterface
     {
-        $pageId = $this->getRequest()->getParam('id');
-        $storeId = $this->storeManager->getStore()->getId();
+        $pageId = (int)$this->getRequest()->getParam('id');
+        $storeId = (int)$this->storeManager->getStore()->getId();
         $landingPage = $this->landingPageRepository->getByIdWithStore($pageId, $storeId);
 
         if (!$landingPage->isActive()) {

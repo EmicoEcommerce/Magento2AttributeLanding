@@ -158,7 +158,7 @@ class UrlRewriteService
      * @param LandingPageInterface $storePage
      * @param LandingPageInterface $page
      * @param stirng|null $suffix
-     *
+     * @param array $urlRewritesToPersist
      * @return array
      */
     private function generateRewritesForAllStores(

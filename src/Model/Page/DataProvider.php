@@ -79,7 +79,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             return $this->loadedData;
         }
 
-        $storeId = $this->request->getParam('store', 0);
+        $storeId = (int)$this->request->getParam('store', 0);
         $items = $this->collection->getItems();
 
         foreach ($items as $model) {

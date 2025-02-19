@@ -56,7 +56,7 @@ class Edit extends Page
     public function execute()
     {
         $id = $this->getRequest()->getParam('page_id');
-        $storeId = $this->getRequest()->getParam('store', 0);
+        $storeId = (int)$this->getRequest()->getParam('store', 0);
 
         if ($id) {
             try {
