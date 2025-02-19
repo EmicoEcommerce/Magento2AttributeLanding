@@ -182,9 +182,9 @@ class LandingPageRepository implements LandingPageRepositoryInterface
                 unset($defaultData['id']);
                 $landingPage->setData($defaultData);
             }
+            
             $landingPage->setData(LandingPageInterface::STORE_ID, $storeId);
         }
-
 
         return $landingPage;
     }
