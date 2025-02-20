@@ -183,7 +183,6 @@ class UrlRewriteService
                 $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
                 $urlRewritesToPersist[$store->getId()] = $urlRewrite;
             }
-
         }
 
         return $urlRewritesToPersist;
