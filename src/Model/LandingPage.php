@@ -606,13 +606,13 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             LandingPageInterface::STORE_ID,
         ];
 
-        $landingpageData = [];
+        $landingPageData = [];
 
         foreach ($fields as $field) {
-            $landingpageData[$field] = $this->getData($field);
+            $landingPageData[$field] = $this->getData($field);
         }
 
-        return $landingpageData;
+        return $landingPageData;
     }
 
     /**
@@ -640,12 +640,12 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             LandingPageInterface::CANONICAL_URL,
         ];
 
-        $landingpageData = [];
+        $landingPageData = [];
 
         foreach ($fields as $field) {
-            $landingpageData[$field] = $this->getData($field);
+            $landingPageData[$field] = $this->getData($field);
         }
 
-        return $landingpageData;
+        return $landingPageData;
     }
 }

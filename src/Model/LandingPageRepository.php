@@ -126,11 +126,11 @@ class LandingPageRepository implements LandingPageRepositoryInterface
                 $page->setData('hide_selected_filters', "1");
             }
 
-            $parentLandingpage = $this->dataPageFactory->create();
-            $parentLandingpage->setData($page->getLandingPageDataWithoutStore());
+            $parentLandingPage = $this->dataPageFactory->create();
+            $parentLandingPage->setData($page->getLandingPageDataWithoutStore());
 
             /** @var LandingPage $page */
-            $this->resource->save($parentLandingpage);
+            $this->resource->save($parentLandingPage);
             $this->resource->saveLandingPageStoreData($page);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
@@ -182,7 +182,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
                 unset($defaultData['id']);
                 $landingPage->setData($defaultData);
             }
-            
+
             $landingPage->setData(LandingPageInterface::STORE_ID, $storeId);
         }
 

@@ -108,6 +108,7 @@ class UrlRewriteService
     /**
      * @param UrlRewriteGeneratorInterface $page
      * @param string|null $suffix
+     * @throws \Magento\UrlRewrite\Model\Exception\UrlAlreadyExistsException|\Exception
      */
     public function generateRewrite(UrlRewriteGeneratorInterface $page, string $suffix = null)
     {
@@ -157,7 +158,7 @@ class UrlRewriteService
     /**
      * @param LandingPageInterface $storePage
      * @param LandingPageInterface $page
-     * @param stirng|null $suffix
+     * @param string|null $suffix
      * @param array $urlRewritesToPersist
      * @return array
      */
@@ -174,12 +175,15 @@ class UrlRewriteService
                 $storePage = $page;
             }
 
-            if (!empty($storePage)) {
-                if (!isset($urlRewritesToPersist[$store->getId()])) {
-                    $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
-                    $urlRewritesToPersist[$store->getId()] = $urlRewrite;
-                }
+            if (empty($storePage)) {
+                continue;
             }
+
+            if (!isset($urlRewritesToPersist[$store->getId()])) {
+                $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
+                $urlRewritesToPersist[$store->getId()] = $urlRewrite;
+            }
+
         }
 
         return $urlRewritesToPersist;
