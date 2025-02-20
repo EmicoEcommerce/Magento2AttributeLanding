@@ -58,14 +58,12 @@ class ConvertLandingpageEntries implements DataPatchInterface
      * @param array $landingPage
      * @param int $storeId
      */
-    private function insertLandingPageStore
-    (
+    private function insertLandingPageStore(
         AdapterInterface $connection,
         string $table,
         array $landingPage,
         int $storeId
-    ): void
-    {
+    ): void {
         $data = [
             'page_id' => $landingPage['page_id'],
             'store_id' => $storeId,
