@@ -78,7 +78,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function getPageId()
     {
-        return $this->getData(self::PAGE_ID);
+        return (int)$this->getData(self::PAGE_ID);
     }
 
     /**
@@ -429,21 +429,21 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
-     * Get active stores IDs
-     * @return int[]
+     * Get active store ID
+     * @return int
      */
-    public function getStoreIds(): array
+    public function getStoreId(): int
     {
-        return explode(',', $this->getData(self::STORE_IDS));
+        return (int)$this->getData(self::STORE_ID);
     }
 
     /**
-     * @param int[] $storeIds
+     * @param int $storeId
      * @return LandingPageInterface
      */
-    public function setStoreIds(array $storeIds): LandingPageInterface
+    public function setStoreId(int $storeId): LandingPageInterface
     {
-        return $this->setData(self::STORE_IDS, implode(',', $storeIds));
+        return $this->setData(self::STORE_ID, $storeId);
     }
 
     /**
@@ -588,5 +588,58 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     public function getUpdatedAt(): string
     {
         return $this->getData(LandingPageInterface::UPDATED_AT);
+    }
+
+    /**
+     * @return array
+     */
+    public function getLandingPageDataWithoutStore(): array
+    {
+        $fields = [
+            LandingPageInterface::PAGE_ID,
+            LandingPageInterface::NAME,
+            LandingPageInterface::CREATED_AT,
+            LandingPageInterface::UPDATED_AT,
+            LandingPageInterface::OVERVIEW_PAGE_ID,
+            LandingPageInterface::OVERVIEW_PAGE_IMAGE,
+            LandingPageInterface::URL_PATH,
+            LandingPageInterface::STORE_ID,
+        ];
+
+        return array_combine(
+            $fields,
+            array_map(fn($field) => $this->getData($field), $fields)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getLandingPageDataForStore(): array
+    {
+        $fields = [
+            LandingPageInterface::STORE_ID,
+            LandingPageInterface::URL_PATH,
+            LandingPageInterface::CATEGORY_ID,
+            LandingPageInterface::HEADING,
+            LandingPageInterface::HEADER_IMAGE,
+            LandingPageInterface::META_TITLE,
+            LandingPageInterface::META_KEYWORDS,
+            LandingPageInterface::META_DESCRIPTION,
+            LandingPageInterface::CONTENT_FIRST,
+            LandingPageInterface::CONTENT_LAST,
+            LandingPageInterface::FILTER_ATTRIBUTES,
+            LandingPageInterface::TWEAKWISE_FILTER_TEMPLATE,
+            LandingPageInterface::TWEAKWISE_SORT_TEMPLATE,
+            LandingPageInterface::TWEAKWISE_BUILDER_TEMPLATE,
+            LandingPageInterface::FILTER_LINK_ALLOWED,
+            LandingPageInterface::HIDE_SELECTED_FILTERS,
+            LandingPageInterface::CANONICAL_URL,
+        ];
+
+        return array_combine(
+            $fields,
+            array_map(fn($field) => $this->getData($field), $fields)
+        );
     }
 }

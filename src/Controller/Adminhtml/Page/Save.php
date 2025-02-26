@@ -68,17 +68,19 @@ class Save extends Action
         /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
+        $data[LandingPageInterface::STORE_ID] = (int)$data[LandingPageInterface::STORE_ID];
 
         if (!$data) {
             return $resultRedirect->setPath('*/*/');
         }
 
-        $id = $this->getRequest()->getParam('page_id');
+        $id = (int)$this->getRequest()->getParam('page_id');
+
         if (!$id) {
             $page = $this->landingPageFactory->create();
         } else {
             try {
-                $page = $this->landingPageRepository->getById($id);
+                $page = $this->landingPageRepository->getByIdWithStore($id, $data[LandingPageInterface::STORE_ID]);
             } catch (NoSuchEntityException $exception) {
                 $this->messageManager->addErrorMessage(__('This Page no longer exists.'));
                 return $resultRedirect->setPath('*/*/');
@@ -86,6 +88,7 @@ class Save extends Action
         }
 
         try {
+            $data['id'] = $id;
             $this->hydrateLandingPage($page, $data);
             $this->landingPageRepository->save($page);
 
@@ -93,7 +96,13 @@ class Save extends Action
             $this->dataPersistor->clear('emico_attributelanding_page');
 
             if ($this->getRequest()->getParam('back')) {
-                return $resultRedirect->setPath('*/*/edit', ['page_id' => $page->getPageId()]);
+                return $resultRedirect->setPath(
+                    '*/*/edit',
+                    [
+                        'page_id' => $page->getPageId(),
+                        'store' => $page->getStoreId()
+                    ]
+                );
             }
 
             return $resultRedirect->setPath('*/*/');
@@ -104,7 +113,7 @@ class Save extends Action
         }
 
         $this->dataPersistor->set('emico_attributelanding_page', $data);
-        return $resultRedirect->setPath('*/*/edit', ['page_id' => $this->getRequest()->getParam('page_id')]);
+        return $resultRedirect->setPath('*/*/edit', ['page_id' => $page->getPageId(), 'store' => $page->getStoreId()]);
     }
 
     /**
@@ -131,6 +140,9 @@ class Save extends Action
         if (empty($data[LandingPageInterface::OVERVIEW_PAGE_ID])) {
             $data[LandingPageInterface::OVERVIEW_PAGE_ID] = null;
         }
+
+        $landingPage->setUrlPath($data[LandingPageInterface::URL_PATH]);
+        $data[LandingPageInterface::URL_PATH] = $landingPage->getUrlPath();
 
         unset($data[LandingPageInterface::FILTER_ATTRIBUTES]);
         $this->dataObjectHelper->populateWithArray($landingPage, $data, LandingPageInterface::class);

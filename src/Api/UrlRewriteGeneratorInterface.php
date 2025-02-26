@@ -28,10 +28,4 @@ interface UrlRewriteGeneratorInterface
      * @return string
      */
     public function getUrlRewriteRequestPath(): string;
-
-    /**
-     * Get active stores IDs
-     * @return int[]
-     */
-    public function getStoreIds(): array;
 }

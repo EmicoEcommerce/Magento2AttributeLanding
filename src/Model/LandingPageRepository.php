@@ -11,7 +11,6 @@ use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Ui\Component\Product\Form\Categories\Options;
-use Magento\Catalog\Model\CategoryManagement;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
@@ -127,8 +126,12 @@ class LandingPageRepository implements LandingPageRepositoryInterface
                 $page->setData('hide_selected_filters', "1");
             }
 
+            $parentLandingPage = $this->dataPageFactory->create();
+            $parentLandingPage->setData($page->getLandingPageDataWithoutStore());
+
             /** @var LandingPage $page */
-            $this->resource->save($page);
+            $this->resource->save($parentLandingPage);
+            $this->resource->saveLandingPageStoreData($page);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
                 __(
@@ -156,6 +159,52 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         }
 
         return $page;
+    }
+
+    /**
+     * @param int $pageId
+     * @param int $storeId
+     * @return LandingPageInterface
+     * @throws NoSuchEntityException
+     */
+    public function getByIdWithStore(int $pageId, int $storeId): LandingPageInterface
+    {
+        $landingPage = $this->getById($pageId);
+
+        $storeData = $this->resource->getLandingPageStoreData($pageId, $storeId);
+
+        if (!empty($storeData)) {
+            unset($storeData['id']);
+            $landingPage->setData($storeData);
+        } else {
+            $defaultData = $this->resource->getLandingPageStoreData($pageId, 0);
+            if (!empty($defaultData)) {
+                unset($defaultData['id']);
+                $landingPage->setData($defaultData);
+            }
+
+            $landingPage->setData(LandingPageInterface::STORE_ID, $storeId);
+        }
+
+        return $landingPage;
+    }
+
+    /**
+     * @param int $pageId
+     * @return LandingPageInterface[]
+     */
+    public function getAllPagesById(int $pageId): array
+    {
+        $storeData = $this->resource->getAllLandingPageStoreData($pageId);
+        $pages = [];
+
+        foreach ($storeData as $data) {
+            $page = $this->dataPageFactory->create();
+            $page->setData($data);
+            $pages[] = $page;
+        }
+
+        return $pages;
     }
 
     /**
@@ -220,7 +269,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter(LandingPageInterface::ACTIVE, 1)
-            ->addFilter(LandingPageInterface::STORE_IDS, [$storeId, 0], 'in')
+            ->addFilter(LandingPageInterface::STORE_ID, [$storeId, 0], 'in')
             ->create();
 
         $result = $this->getList($searchCriteria);
@@ -241,5 +290,14 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
         $result = $this->getList($searchCriteria);
         return $result->getItems();
+    }
+
+    /**
+     * @param LandingPageInterface $page
+     * @return void
+     */
+    public function saveLandingPageStoreData(LandingPageInterface $page): void
+    {
+        $this->resource->saveLandingPageStoreData($page);
     }
 }

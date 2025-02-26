@@ -8,10 +8,11 @@
 namespace Emico\AttributeLanding\Model\Page;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
-use Emico\AttributeLanding\Model\LandingPage;
+use Emico\AttributeLanding\Model\LandingPageRepository;
 use Emico\AttributeLanding\Model\ResourceModel\Page\Collection;
 use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Framework\App\Request\Http;
 
 class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
@@ -44,6 +45,8 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
      * @param CollectionFactory $collectionFactory
      * @param DataPersistorInterface $dataPersistor
      * @param ImageUploader $imageUploader
+     * @param Http $request
+     * @param LandingPageRepository $landingPageRepository
      * @param array $meta
      * @param array $data
      */
@@ -54,6 +57,8 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         CollectionFactory $collectionFactory,
         DataPersistorInterface $dataPersistor,
         ImageUploader $imageUploader,
+        private readonly Http $request,
+        private readonly LandingPageRepository $landingPageRepository,
         array $meta = [],
         array $data = []
     ) {
@@ -74,11 +79,17 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             return $this->loadedData;
         }
 
+        $storeId = (int)$this->request->getParam('store', 0);
         $items = $this->collection->getItems();
-        foreach ($items as $model) {
-            /** @var LandingPage $model */
 
+        foreach ($items as $model) {
             $modelData = $model->getData();
+            $storeData = $this->landingPageRepository->getByIdWithStore($model->getPageId(), $storeId)->getData();
+
+            foreach ($storeData as $key => $value) {
+                $modelData[$key] = $value;
+            }
+
             if ($model->getOverviewPageImage()) {
                 $modelData[LandingPageInterface::OVERVIEW_PAGE_IMAGE] = [
                     [
@@ -89,19 +100,21 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             }
 
             $modelData[LandingPageInterface::FILTER_ATTRIBUTES] = $model->getUnserializedFilterAttributes();
+            $modelData[LandingPageInterface::STORE_ID] = $storeId;
 
             $this->loadedData[$model->getPageId()] = $modelData;
         }
 
         $data = $this->dataPersistor->get('emico_attributelanding_page');
-        
+        $data['store_id'] = $storeId;
+
         if (!empty($data)) {
             $model = $this->collection->getNewEmptyItem();
             $model->setData($data);
             $this->loadedData[$model->getPageId()] = $model->getData();
             $this->dataPersistor->clear('emico_attributelanding_page');
         }
-        
+
         return $this->loadedData;
     }
 }
