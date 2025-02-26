@@ -7,6 +7,7 @@
 
 namespace Emico\AttributeLanding\Model;
 
+use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
@@ -107,38 +108,100 @@ class UrlRewriteService
     /**
      * @param UrlRewriteGeneratorInterface $page
      * @param string|null $suffix
+     * @throws \Magento\UrlRewrite\Model\Exception\UrlAlreadyExistsException|\Exception
      */
     public function generateRewrite(UrlRewriteGeneratorInterface $page, string $suffix = null)
     {
-        // This is needed because you want to delete all the existing rewrites
-        // before saving the new ones due to same url paths but different store id.
-        // When duplicating a page, for example, the url_rewrite of that store gets copied as well and
-        // this needs to be removed in order to make it possible
-        // to choose same url paths with different store views
         $this->removeExistingUrlRewrites($page);
-
         $urlRewritesToPersist = [];
 
-        foreach ($this->getActiveStoreIds($page) as $storeId) {
-            /** @var UrlRewrite $urlRewrite */
-            $urlRewrite = $this->urlRewriteFactory->create();
-            $urlRewrite
-                ->setEntityType($page->getUrlRewriteEntityType())
-                ->setEntityId($page->getUrlRewriteEntityId())
-                ->setTargetPath($page->getUrlRewriteTargetPath())
-                ->setStoreId($storeId);
-
-            $requestPath = ($suffix === null)
-                ? $page->getUrlRewriteRequestPath()
-                : $page->getUrlPath() . $suffix;
-
-            $requestPath = trim($requestPath, '/');
-
-            $urlRewrite->setRequestPath($requestPath);
-            $urlRewritesToPersist[] = $urlRewrite;
+        if ($page->getUrlRewriteEntityType() == 'landingpage') {
+            $urlRewritesToPersist = $this->generateLandingPageRewrites($page, $suffix);
+        } elseif ($page->getUrlRewriteEntityType() == 'landingpage_overview') {
+            $urlRewritesToPersist = $this->generateOverviewPageRewrites($page, $suffix);
         }
 
         $this->urlPersist->replace($urlRewritesToPersist);
+    }
+
+    /**
+     * @param UrlRewriteGeneratorInterface $page
+     * @param string|null $suffix
+     * @return array
+     */
+    private function generateLandingPageRewrites(UrlRewriteGeneratorInterface $page, string $suffix = null): array
+    {
+        $urlRewritesToPersist = [];
+        $allPages = $this->landingPageRepository->getAllPagesById($page->getPageId());
+
+        foreach ($allPages as $storePage) {
+            if ($storePage->getStoreId() == $page->getStoreId()) {
+                $storePage = $page;
+            }
+
+            if ($storePage->getStoreId() == 0) {
+                $urlRewritesToPersist = $this->generateRewritesForAllStores(
+                    $storePage,
+                    $page,
+                    $suffix,
+                    $urlRewritesToPersist
+                );
+            } else {
+                $urlRewrite = $this->createUrlRewrite($storePage, $storePage->getStoreId(), $suffix);
+                $urlRewritesToPersist[$storePage->getStoreId()] = $urlRewrite;
+            }
+        }
+
+        return $urlRewritesToPersist;
+    }
+
+    /**
+     * @param LandingPageInterface $storePage
+     * @param LandingPageInterface $page
+     * @param string|null $suffix
+     * @param array $urlRewritesToPersist
+     * @return array
+     */
+    private function generateRewritesForAllStores(
+        LandingPageInterface $storePage,
+        LandingPageInterface $page,
+        ?string $suffix,
+        array $urlRewritesToPersist
+    ): array {
+        $stores = $this->storeManager->getStores();
+
+        foreach ($stores as $store) {
+            if ($store->getId() == $page->getStoreId()) {
+                $storePage = $page;
+            }
+
+            if (empty($storePage)) {
+                continue;
+            }
+
+            if (!isset($urlRewritesToPersist[$store->getId()])) {
+                $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
+                $urlRewritesToPersist[$store->getId()] = $urlRewrite;
+            }
+        }
+
+        return $urlRewritesToPersist;
+    }
+
+    /**
+     * @param UrlRewriteGeneratorInterface $page
+     * @param string|null $suffix
+     * @return array
+     */
+    private function generateOverviewPageRewrites(UrlRewriteGeneratorInterface $page, string $suffix = null): array
+    {
+        $urlRewritesToPersist = [];
+
+        foreach ($this->getActiveStoreIds($page) as $storeId) {
+            $urlRewritesToPersist[$storeId] = $this->createUrlRewrite($page, $storeId, $suffix);
+        }
+
+        return $urlRewritesToPersist;
     }
 
     /**
@@ -155,10 +218,30 @@ class UrlRewriteService
         );
     }
 
-    /**
-     * @param UrlRewriteGeneratorInterface $landingPage
-     * @return int[]
-     */
+    private function createUrlRewrite(
+        UrlRewriteGeneratorInterface $page,
+        int $storeId,
+        string $suffix = null
+    ): UrlRewrite {
+        /** @var UrlRewrite $urlRewrite **/
+        $urlRewrite = $this->urlRewriteFactory->create();
+        $urlRewrite
+            ->setEntityType($page->getUrlRewriteEntityType())
+            ->setEntityId($page->getUrlRewriteEntityId())
+            ->setTargetPath($page->getUrlRewriteTargetPath())
+            ->setStoreId($storeId);
+
+        $requestPath = ($suffix === null)
+            ? $page->getUrlRewriteRequestPath()
+            : $page->getUrlPath() . $suffix;
+
+        $requestPath = trim($requestPath, '/');
+
+        $urlRewrite->setRequestPath($requestPath);
+
+        return $urlRewrite;
+    }
+
     protected function getActiveStoreIds(UrlRewriteGeneratorInterface $landingPage): array
     {
         if (\in_array('0', $landingPage->getStoreIds(), false) !== false) {

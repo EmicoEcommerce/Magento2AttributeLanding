@@ -30,7 +30,6 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public const CATEGORY_ID = 'category_id';
     public const PAGE_ID = 'page_id';
     public const META_DESCRIPTION = 'meta_description';
-    public const STORE_IDS = 'store_ids';
     public const OVERVIEW_PAGE_ID = 'overview_page_id';
     public const OVERVIEW_PAGE_IMAGE = 'overview_page_image';
     public const FILTER_LINK_ALLOWED = 'is_filter_link_allowed';
@@ -38,6 +37,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public const CANONICAL_URL = 'canonical_url';
     public const CREATED_AT = 'created_at';
     public const UPDATED_AT = 'updated_at';
+    public const STORE_ID = 'store_id';
 
     /**
      * Set an extension attributes object.
@@ -57,6 +57,12 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return int|null
      */
     public function getPageId();
+
+    /**
+     * Get store_id
+     * @return int
+     */
+    public function getStoreId(): int;
 
     /**
      * Get active
@@ -143,12 +149,6 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public function getTweakwiseBuilderTemplate(): ?string;
 
     /**
-     * Get active stores IDs
-     * @return int[]
-     */
-    public function getStoreIds(): array;
-
-    /**
      * Get filter_attributes
      * @return string|null
      */
@@ -213,6 +213,12 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return LandingPageInterface
      */
     public function setPageId(?string $pageId): LandingPageInterface;
+
+    /**
+     * @param int $storeId
+     * @return LandingPageInterface
+     */
+    public function setStoreId(int $storeId): LandingPageInterface;
 
     /**
      * @param string|null $active
@@ -291,12 +297,6 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return LandingPageInterface
      */
     public function setTweakwiseBuilderTemplate(?string $tweakwiseBuilderTemplate): LandingPageInterface;
-
-    /**
-     * @param array|null $storeIds
-     * @return LandingPageInterface
-     */
-    public function setStoreIds(array $storeIds): LandingPageInterface;
 
     /**
      * @param string|null $overviewPageId

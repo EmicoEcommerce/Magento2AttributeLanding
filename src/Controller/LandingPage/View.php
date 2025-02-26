@@ -92,18 +92,12 @@ class View extends Action
      */
     public function execute(): ResultInterface
     {
-        $pageId = $this->getRequest()->getParam('id');
-        $landingPage = $this->landingPageRepository->getById($pageId);
+        $pageId = (int)$this->getRequest()->getParam('id');
+        $storeId = (int)$this->storeManager->getStore()->getId();
+        $landingPage = $this->landingPageRepository->getByIdWithStore($pageId, $storeId);
 
         if (!$landingPage->isActive()) {
             throw new NotFoundException(__('Page not active'));
-        }
-
-        $storeId = $this->storeManager->getStore()->getId();
-        $landingPageStoreIds = $landingPage->getStoreIds();
-
-        if ((!in_array($storeId, $landingPage->getStoreIds())) && (!in_array(0, $landingPage->getStoreIds()))) {
-            throw new NotFoundException(__('Page not active for this store'));
         }
 
         $this->landingPageContext->setLandingPage($landingPage);

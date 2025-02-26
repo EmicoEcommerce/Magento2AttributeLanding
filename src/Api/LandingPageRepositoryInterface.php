@@ -20,11 +20,12 @@ interface LandingPageRepositoryInterface
     /**
      * Retrieve Page
      * @param int $pageId
+     * @param int $storeId
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws NoSuchEntityException
      */
-    public function getById(int $pageId): LandingPageInterface;
+    public function getByIdWithStore(int $pageId, int $storeId): LandingPageInterface;
 
     /**
      * Retrieve Page matching the specified criteria.

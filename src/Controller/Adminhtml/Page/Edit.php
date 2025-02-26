@@ -56,10 +56,11 @@ class Edit extends Page
     public function execute()
     {
         $id = $this->getRequest()->getParam('page_id');
+        $storeId = (int)$this->getRequest()->getParam('store', 0);
 
         if ($id) {
             try {
-                $landingPage = $this->landingPageRepository->getById($id);
+                $landingPage = $this->landingPageRepository->getByIdWithStore($id, $storeId);
             } catch (NoSuchEntityException $exception) {
                 $this->messageManager->addErrorMessage(__('This Page no longer exists.'));
 
