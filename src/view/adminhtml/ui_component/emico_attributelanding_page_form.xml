@@ -268,62 +268,6 @@
 			</formElements>
 		</field>
 
-		<field formElement="select" name="tweakwise_filter_template" sortOrder="61">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">Page</item>
-                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
-                    <item name="showInDefault" xsi:type="boolean">1</item>
-                    <item name="showInWebsite" xsi:type="boolean">0</item>
-                    <item name="showInStore" xsi:type="boolean">1</item>
-				</item>
-			</argument>
-
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">Tweakwise filter template</label>
-				<dataScope>tweakwise_filter_template</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
-			<formElements>
-				<select>
-					<settings>
-						<options class="Tweakwise\Magento2Tweakwise\Model\Config\Source\FilterTemplate" />
-					</settings>
-				</select>
-			</formElements>
-		</field>
-
-		<field formElement="select" name="tweakwise_sort_template" sortOrder="62">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">Page</item>
-                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
-                    <item name="showInDefault" xsi:type="boolean">1</item>
-                    <item name="showInWebsite" xsi:type="boolean">0</item>
-                    <item name="showInStore" xsi:type="boolean">1</item>
-				</item>
-			</argument>
-
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">Tweakwise sorteer template</label>
-				<dataScope>tweakwise_sort_template</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
-			<formElements>
-				<select>
-					<settings>
-						<options class="Tweakwise\Magento2Tweakwise\Model\Config\Source\SortTemplate" />
-					</settings>
-				</select>
-			</formElements>
-		</field>
-
 		<field formElement="checkbox" name="is_filter_link_allowed" sortOrder="80">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
