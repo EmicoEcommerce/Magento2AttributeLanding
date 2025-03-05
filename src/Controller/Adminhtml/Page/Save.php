@@ -91,6 +91,7 @@ class Save extends Action
             if ($id) {
                 $data['id'] = $id;
             }
+            
             $this->hydrateLandingPage($page, $data);
             $this->landingPageRepository->save($page);
 
