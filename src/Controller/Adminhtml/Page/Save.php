@@ -74,7 +74,7 @@ class Save extends Action
             return $resultRedirect->setPath('*/*/');
         }
 
-        $id = $this->getRequest()->getParam('page_id') ? (int)$this->getRequest()->getParam('page_id') : null;
+        $id = $this->getRequest()->getParam('page_id') ?? null;
 
         if (!$id) {
             $page = $this->landingPageFactory->create();
@@ -91,7 +91,7 @@ class Save extends Action
             if ($id) {
                 $data['id'] = $id;
             }
-            
+
             $this->hydrateLandingPage($page, $data);
             $this->landingPageRepository->save($page);
 
