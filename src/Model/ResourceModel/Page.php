@@ -34,7 +34,7 @@ class Page extends AbstractDb
      */
     protected function _construct(): void
     {
-        $this->_init('emico_attributelanding_page', LandingPageInterface::PAGE_ID);
+        $this->_init('emico_attributelanding_page',LandingPageInterface::PAGE_ID);
     }
 
     /**
