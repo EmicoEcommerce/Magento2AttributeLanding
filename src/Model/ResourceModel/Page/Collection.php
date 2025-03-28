@@ -16,7 +16,7 @@ class Collection extends AbstractCollection
     /**
      * @var string
      */
-    protected $_idFieldName = 'page_id';
+    protected $_idFieldName = 'id';
 
     /**
      * @return void
@@ -24,5 +24,21 @@ class Collection extends AbstractCollection
     protected function _construct()
     {
         $this->_init(LandingPage::class, PageResourceModel::class);
+    }
+
+    /**
+     * Initialize select with join
+     *
+     * @return $this
+     */
+    protected function _initSelect()
+    {
+        parent::_initSelect();
+        $this->getSelect()->join(
+            ['emico_attributelanding_page_store' => $this->getTable('emico_attributelanding_page_store')],
+            'main_table.page_id = emico_attributelanding_page_store.page_id',
+            ['*']
+        );
+        return $this;
     }
 }

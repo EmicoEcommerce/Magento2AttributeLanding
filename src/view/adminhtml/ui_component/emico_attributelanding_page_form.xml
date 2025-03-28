@@ -32,7 +32,7 @@
 		<dataProvider class="Emico\AttributeLanding\Model\Page\DataProvider" name="page_form_data_source">
 			<settings>
 				<requestFieldName>page_id</requestFieldName>
-				<primaryFieldName>page_id</primaryFieldName>
+				<primaryFieldName>main_table.page_id</primaryFieldName>
 			</settings>
 		</dataProvider>
 	</dataSource>
