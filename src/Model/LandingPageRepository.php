@@ -131,6 +131,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
             /** @var LandingPage $page */
             $this->resource->save($parentLandingPage);
+            $page->setPageId($parentLandingPage->getPageId());
             $this->resource->saveLandingPageStoreData($page);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
@@ -268,8 +269,8 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         $storeId = $this->storeManager->getStore()->getId();
 
         $searchCriteria = $this->searchCriteriaBuilder
-            ->addFilter(LandingPageInterface::ACTIVE, 1)
-            ->addFilter(LandingPageInterface::STORE_ID, [$storeId, 0], 'in')
+            ->addFilter('emico_attributelanding_page_store.' . LandingPageInterface::ACTIVE, 1)
+            ->addFilter('emico_attributelanding_page_store.' . LandingPageInterface::STORE_ID, [$storeId, 0], 'in')
             ->create();
 
         $result = $this->getList($searchCriteria);
@@ -285,7 +286,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     {
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter(LandingPageInterface::OVERVIEW_PAGE_ID, $overviewPage->getPageId())
-            ->addFilter(LandingPageInterface::ACTIVE, 1)
+            ->addFilter('emico_attributelanding_page_store.' . LandingPageInterface::ACTIVE, 1)
             ->create();
 
         $result = $this->getList($searchCriteria);

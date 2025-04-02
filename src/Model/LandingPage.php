@@ -164,7 +164,6 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function setUrlPath(?string $urlPath): LandingPageInterface
     {
-        $urlPath = trim($urlPath, ' /');
         return $this->setData(self::URL_PATH, $urlPath);
     }
 
@@ -618,6 +617,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     public function getLandingPageDataForStore(): array
     {
         $fields = [
+            LandingPageInterface::ACTIVE,
             LandingPageInterface::STORE_ID,
             LandingPageInterface::URL_PATH,
             LandingPageInterface::CATEGORY_ID,

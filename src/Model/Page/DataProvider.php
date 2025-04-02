@@ -99,6 +99,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 ];
             }
 
+            $model->setFilterAttributes($modelData[LandingPageInterface::FILTER_ATTRIBUTES]);
             $modelData[LandingPageInterface::FILTER_ATTRIBUTES] = $model->getUnserializedFilterAttributes();
             $modelData[LandingPageInterface::STORE_ID] = $storeId;
 

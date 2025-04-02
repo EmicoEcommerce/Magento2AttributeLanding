@@ -142,8 +142,8 @@ class UrlFinder
         }
 
         $searchCriteria = $this->searchCriteriaBuilder
-            ->addFilter(LandingPageInterface::ACTIVE, 1)
-            ->addFilter(LandingPageInterface::FILTER_LINK_ALLOWED, 1)
+            ->addFilter('emico_attributelanding_page_store.' . LandingPageInterface::ACTIVE, 1)
+            ->addFilter('emico_attributelanding_page_store.' . LandingPageInterface::FILTER_LINK_ALLOWED, 1)
             ->create();
 
         $landingPageLookup = [];
