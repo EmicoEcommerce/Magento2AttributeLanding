@@ -15,5 +15,5 @@ interface OverviewPageSearchResultsInterface extends SearchResultsInterface
      * Get Page list.
      * @return \Emico\AttributeLanding\Api\Data\OverviewPageInterface[]
      */
-    public function getItems(): array;
+    public function getItems();
 }

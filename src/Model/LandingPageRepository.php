@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
@@ -9,11 +11,12 @@ namespace Emico\AttributeLanding\Model;
 
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
+use Emico\AttributeLanding\Api\Data\LandingPageSearchResultsInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Ui\Component\Product\Form\Categories\Options;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
+use Emico\AttributeLanding\Api\Data\LandingPageSearchResultsInterfaceFactory;
 use Emico\AttributeLanding\Model\ResourceModel\Page as ResourcePage;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -27,55 +30,10 @@ use Magento\Store\Model\StoreManagerInterface;
 class LandingPageRepository implements LandingPageRepositoryInterface
 {
     /**
-     * @var ResourcePage
-     */
-    protected $resource;
-
-    /**
-     * @var PageSearchResultsInterfaceFactory
-     */
-    protected $searchResultsFactory;
-
-    /**
-     * @var CollectionProcessorInterface
-     */
-    private $collectionProcessor;
-
-    /**
-     * @var PageCollectionFactory
-     */
-    protected $pageCollectionFactory;
-
-    /**
-     * @var LandingPageInterfaceFactory
-     */
-    protected $dataPageFactory;
-
-    /**
-     * @var JoinProcessorInterface
-     */
-    protected $extensionAttributesJoinProcessor;
-
-    /**
-     * @var SearchCriteriaBuilder
-     */
-    private $searchCriteriaBuilder;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private StoreManagerInterface $storeManager;
-
-    /**
-     * @var Options
-     */
-    private Options $options;
-
-    /**
      * @param ResourcePage $resource
      * @param LandingPageInterfaceFactory $dataPageFactory
      * @param PageCollectionFactory $pageCollectionFactory
-     * @param PageSearchResultsInterfaceFactory $searchResultsFactory
+     * @param LandingPageSearchResultsInterfaceFactory $searchResultsFactory
      * @param CollectionProcessorInterface $collectionProcessor
      * @param JoinProcessorInterface $extensionAttributesJoinProcessor
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
@@ -83,25 +41,16 @@ class LandingPageRepository implements LandingPageRepositoryInterface
      * @param Options $options
      */
     public function __construct(
-        ResourcePage $resource,
-        LandingPageInterfaceFactory $dataPageFactory,
-        PageCollectionFactory $pageCollectionFactory,
-        PageSearchResultsInterfaceFactory $searchResultsFactory,
-        CollectionProcessorInterface $collectionProcessor,
-        JoinProcessorInterface $extensionAttributesJoinProcessor,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        StoreManagerInterface $storeManager,
-        Options $options
+        private readonly ResourcePage $resource,
+        private readonly LandingPageInterfaceFactory $dataPageFactory,
+        private readonly PageCollectionFactory $pageCollectionFactory,
+        private readonly LandingPageSearchResultsInterfaceFactory $searchResultsFactory,
+        private readonly CollectionProcessorInterface $collectionProcessor,
+        private readonly JoinProcessorInterface $extensionAttributesJoinProcessor,
+        private readonly SearchCriteriaBuilder $searchCriteriaBuilder,
+        private readonly StoreManagerInterface $storeManager,
+        private readonly Options $options
     ) {
-        $this->resource = $resource;
-        $this->pageCollectionFactory = $pageCollectionFactory;
-        $this->searchResultsFactory = $searchResultsFactory;
-        $this->dataPageFactory = $dataPageFactory;
-        $this->collectionProcessor = $collectionProcessor;
-        $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->storeManager = $storeManager;
-        $this->options = $options;
     }
 
     /**
@@ -211,7 +160,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getList(SearchCriteriaInterface $criteria)
+    public function getList(SearchCriteriaInterface $criteria): LandingPageSearchResultsInterface
     {
         $collection = $this->pageCollectionFactory->create();
 

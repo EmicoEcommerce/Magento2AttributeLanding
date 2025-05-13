@@ -221,10 +221,10 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public function setStoreId(int $storeId): LandingPageInterface;
 
     /**
-     * @param string|null $active
+     * @param bool $active
      * @return LandingPageInterface
      */
-    public function setActive(?string $active): LandingPageInterface;
+    public function setActive(bool $active): LandingPageInterface;
 
     /**
      * @param string|null $name

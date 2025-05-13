@@ -9,10 +9,10 @@
                 type="Emico\AttributeLanding\Model\LandingPage"/>
     <preference for="Emico\AttributeLanding\Api\Data\OverviewPageInterface"
                 type="Emico\AttributeLanding\Model\OverviewPage"/>
-    <preference for="Emico\AttributeLanding\Api\Data\PageSearchResultsInterface"
-                type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Emico\AttributeLanding\Api\Data\LandingPageSearchResultsInterface"
+                type="Emico\AttributeLanding\Model\LandingPageSearchResults"/>
     <preference for="Emico\AttributeLanding\Api\Data\OverviewPageSearchResultsInterface"
-                type="Magento\Framework\Api\SearchResults"/>
+                type="Emico\AttributeLanding\Model\OverviewPageSearchResults"/>
     <preference for="Emico\AttributeLanding\Model\FilterApplier\FilterApplierInterface"
                 type="Emico\AttributeLanding\Model\FilterApplier\AggregateFilterApplier"/>
     <preference for="Emico\AttributeLanding\Model\FilterHider\FilterHiderInterface"
