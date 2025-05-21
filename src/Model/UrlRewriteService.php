@@ -235,8 +235,6 @@ class UrlRewriteService
             ? $page->getUrlRewriteRequestPath()
             : $page->getUrlPath() . $suffix;
 
-        $requestPath = trim($requestPath, '/');
-
         $urlRewrite->setRequestPath($requestPath);
 
         return $urlRewrite;
