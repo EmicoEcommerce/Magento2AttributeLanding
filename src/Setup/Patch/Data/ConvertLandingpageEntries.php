@@ -80,7 +80,9 @@ class ConvertLandingpageEntries implements DataPatchInterface
             LandingPageInterface::CANONICAL_URL,
             LandingPageInterface::HIDE_SELECTED_FILTERS,
             LandingPageInterface::TWEAKWISE_SORT_TEMPLATE,
-            LandingPageInterface::TWEAKWISE_BUILDER_TEMPLATE
+            LandingPageInterface::TWEAKWISE_BUILDER_TEMPLATE,
+            LandingPageInterface::OVERVIEW_PAGE_ID,
+            LandingPageInterface::OVERVIEW_PAGE_IMAGE,
         ];
 
         foreach ($fields as $field) {

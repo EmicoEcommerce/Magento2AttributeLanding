@@ -599,8 +599,6 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             LandingPageInterface::NAME,
             LandingPageInterface::CREATED_AT,
             LandingPageInterface::UPDATED_AT,
-            LandingPageInterface::OVERVIEW_PAGE_ID,
-            LandingPageInterface::OVERVIEW_PAGE_IMAGE,
             LandingPageInterface::URL_PATH,
             LandingPageInterface::STORE_ID,
         ];
@@ -635,6 +633,8 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             LandingPageInterface::FILTER_LINK_ALLOWED,
             LandingPageInterface::HIDE_SELECTED_FILTERS,
             LandingPageInterface::CANONICAL_URL,
+            LandingPageInterface::OVERVIEW_PAGE_ID,
+            LandingPageInterface::OVERVIEW_PAGE_IMAGE,
         ];
 
         return array_combine(
