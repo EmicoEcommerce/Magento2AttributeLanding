@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emico\AttributeLanding\Api;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
+use Emico\AttributeLanding\Api\Data\OverviewPageSearchResultsInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 
@@ -29,10 +32,10 @@ interface OverviewPageRepositoryInterface
     /**
      * Retrieve Page matching the specified criteria.
      * @param SearchCriteriaInterface $searchCriteria
-     * @return \Emico\AttributeLanding\Api\Data\PageSearchResultsInterface
+     * @return \Emico\AttributeLanding\Api\Data\OverviewPageSearchResultsInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getList(SearchCriteriaInterface $searchCriteria);
+    public function getList(SearchCriteriaInterface $searchCriteria): OverviewPageSearchResultsInterface;
 
     /**
      * Delete Page

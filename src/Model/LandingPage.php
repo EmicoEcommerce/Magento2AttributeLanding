@@ -23,11 +23,6 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     protected $_eventPrefix = 'emico_attributelanding_page';
 
     /**
-     * @var Config
-     */
-    protected $config;
-
-    /**
      * LandingPage constructor.
      * @param Context $context
      * @param Registry $registry
@@ -39,11 +34,11 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * @param array $data
      */
     public function __construct(
+        private readonly Config $config,
         Context $context,
         Registry $registry,
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory,
-        Config $config,
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
         array $data = []
@@ -57,8 +52,6 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             $resourceCollection,
             $data
         );
-
-        $this->config = $config;
     }
 
     /**
@@ -102,10 +95,10 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Set active
-     * @param string $active
+     * @param bool $active
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setActive($active): LandingPageInterface
+    public function setActive(bool $active): LandingPageInterface
     {
         return $this->setData(self::ACTIVE, $active);
     }

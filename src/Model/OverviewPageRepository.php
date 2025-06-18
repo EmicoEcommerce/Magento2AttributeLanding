@@ -4,11 +4,12 @@ namespace Emico\AttributeLanding\Model;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
+use Emico\AttributeLanding\Api\Data\OverviewPageSearchResultsInterface;
 use Emico\AttributeLanding\Api\OverviewPageRepositoryInterface;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
+use Emico\AttributeLanding\Api\Data\OverviewPageSearchResultsInterfaceFactory;
 use Emico\AttributeLanding\Model\ResourceModel\OverviewPage as ResourcePage;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -19,36 +20,6 @@ use Emico\AttributeLanding\Api\Data\OverviewPageInterfaceFactory;
 class OverviewPageRepository implements OverviewPageRepositoryInterface
 {
     /**
-     * @var ResourcePage
-     */
-    protected $resource;
-
-    /**
-     * @var PageSearchResultsInterfaceFactory
-     */
-    protected $searchResultsFactory;
-
-    /**
-     * @var PageCollectionFactory
-     */
-    protected $pageCollectionFactory;
-
-    /**
-     * @var OverviewPageInterfaceFactory
-     */
-    protected $dataPageFactory;
-
-    /**
-     * @var SearchCriteriaBuilder
-     */
-    private $searchCriteriaBuilder;
-
-    /**
-     * @var CollectionProcessorInterface
-     */
-    private $collectionProcessor;
-
-    /**
      * @param ResourcePage $resource
      * @param OverviewPageInterfaceFactory $dataPageFactory
      * @param PageCollectionFactory $pageCollectionFactory
@@ -57,19 +28,13 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      */
     public function __construct(
-        ResourcePage $resource,
-        OverviewPageInterfaceFactory $dataPageFactory,
-        PageCollectionFactory $pageCollectionFactory,
-        PageSearchResultsInterfaceFactory $searchResultsFactory,
-        CollectionProcessorInterface $collectionProcessor,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        private readonly ResourcePage $resource,
+        private readonly OverviewPageInterfaceFactory $dataPageFactory,
+        private readonly PageCollectionFactory $pageCollectionFactory,
+        private readonly OverviewPageSearchResultsInterfaceFactory $searchResultsFactory,
+        private readonly CollectionProcessorInterface $collectionProcessor,
+        private readonly SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
-        $this->resource = $resource;
-        $this->pageCollectionFactory = $pageCollectionFactory;
-        $this->searchResultsFactory = $searchResultsFactory;
-        $this->dataPageFactory = $dataPageFactory;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->collectionProcessor = $collectionProcessor;
     }
 
     /**
@@ -114,7 +79,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getList(SearchCriteriaInterface $criteria)
+    public function getList(SearchCriteriaInterface $criteria): OverviewPageSearchResultsInterface
     {
         $collection = $this->pageCollectionFactory->create();
 

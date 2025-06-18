@@ -9,11 +9,11 @@ namespace Emico\AttributeLanding\Api\Data;
 
 use Magento\Framework\Api\SearchResultsInterface;
 
-interface PageSearchResultsInterface extends SearchResultsInterface
+interface LandingPageSearchResultsInterface extends SearchResultsInterface
 {
     /**
      * Get Page list.
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface[]
      */
-    public function getItems(): array;
+    public function getItems();
 }

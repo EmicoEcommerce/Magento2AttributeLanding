@@ -4,6 +4,7 @@ namespace Emico\AttributeLanding\Api;
 
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
+use Emico\AttributeLanding\Api\Data\LandingPageSearchResultsInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 
@@ -33,7 +34,7 @@ interface LandingPageRepositoryInterface
      * @return \Emico\AttributeLanding\Api\Data\PageSearchResultsInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getList(SearchCriteriaInterface $searchCriteria);
+    public function getList(SearchCriteriaInterface $searchCriteria): LandingPageSearchResultsInterface;
 
     /**
      * Delete Page
