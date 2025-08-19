@@ -44,8 +44,8 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory,
         Config $config,
-        AbstractResource $resource = null,
-        AbstractDb $resourceCollection = null,
+        ?AbstractResource $resource = null,
+        ?AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct(

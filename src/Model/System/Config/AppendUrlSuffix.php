@@ -41,8 +41,8 @@ class AppendUrlSuffix extends Value
         ScopeConfigInterface $config,
         TypeListInterface $cacheTypeList,
         UrlRewriteService $rewriteService,
-        AbstractResource $resource = null,
-        AbstractDb $resourceCollection = null,
+        ?AbstractResource $resource = null,
+        ?AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct(
