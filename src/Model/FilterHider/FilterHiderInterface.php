@@ -21,6 +21,6 @@ interface FilterHiderInterface
     public function shouldHideFilter(
         LandingPageInterface $landingPage,
         FilterInterface $filter,
-        Item $filterItem = null
+        ?Item $filterItem = null
     ): bool;
 }

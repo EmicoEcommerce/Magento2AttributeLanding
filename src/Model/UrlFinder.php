@@ -75,7 +75,7 @@ class UrlFinder
      * @param int|null $categoryId
      * @return string|null
      */
-    public function findUrlByFilters(array $filters, int $categoryId = null)
+    public function findUrlByFilters(array $filters, ?int $categoryId = null)
     {
         $result = null;
         $filterHash = $this->createHashForFilters($filters, $categoryId);
@@ -114,7 +114,7 @@ class UrlFinder
      *
      * phpcs:disable Magento2.Security.InsecureFunction.FoundWithAlternative
      */
-    protected function createHashForFilters(array $filters, int $categoryId = null): string
+    protected function createHashForFilters(array $filters, ?int $categoryId = null): string
     {
         usort($filters, [$this, 'sortFilterItems']);
 
