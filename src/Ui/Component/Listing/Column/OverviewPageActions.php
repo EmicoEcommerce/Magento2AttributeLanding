@@ -13,8 +13,8 @@ class OverviewPageActions extends Column
     public const URL_PATH_DETAILS = 'emico_attributelanding/overviewpage/details';
 
     protected $urlBuilder;
-    private const URL_PATH_EDIT = 'emico_attributelanding/overviewpage/edit';
-    private const URL_PATH_DELETE = 'emico_attributelanding/overviewpage/delete';
+    protected const URL_PATH_EDIT = 'emico_attributelanding/overviewpage/edit';
+    protected const URL_PATH_DELETE = 'emico_attributelanding/overviewpage/delete';
 
     public StoreRepositoryInterface $storeRepository;
 
