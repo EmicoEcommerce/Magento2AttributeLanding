@@ -24,9 +24,9 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
     public StoreRepositoryInterface $storeRepository;
 
     public const URL_PATH_DETAILS = 'emico_attributelanding/page/details';
-    private const URL_PATH_EDIT = 'emico_attributelanding/page/edit';
-    private const URL_PATH_DELETE = 'emico_attributelanding/page/delete';
-    private const URL_PATH_DUPLICATE = 'emico_attributelanding/page/duplicate';
+    protected const URL_PATH_EDIT = 'emico_attributelanding/page/edit';
+    protected const URL_PATH_DELETE = 'emico_attributelanding/page/delete';
+    protected const URL_PATH_DUPLICATE = 'emico_attributelanding/page/duplicate';
 
     /**
      * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
