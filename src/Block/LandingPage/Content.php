@@ -67,7 +67,7 @@ class Content extends Template
     /**
      * @return LandingPageInterface
      */
-    protected function getLandingPage(): LandingPageInterface
+    public function getLandingPage(): LandingPageInterface
     {
         return $this->landingPageContext->getLandingPage();
     }

@@ -34,7 +34,7 @@ class Config
      * @param Store|null $store
      * @return mixed|string|null
      */
-    protected function getStoreConfig(string $path, Store $store = null)
+    protected function getStoreConfig(string $path, ?Store $store = null)
     {
         if ($store) {
             return $store->getConfig($path);
@@ -47,7 +47,7 @@ class Config
      * @param Store|null $store
      * @return bool
      */
-    public function isCrossLinkEnabled(Store $store = null): bool
+    public function isCrossLinkEnabled(?Store $store = null): bool
     {
         return (bool) $this->getStoreConfig('emico_attributelanding/general/allow_crosslink', $store);
     }
@@ -56,7 +56,7 @@ class Config
      * @param Store|null $store
      * @return bool
      */
-    public function isAppendCategoryUrlSuffix(Store $store = null): bool
+    public function isAppendCategoryUrlSuffix(?Store $store = null): bool
     {
         return (bool) $this->getStoreConfig('emico_attributelanding/general/append_category_url_suffix', $store);
     }
@@ -65,7 +65,7 @@ class Config
      * @param Store|null $store
      * @return string
      */
-    public function getCategoryUrlSuffix(Store $store = null)
+    public function getCategoryUrlSuffix(?Store $store = null)
     {
         return (string) $this->getStoreConfig(CategoryUrlPathGenerator::XML_PATH_CATEGORY_URL_SUFFIX, $store);
     }
@@ -74,7 +74,7 @@ class Config
      * @param Store|null $store
      * @return bool
      */
-    public function isCanonicalSelfReferencingEnabled(Store $store = null): bool
+    public function isCanonicalSelfReferencingEnabled(?Store $store = null): bool
     {
         return (bool) $this->config->isSetFlag(
             'emico_attributelanding/general/canonical_self_referencing',

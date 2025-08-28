@@ -110,7 +110,7 @@ class UrlRewriteService
      * @param string|null $suffix
      * @throws \Magento\UrlRewrite\Model\Exception\UrlAlreadyExistsException|\Exception
      */
-    public function generateRewrite(UrlRewriteGeneratorInterface $page, string $suffix = null)
+    public function generateRewrite(UrlRewriteGeneratorInterface $page, ?string $suffix = null)
     {
         $this->removeExistingUrlRewrites($page);
         $urlRewritesToPersist = [];
@@ -129,7 +129,7 @@ class UrlRewriteService
      * @param string|null $suffix
      * @return array
      */
-    private function generateLandingPageRewrites(UrlRewriteGeneratorInterface $page, string $suffix = null): array
+    private function generateLandingPageRewrites(UrlRewriteGeneratorInterface $page, ?string $suffix = null): array
     {
         $urlRewritesToPersist = [];
         $allPages = $this->landingPageRepository->getAllPagesById($page->getPageId());
@@ -193,7 +193,7 @@ class UrlRewriteService
      * @param string|null $suffix
      * @return array
      */
-    private function generateOverviewPageRewrites(UrlRewriteGeneratorInterface $page, string $suffix = null): array
+    private function generateOverviewPageRewrites(UrlRewriteGeneratorInterface $page, ?string $suffix = null): array
     {
         $urlRewritesToPersist = [];
 
@@ -221,7 +221,7 @@ class UrlRewriteService
     private function createUrlRewrite(
         UrlRewriteGeneratorInterface $page,
         int $storeId,
-        string $suffix = null
+        ?string $suffix = null
     ): UrlRewrite {
         /** @var UrlRewrite $urlRewrite **/
         $urlRewrite = $this->urlRewriteFactory->create();
