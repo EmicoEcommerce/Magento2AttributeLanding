@@ -1,6 +1,7 @@
 /.idea
 /vendor
 /composer.lock
+/auth.json
 
 /build/local.env
 /build/data
