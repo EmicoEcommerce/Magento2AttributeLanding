@@ -144,7 +144,7 @@ class Save extends Action
             $data[LandingPageInterface::OVERVIEW_PAGE_ID] = null;
         }
 
-        $landingPage->setUrlPath($data[LandingPageInterface::URL_PATH]);
+        $landingPage->setUrlPath(trim($data[LandingPageInterface::URL_PATH]));
         $data[LandingPageInterface::URL_PATH] = $landingPage->getUrlPath();
 
         unset($data[LandingPageInterface::FILTER_ATTRIBUTES]);
