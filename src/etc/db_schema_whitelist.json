@@ -1,0 +1,94 @@
+{
+    "emico_attributelanding_page": {
+        "column": {
+            "page_id": true,
+            "active": true,
+            "created_at": true,
+            "updated_at": true,
+            "url_path": true,
+            "category_id": true,
+            "heading": true,
+            "header_image": true,
+            "meta_title": true,
+            "meta_keywords": true,
+            "meta_description": true,
+            "content_first": true,
+            "content_last": true,
+            "filter_attributes": true,
+            "tweakwise_filter_template": true,
+            "store_ids": true,
+            "overview_page_id": true,
+            "is_filter_link_allowed": true,
+            "name": true,
+            "overview_page_image": true,
+            "canonical_url": true,
+            "hide_selected_filters": true,
+            "tweakwise_sort_template": true,
+            "tweakwise_builder_template": true
+        },
+        "index": {
+            "EMICO_ATTRIBUTELANDING_PAGE_URL_PATH": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "EMICO_ATTRLANDING_PAGE_CTGR_ID_CAT_CTGR_ENTT_ENTT_ID": true,
+            "FK_A8661B1DD183E5D311907AF672A5EBB6": true
+        }
+    },
+    "emico_attributelanding_overviewpage": {
+        "column": {
+            "page_id": true,
+            "active": true,
+            "created_at": true,
+            "updated_at": true,
+            "url_path": true,
+            "heading": true,
+            "meta_title": true,
+            "meta_keywords": true,
+            "meta_description": true,
+            "content_first": true,
+            "content_last": true,
+            "store_ids": true,
+            "name": true
+        },
+        "index": {
+            "EMICO_ATTRIBUTELANDING_OVERVIEWPAGE_URL_PATH": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "emico_attributelanding_page_store": {
+        "column": {
+            "id": true,
+            "page_id": true,
+            "store_id": true,
+            "active": true,
+            "url_path": true,
+            "category_id": true,
+            "heading": true,
+            "header_image": true,
+            "meta_title": true,
+            "meta_keywords": true,
+            "meta_description": true,
+            "content_first": true,
+            "content_last": true,
+            "filter_attributes": true,
+            "tweakwise_filter_template": true,
+            "is_filter_link_allowed": true,
+            "canonical_url": true,
+            "hide_selected_filters": true,
+            "tweakwise_sort_template": true,
+            "tweakwise_builder_template": true
+        },
+        "index": {
+            "EMICO_ATTRIBUTELANDING_PAGE_STORE_URL_PATH": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "EMICO_ATTRIBUTELANDING_PAGE_STORE_PAGE_ID_STORE_ID": true,
+            "FK_3277887D3FFBCA6335B0722410074EC8": true,
+            "EMICO_ATTRIBUTELANDING_PAGE_STORE_STORE_ID_STORE_STORE_ID": true
+        }
+    }
+}
