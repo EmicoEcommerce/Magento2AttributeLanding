@@ -133,7 +133,8 @@ class Save extends Action
             $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] =
                 $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['file'];
         } else {
-            unset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE]);
+            $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] =
+                $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['name'];
         }
 
         $filterAttributes = $data[LandingPageInterface::FILTER_ATTRIBUTES] ?? [];
