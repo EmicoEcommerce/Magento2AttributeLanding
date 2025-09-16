@@ -14,6 +14,7 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\View\Result\PageFactory;
+use Magento\Store\Model\StoreManagerInterface;
 
 class View extends Action
 {
@@ -44,7 +45,8 @@ class View extends Action
         Context $context,
         PageFactory $resultPageFactory,
         LandingPageContext $landingPageContext,
-        OverviewPageRepositoryInterface $overviewPageRepository
+        OverviewPageRepositoryInterface $overviewPageRepository,
+        private readonly StoreManagerInterface $storeManager
     ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->overviewPageRepository = $overviewPageRepository;
@@ -61,8 +63,9 @@ class View extends Action
      */
     public function execute(): ResultInterface
     {
-        $pageId = $this->getRequest()->getParam('id');
-        $overviewPage = $this->overviewPageRepository->getById($pageId);
+        $pageId = (int)$this->getRequest()->getParam('id');
+        $storeId = (int)$this->storeManager->getStore()->getId();
+        $overviewPage = $this->overviewPageRepository->getByIdWithStore($pageId, $storeId);
 
         if (!$overviewPage->isActive()) {
             throw new NotFoundException(__('Page not active'));

@@ -55,10 +55,11 @@ class Edit extends OverviewPage
     public function execute()
     {
         $id = $this->getRequest()->getParam('page_id');
+        $storeId = (int)$this->getRequest()->getParam('store', 0);
 
         if ($id) {
             try {
-                $landingPage = $this->overviewPageRepository->getById($id);
+                $landingPage = $this->overviewPageRepository->getByIdWithStore($id, $storeId);
             } catch (NoSuchEntityException $exception) {
                 $this->messageManager->addErrorMessage(__('This Page no longer exists.'));
 

@@ -20,18 +20,23 @@ interface OverviewPageInterface
     public const NAME = 'name';
     public const URL_PATH = 'url_path';
     public const META_KEYWORDS = 'meta_keywords';
-    public const CATEGORY_ID = 'category_id';
     public const PAGE_ID = 'page_id';
     public const META_DESCRIPTION = 'meta_description';
-    public const STORE_IDS = 'store_ids';
     public const CREATED_AT = 'created_at';
     public const UPDATED_AT = 'updated_at';
+    public const STORE_ID = 'store_id';
 
     /**
      * Get page_id
      * @return int|null
      */
     public function getPageId();
+
+    /**
+     * Get store_id
+     * @return int
+     */
+    public function getStoreId(): int;
 
     /**
      * Get active
@@ -88,12 +93,6 @@ interface OverviewPageInterface
     public function getContentLast();
 
     /**
-     * Get active stores IDs
-     * @return int[]
-     */
-    public function getStoreIds(): array;
-
-    /**
      * @return string
      */
     public function getCreatedAt(): string;
@@ -102,4 +101,10 @@ interface OverviewPageInterface
      * @return string
      */
     public function getUpdatedAt(): string;
+
+    /**
+     * @param int $storeId
+     * @return OverviewPageInterface
+     */
+    public function setStoreId(int $storeId): OverviewPageInterface;
 }

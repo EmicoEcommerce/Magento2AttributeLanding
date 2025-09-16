@@ -77,32 +77,6 @@ class OverviewPageActions extends Column
                         ]
                     ];
                 }
-
-                if (!empty($item['store_ids']) && is_string($item['store_ids'])) {
-                    $store_ids = explode(',', $item['store_ids']);
-                    /** @phpstan-ignore-next-line */
-                    if (!empty($store_ids) && is_array($store_ids)) {
-                        $stores = $this->storeRepository->getList();
-                        $item['stores'] = '';
-                        foreach ($stores as $store) {
-                            $id = $store->getId();
-
-                            // phpcs:ignore SlevomatCodingStandard.Functions.StrictCall.StrictParameterMissing
-                            if (!in_array($id, $store_ids)) {
-                                continue;
-                            }
-
-                            /** @phpstan-ignore-next-line */
-                            if ($id === '0') {
-                                $item['stores'] .= 'All Store Views' . ', ';
-                            } else {
-                                $item['stores'] .= $store->getName() . ', ';
-                            }
-                        }
-                    }
-                } else {
-                    $item['stores'] = 'All Store Views';
-                }
             }
         }
 
