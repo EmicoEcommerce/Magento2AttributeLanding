@@ -20,11 +20,12 @@ interface OverviewPageRepositoryInterface
     /**
      * Retrieve Page
      * @param int $pageId
+     * @param int $storeId
      * @return \Emico\AttributeLanding\Api\Data\OverviewPageInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws NoSuchEntityException
      */
-    public function getById(int $pageId): OverviewPageInterface;
+    public function getByIdWithStore(int $pageId, int $storeId): OverviewPageInterface;
 
     /**
      * Retrieve Page matching the specified criteria.

@@ -6,6 +6,8 @@ use Emico\AttributeLanding\Model\OverviewPage;
 use Emico\AttributeLanding\Model\ResourceModel\OverviewPage\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
+use Emico\AttributeLanding\Model\OverviewPageRepository;
+use Magento\Framework\App\Request\Http;
 
 class DataProvider extends AbstractDataProvider
 {
@@ -32,6 +34,8 @@ class DataProvider extends AbstractDataProvider
      * @param string $requestFieldName
      * @param CollectionFactory $collectionFactory
      * @param DataPersistorInterface $dataPersistor
+     * @param Http $request
+     * @param OverviewPageRepository $overviewPageRepository
      * @param array $meta
      * @param array $data
      */
@@ -41,6 +45,8 @@ class DataProvider extends AbstractDataProvider
         $requestFieldName,
         CollectionFactory $collectionFactory,
         DataPersistorInterface $dataPersistor,
+        private readonly Http $request,
+        private readonly overviewPageRepository $overviewPageRepository,
         array $meta = [],
         array $data = []
     ) {
@@ -60,21 +66,28 @@ class DataProvider extends AbstractDataProvider
             return $this->loadedData;
         }
 
+        $storeId = (int)$this->request->getParam('store', 0);
         $items = $this->collection->getItems();
         foreach ($items as $model) {
+            $storeData = $this->overviewPageRepository->getByIdWithStore($model->getPageId(), $storeId)->getData();
+
+            foreach ($storeData as $key => $value) {
+                $modelData[$key] = $value;
+            }
+
             /** @var OverviewPage $model */
-            $this->loadedData[$model->getPageId()] = $model->getData();
+            $this->loadedData[$model->getPageId()] = $modelData;
         }
 
         $data = $this->dataPersistor->get('emico_attributelanding_overviewpage');
-        
+
         if (!empty($data)) {
             $model = $this->collection->getNewEmptyItem();
             $model->setData($data);
             $this->loadedData[$model->getPageId()] = $model->getData();
             $this->dataPersistor->clear('emico_attributelanding_overviewpage');
         }
-        
+
         return $this->loadedData;
     }
 }

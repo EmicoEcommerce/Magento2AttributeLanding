@@ -66,23 +66,31 @@ class Save extends Action
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
+        $data[OverviewPageInterface::STORE_ID] = (int)$data[OverviewPageInterface::STORE_ID];
 
         if (!$data) {
             return $resultRedirect->setPath('*/*/');
         }
 
-        $id = $this->getRequest()->getParam('page_id');
+        $id = $this->getRequest()->getParam('page_id') ?? null;
         if (!$id) {
             $page = $this->overviewPageFactory->create();
         } else {
             try {
-                $page = $this->overviewPageRepository->getById($id);
+                $page = $this->overviewPageRepository->getByIdWithStore(
+                    $id,
+                    (int)$data[OverviewPageInterface::STORE_ID]
+                );
             } catch (NoSuchEntityException $exception) {
                 $this->messageManager->addErrorMessage(__('This Page no longer exists.'));
                 return $resultRedirect->setPath('*/*/');
             }
         }
 
+        if ($id) {
+            $data['id'] = $id;
+        }
+        
         $this->dataObjectHelper->populateWithArray($page, $data, OverviewPageInterface::class);
 
         try {
@@ -92,7 +100,13 @@ class Save extends Action
             $this->dataPersistor->clear('emico_attributelanding_overviewpage');
 
             if ($this->getRequest()->getParam('back')) {
-                return $resultRedirect->setPath('*/*/edit', ['page_id' => $page->getPageId()]);
+                return $resultRedirect->setPath(
+                    '*/*/edit',
+                    [
+                        'page_id' => $page->getPageId(),
+                        'store' => $page->getStoreId()
+                    ]
+                );
             }
 
             return $resultRedirect->setPath('*/*/');
@@ -103,6 +117,6 @@ class Save extends Action
         }
 
         $this->dataPersistor->set('emico_attributelanding_overviewpage', $data);
-        return $resultRedirect->setPath('*/*/edit', ['page_id' => $this->getRequest()->getParam('page_id')]);
+        return $resultRedirect->setPath('*/*/edit', ['page_id' => $page->getPageId(), 'store' => $page->getStoreId()]);
     }
 }

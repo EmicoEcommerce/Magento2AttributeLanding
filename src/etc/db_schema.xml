@@ -59,4 +59,23 @@
         <constraint xsi:type="primary" referenceId="PRIMARY"><column name="page_id"/></constraint>
         <index referenceId="EMICO_ATTRIBUTELANDING_PAGE_URL_PATH" indexType="btree"><column name="url_path"/></index>
     </table>
+    <table name="emico_attributelanding_overviewpage_store" resource="default" engine="innodb" comment="Landing Page Store Table">
+        <column name="id" xsi:type="int" nullable="false" identity="true" unsigned="true" comment="ID" />
+        <column name="page_id" xsi:type="int" nullable="false" unsigned="true" comment="Landing Page ID" />
+        <column name="store_id" xsi:type="smallint" nullable="false" unsigned="true" comment="Store ID" />
+        <column xsi:type="varchar" name="name" nullable="true" comment="Name"/>
+        <column xsi:type="boolean" name="active" nullable="true" default="1" comment="Active state" />
+        <column xsi:type="varchar" name="url_path" nullable="false" comment="Url Path"/>
+        <column xsi:type="varchar" name="heading" nullable="true" comment="H2 Heading"/>
+        <column xsi:type="varchar" name="meta_title" nullable="true" comment="Meta Title"/>
+        <column xsi:type="text" name="meta_keywords" nullable="true" comment="Meta Keywords"/>
+        <column xsi:type="text" name="meta_description" nullable="true" comment="Meta Description"/>
+        <column xsi:type="text" name="content_first" nullable="true" comment="Content above results"/>
+        <column xsi:type="text" name="content_last" nullable="true" comment="Content below results"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY"><column name="id"/></constraint>
+        <index referenceId="EMICO_ATTRIBUTELANDING_OVERVIEWPAGE_URL_PATH_STORE" indexType="btree"><column name="url_path"/></index>
+        <constraint xsi:type="unique" referenceId="UNQ_OVERVIEWPAGE_STORE_OVERVIEWPAGE_ID_STORE_ID"><column name="page_id"/><column name="store_id"/></constraint>
+        <constraint xsi:type="foreign" referenceId="FK_OVERVIEWPAGE_STORE_OVERVIEWPAGE_ID" table="emico_attributelanding_page_store" column="page_id" referenceTable="emico_attributelanding_overviewpage" referenceColumn="page_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_OVERVIEWPAGE_STORE_STORE_ID" table="emico_attributelanding_overviewpage_store" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
 </schema>
