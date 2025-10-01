@@ -94,7 +94,7 @@ class UrlRewriteService
         );
 
         $searchCriteria = $this->searchCriteriaBuilder->addFilter(
-            LandingPage::PAGE_ID,
+            'main_table.' . LandingPage::PAGE_ID,
             $landingPageIds,
             'in'
         )->create();
