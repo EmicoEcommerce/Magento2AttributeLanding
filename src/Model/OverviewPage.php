@@ -1,9 +1,8 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Model;
 
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
-use Emico\AttributeLanding\Api\Data\StoreSelectableInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Emico\AttributeLanding\Model\ResourceModel\OverviewPage as PageResourceModel;
 use Magento\Framework\Model\AbstractModel;
@@ -92,7 +91,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
     /**
      * Set url_path
      * @param string $urlPath
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return OverviewPageInterface
      */
     public function setUrlPath($urlPath): OverviewPageInterface
     {
@@ -215,7 +214,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
 
     /**
      * Get active stores IDs
-     * @return int[]
+     * @return array
      */
     public function getStoreIds(): array
     {

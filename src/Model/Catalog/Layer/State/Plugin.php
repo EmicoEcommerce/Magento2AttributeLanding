@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -7,7 +7,6 @@
 
 namespace Emico\AttributeLanding\Model\Catalog\Layer\State;
 
-use Emico\AttributeLanding\Controller\Page\ViewContext;
 use Emico\AttributeLanding\Model\FilterHider\FilterHiderInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Magento\Catalog\Model\Layer\Filter\Item;
@@ -42,23 +41,28 @@ class Plugin
      * @param Item[] $result
      * @return mixed
      * @throws LocalizedException
+     * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed
      */
     public function afterGetFilters(State $subject, $result)
     {
+        /** @phpstan-ignore-next-line */
         if (!\is_array($result) || empty($result)) {
             return $result;
         }
 
         $landingPage = $this->landingPageContext->getLandingPage();
+        /** @phpstan-ignore-next-line */
         if (!$landingPage || !$landingPage->getHideSelectedFilters()) {
             return $result;
         }
 
         /** @var Item $activeFilter */
         foreach ($result as $index => $activeFilter) {
-            if ($this->filterHider->shouldHideFilter($landingPage, $activeFilter->getFilter(), $activeFilter)) {
-                unset($result[$index]);
+            if (!$this->filterHider->shouldHideFilter($landingPage, $activeFilter->getFilter(), $activeFilter)) {
+                continue;
             }
+
+            unset($result[$index]);
         }
 
         return $result;

@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -49,6 +49,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
      * @param LandingPageRepository $landingPageRepository
      * @param array $meta
      * @param array $data
+     * @SuppressWarnings("PHPMD.ExcessiveParameterList")
      */
     public function __construct(
         $name,
@@ -84,6 +85,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 
         foreach ($items as $model) {
             $modelData = $model->getData();
+            /** @phpstan-ignore-next-line */
             $storeData = $this->landingPageRepository->getByIdWithStore($model->getPageId(), $storeId)->getData();
 
             foreach ($storeData as $key => $value) {

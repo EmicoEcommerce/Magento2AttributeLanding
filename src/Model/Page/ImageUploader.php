@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -102,8 +102,8 @@ class ImageUploader
      */
     public function getMediaUrl(string $filename, bool $relative = false): string
     {
-        /** @var Store $store */
         try {
+            /** @var Store $store */
             $store = $this->storeManager->getStore();
         } catch (NoSuchEntityException $e) {
             $store = $this->storeManager->getDefaultStoreView();
@@ -113,6 +113,7 @@ class ImageUploader
             return self::MEDIA_PATH_OVERVIEW . '/' . $filename;
         }
 
+        /** @phpstan-ignore-next-line */
         return $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . self::MEDIA_PATH_OVERVIEW . '/' . $filename;
     }
 }

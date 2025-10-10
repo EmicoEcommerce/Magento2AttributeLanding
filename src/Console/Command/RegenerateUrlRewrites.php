@@ -9,37 +9,21 @@ use Emico\AttributeLanding\Api\OverviewPageRepositoryInterface;
 use Emico\AttributeLanding\Model\UrlRewriteService;
 use Exception;
 use Magento\Framework\Api\SearchCriteriaBuilder;
-use Magento\Framework\App\Area;
-use Magento\Framework\App\State;
 use Magento\Framework\Console\Cli;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Store\Model\App\Emulation;
-use Magento\Store\Model\StoreManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class RegenerateUrlRewrites extends Command
 {
-    private LandingPageRepositoryInterface $landingPageRepository;
-
-    private SearchCriteriaBuilder $searchCriteriaBuilder;
-
-    private UrlRewriteService $urlRewriteService;
-
-    private OverviewPageRepositoryInterface $overviewPageRepository;
-
     public function __construct(
-        LandingPageRepositoryInterface $landingPageRepository,
-        OverviewPageRepositoryInterface $overviewPageRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        UrlRewriteService $urlRewriteService
+        private LandingPageRepositoryInterface $landingPageRepository,
+        private OverviewPageRepositoryInterface $overviewPageRepository,
+        private SearchCriteriaBuilder $searchCriteriaBuilder,
+        private UrlRewriteService $urlRewriteService
     ) {
         parent::__construct();
-        $this->landingPageRepository = $landingPageRepository;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->urlRewriteService = $urlRewriteService;
-        $this->overviewPageRepository = $overviewPageRepository;
     }
 
     /**
@@ -59,6 +43,8 @@ class RegenerateUrlRewrites extends Command
      *
      * @return int
      * @throws LocalizedException
+     * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassBeforeLastUsed
+     *
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

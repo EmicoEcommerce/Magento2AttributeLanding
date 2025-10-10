@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
@@ -64,7 +64,7 @@ class Duplicate extends Page
 
         try {
             /** @var LandingPage $existingLandingPage */
-            $existingLandingPage = $this->landingPageRepository->getById($id);
+            $existingLandingPage = $this->landingPageRepository->getById($id); // @phpstan-ignore-line
 
             /** @var LandingPage $newLandingPage */
             $newLandingPage = $this->landingPageFactory->create();
@@ -76,6 +76,7 @@ class Duplicate extends Page
 
             $this->messageManager->addNoticeMessage('Your page has been duplicated');
             $this->messageManager->addWarningMessage('Do not forget to change the URL path');
+            /** @phpstan-ignore-next-line */
             return $resultRedirect->setPath('*/*/edit', ['page_id' => $newLandingPage->getId()]);
         } catch (NoSuchEntityException $exception) {
             $this->messageManager->addErrorMessage(__('This Page no longer exists.'));

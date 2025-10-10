@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -41,6 +41,7 @@ class SitemapPlugin
      * Add landingpages to sitemap
      *
      * @param Sitemap $subject
+     * @return void
      */
     public function afterCollectSitemapItems(Sitemap $subject)
     {

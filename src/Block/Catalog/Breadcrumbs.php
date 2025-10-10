@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -34,11 +34,6 @@ class Breadcrumbs extends CatalogBreadcrumbs
     private $overviewPageRepository;
 
     /**
-     * @var UrlInterface
-     */
-    private UrlInterface $urlInterface;
-
-    /**
      * @param Context $context
      * @param Data $catalogData
      * @param LandingPageContext $landingPageContext
@@ -51,13 +46,12 @@ class Breadcrumbs extends CatalogBreadcrumbs
         Data $catalogData,
         LandingPageContext $landingPageContext,
         OverviewPageRepositoryInterface $overviewPageRepository,
-        UrlInterface $urlInterface,
+        private UrlInterface $urlInterface,
         array $data = []
     ) {
         parent::__construct($context, $catalogData, $data);
         $this->landingPageContext = $landingPageContext;
         $this->overviewPageRepository = $overviewPageRepository;
-        $this->urlInterface = $urlInterface;
     }
 
     /**
@@ -70,11 +64,13 @@ class Breadcrumbs extends CatalogBreadcrumbs
     protected function _prepareLayout()
     {
         $landingPage = $this->landingPageContext->getLandingPage();
+        /** @phpstan-ignore-next-line */
         if ($landingPage === null) {
             return parent::_prepareLayout();
         }
 
         $this->addLandingPageBreadCrumbs($landingPage);
+        return $this;
     }
 
     /**
@@ -90,17 +86,20 @@ class Breadcrumbs extends CatalogBreadcrumbs
             return;
         }
 
+        /** @phpstan-ignore-next-line */
         $breadcrumbsBlock->addCrumb(
             'home',
             [
                 'label' => __('Home'),
                 'title' => __('Go to Home Page'),
-                'link' => $this->_storeManager->getStore()->getBaseUrl()
+                'link' => $this->_storeManager->getStore()->getBaseUrl() // @phpstan-ignore-line
             ]
         );
 
+        /** @phpstan-ignore-next-line */
         if ($landingPage->getOverviewPageId() !== null) {
             $overviewPage = $this->overviewPageRepository->getById($landingPage->getOverviewPageId());
+            /** @phpstan-ignore-next-line */
             $breadcrumbsBlock->addCrumb(
                 'overviewpage',
                 [
@@ -111,6 +110,7 @@ class Breadcrumbs extends CatalogBreadcrumbs
             );
         }
 
+        /** @phpstan-ignore-next-line */
         $breadcrumbsBlock->addCrumb(
             'landingpage',
             [

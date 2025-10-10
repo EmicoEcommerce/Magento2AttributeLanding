@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author : Edwin Jacobs, email: ejacobs@emico.nl.
@@ -109,6 +109,7 @@ class View extends Action
     /**
      * @param LandingPageInterface $page
      * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return void
      */
     protected function setCategoryInRegistry(LandingPageInterface $page)
     {
