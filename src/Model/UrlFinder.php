@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -84,15 +84,16 @@ class UrlFinder
             $this->landingPageLookup = $this->loadPageLookupArray();
         }
 
+        /** @phpstan-ignore-next-line */
         $storePrefix = $this->storeManager->getStore()->getBaseUrl();
 
         if (!isset($this->landingPageLookup[$this->storeManager->getStore()->getId()][$filterHash])) {
             //check if hash is set for all stores
-            if (isset($this->landingPageLookup[0][$filterHash])) {
-                $result = $this->landingPageLookup[0][$filterHash];
-            } else {
+            if (!isset($this->landingPageLookup[0][$filterHash])) {
                 return null;
             }
+
+            $result = $this->landingPageLookup[0][$filterHash];
         }
 
         if (empty($result)) {
@@ -137,7 +138,8 @@ class UrlFinder
     protected function loadPageLookupArray(): array
     {
         $landingPageLookup = $this->cache->load(self::CACHE_KEY);
-        if ($landingPageLookup !== false) {
+        if ($landingPageLookup) {
+            /** @phpstan-ignore-next-line */
             return $this->serializer->unserialize($landingPageLookup);
         }
 
@@ -147,10 +149,11 @@ class UrlFinder
             ->create();
 
         $landingPageLookup = [];
-        $landingPageStores = [];
         foreach ($this->landingPageRepository->getList($searchCriteria)->getItems() as $landingPage) {
             $hash = $this->createHashForFilters($landingPage->getFilters(), $landingPage->getCategoryId());
+            /** @phpstan-ignore-next-line */
             $storeId = $landingPage->getData('store_id');
+            /** @phpstan-ignore-next-line */
             $landingPageLookup[$storeId][$hash] = $landingPage->getUrlRewriteRequestPath();
         }
 

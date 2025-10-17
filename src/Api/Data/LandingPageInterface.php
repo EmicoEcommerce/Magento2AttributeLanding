@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -72,7 +72,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
 
     /**
      * Get name
-     * @return string|null
+     * @return string
      */
     public function getName(): string;
 
@@ -167,7 +167,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public function getFilters(): array;
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getUnserializedFilterAttributes(): array;
 
@@ -183,13 +183,13 @@ interface LandingPageInterface extends ExtensibleDataInterface
 
     /**
      * @return bool
-     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
+     * @SuppressWarnings("PHPMD.BooleanGetMethodName")
      */
     public function getIsFilterLinkAllowed(): bool;
 
     /**
      * @return bool
-     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
+     * @SuppressWarnings("PHPMD.BooleanGetMethodName")
      */
     public function getHideSelectedFilters(): bool;
 

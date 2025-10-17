@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Ui\Component\Listing\Column;
 
@@ -16,12 +16,7 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
     /**
      * @var \Magento\Catalog\Model\CategoryRepository
      */
-    public CategoryRepository $categoryRepository;
-
-    /**
-     * @var StoreRepositoryInterface|\Magento\Store\Model\StoreRepository
-     */
-    public StoreRepositoryInterface $storeRepository;
+    public CategoryRepository $categoryRepository; // phpcs:ignore SlevomatCodingStandard.Classes.ForbiddenPublicProperty.ForbiddenPublicProperty
 
     public const URL_PATH_DETAILS = 'emico_attributelanding/page/details';
     protected const URL_PATH_EDIT = 'emico_attributelanding/page/edit';
@@ -41,12 +36,11 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
         \Magento\Framework\View\Element\UiComponent\ContextInterface $context,
         \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory,
         \Magento\Catalog\Model\CategoryRepository $categoryRepository,
-        StoreRepositoryInterface $storeRepository,
+        public StoreRepositoryInterface $storeRepository,
         \Magento\Framework\UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
     ) {
-        $this->storeRepository = $storeRepository;
         $this->categoryRepository = $categoryRepository;
         $this->urlBuilder = $urlBuilder;
 
@@ -61,7 +55,9 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
      * @throws NoSuchEntityException
      *
      * phpcs:disable Generic.Metrics.NestingLevel.TooHigh
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * phpcs:disable SlevomatCodingStandard.PHP.DisallowReference.DisallowedAssigningByReference
+     * phpcs:disable SlevomatCodingStandard.Functions.StrictCall.StrictParameterMissing
+     * @SuppressWarnings("PHPMD.CyclomaticComplexity")
      */
     public function prepareDataSource(array $dataSource)
     {
@@ -111,17 +107,21 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
 
                 if (!empty($item['store_ids']) && is_string($item['store_ids'])) {
                     $store_ids = explode(',', $item['store_ids']);
+                    /** @phpstan-ignore-next-line */
                     if (!empty($store_ids) && is_array($store_ids)) {
                         $stores = $this->storeRepository->getList();
                         $item['stores'] = '';
                         foreach ($stores as $store) {
                             $id = $store->getId();
-                            if (in_array($id, $store_ids)) {
-                                if ($id === "0") {
-                                    $item['stores'] .= 'All Store Views' . ', ';
-                                } else {
-                                    $item['stores'] .= $store->getName() . ', ';
-                                }
+                            if (!in_array($id, $store_ids)) {
+                                continue;
+                            }
+
+                            /** @phpstan-ignore-next-line */
+                            if ($id === '0') {
+                                $item['stores'] .= 'All Store Views' . ', ';
+                            } else {
+                                $item['stores'] .= $store->getName() . ', ';
                             }
                         }
                     }

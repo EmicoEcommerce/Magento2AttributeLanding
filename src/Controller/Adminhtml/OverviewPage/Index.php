@@ -1,15 +1,15 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Controller\Adminhtml\OverviewPage;
 
 use Emico\AttributeLanding\Controller\Adminhtml\OverviewPage;
-use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\View\Result\PageFactory;
 
 class Index extends OverviewPage
 {
+    /** @phpstan-ignore-next-line */
     protected $resultPageFactory;
 
     /**

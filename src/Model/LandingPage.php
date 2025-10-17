@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Model;
 
@@ -15,8 +15,8 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 
 /**
- * @SuppressWarnings(PHPMD.ExcessivePublicCount)
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings("PHPMD.ExcessivePublicCount")
+ * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  */
 class LandingPage extends AbstractExtensibleModel implements LandingPageInterface, UrlRewriteGeneratorInterface
 {
@@ -116,6 +116,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function getExtensionAttributes()
     {
+        /** @phpstan-ignore-next-line */
         return $this->_getExtensionAttributes();
     }
 
@@ -131,7 +132,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get name
-     * @return string|null
+     * @return string
      */
     public function getName(): string
     {
@@ -339,13 +340,13 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
-     * @return mixed
+     * @return array
      *
      * phpcs:disable Magento2.Security.InsecureFunction.FoundWithAlternative
      */
     public function getUnserializedFilterAttributes(): array
     {
-        if (null === $this->getFilterAttributes()) {
+        if ($this->getFilterAttributes() === null) {
             return [];
         }
 
@@ -358,6 +359,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     public function getFilters(): array
     {
         $unserializedFilters = $this->getUnserializedFilterAttributes();
+        /** @phpstan-ignore-next-line */
         if (!is_array($unserializedFilters)) {
             return [];
         }
@@ -491,7 +493,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
-     * @param int|null $overviewPageId
+     * @param string|null $overviewPageId
      * @return LandingPageInterface
      */
     public function setOverviewPageId(?string $overviewPageId): LandingPageInterface
@@ -522,7 +524,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * @return bool
-     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
+     * @SuppressWarnings("PHPMD.BooleanGetMethodName")
      */
     public function getIsFilterLinkAllowed(): bool
     {
@@ -540,7 +542,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * @return bool
-     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
+     * @SuppressWarnings("PHPMD.BooleanGetMethodName")
      */
     public function getHideSelectedFilters(): bool
     {

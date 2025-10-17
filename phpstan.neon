@@ -1,3 +1,27 @@
+services:
+    - class: Emico\CodeQuality\PHPStan\VarModelExtension
+      tags:
+          - phpstan.broker.methodsClassReflectionExtension
+
 parameters:
-  excludePaths:
-#    - %rootDir%/../../../path/to/exclude/*
+    ignoreErrors:
+        - '/Call to an undefined method Mockery\\ExpectationInterface|Mockery\\HigherOrderMessage::andReturnUsing\(\)./'
+        - '/expects string, Magento\\Framework\\Phrase given/'
+        - identifier: missingType.iterableValue
+        - identifier: missingType.generics
+        - messages:
+            - '/::delete\(\) expects Magento\\Framework\\Model\\AbstractModel,/'
+            - '/::save\(\) expects Magento\\Framework\\Model\\AbstractModel,/'
+            - '/::load\(\) expects Magento\\Framework\\Model\\AbstractModel,/'
+          path: *Repository.php
+    stubFiles:
+        - ./vendor/emico/code-quality/phpstan/stubs/globalFunctions.stub
+        - ./vendor/emico/code-quality/phpstan/stubs/Magento/Catalog/Model/ResourceModel/Product/Collection.stub
+        - ./vendor/emico/code-quality/phpstan/stubs/Magento/Eav/Setup/EavSetup.stub
+        - ./vendor/emico/code-quality/phpstan/stubs/Magento/Framework/Api/Search/FilterGroupBuilder.stub
+        - ./vendor/emico/code-quality/phpstan/stubs/Magento/Framework/App/ActionFlag.stub
+        - ./vendor/emico/code-quality/phpstan/stubs/Magento/Framework/Escaper.stub
+        - ./vendor/emico/code-quality/phpstan/stubs/Magento/Framework/Serialize/SerializerInterface.stub
+        - ./vendor/emico/code-quality/phpstan/stubs/Magento/InventoryImportExport/Model/Import/Serializer/Json.stub
+    bootstrapFiles:
+        - ../../autoload.php

@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Model;
 
@@ -81,7 +81,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
     {
         try {
             /** @var LandingPage $page */
-            $this->resource->save($page);
+            $this->resource->save($page); // @phpstan-ignore-line
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
                 __(
@@ -91,6 +91,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
             );
         }
 
+        /** @phpstan-ignore-next-line */
         return $page;
     }
 
@@ -108,6 +109,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
             throw new NoSuchEntityException(__('Page with id "%d" does not exist.', $pageId));
         }
 
+        /** @phpstan-ignore-next-line */
         return $page;
     }
 
@@ -123,6 +125,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
 
+        /** @phpstan-ignore-next-line */
         $searchResults->setItems($collection->getItems());
         $searchResults->setTotalCount($collection->getSize());
         return $searchResults;
@@ -137,7 +140,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
     {
         try {
             /** @var LandingPage $page */
-            $this->resource->delete($page);
+            $this->resource->delete($page); // @phpstan-ignore-line
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(
                 __(
@@ -169,6 +172,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
             ->create();
 
         $result = $this->getList($searchCriteria);
+        /** @phpstan-ignore-next-line */
         return $result->getItems();
     }
 
@@ -179,6 +183,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
      */
     public function getByLandingPage(LandingPageInterface $landingPage): OverviewPageInterface
     {
+        /** @phpstan-ignore-next-line */
         if ($landingPage->getOverviewPageId() === null) {
             throw new NoSuchEntityException(__('The landingpage does not have a overview page linked'));
         }

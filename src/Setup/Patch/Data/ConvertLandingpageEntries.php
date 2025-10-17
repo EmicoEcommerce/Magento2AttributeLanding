@@ -1,11 +1,10 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Setup\Patch\Data;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
-use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 
 class ConvertLandingpageEntries implements DataPatchInterface
@@ -13,25 +12,22 @@ class ConvertLandingpageEntries implements DataPatchInterface
     /**
      * ConvertLandingpageEntries constructor.
      * @param ModuleDataSetupInterface $moduleDataSetup
-     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         private readonly ModuleDataSetupInterface $moduleDataSetup,
-        private readonly StoreManagerInterface $storeManager
     ) {
     }
 
     /**
      * @inheritDoc
      */
-    public function apply(): void
+    public function apply(): ConvertLandingpageEntries
     {
         $this->moduleDataSetup->startSetup();
 
         $connection = $this->moduleDataSetup->getConnection();
         $landingPageTable = $this->moduleDataSetup->getTable('emico_attributelanding_page');
         $landingPageStoreTable = $this->moduleDataSetup->getTable('emico_attributelanding_page_store');
-        $stores = $this->storeManager->getStores();
 
         $select = $connection->select()->from($landingPageTable);
         $landingPages = $connection->fetchAll($select);
@@ -39,11 +35,14 @@ class ConvertLandingpageEntries implements DataPatchInterface
         foreach ($landingPages as $landingPage) {
             $storeIds = explode(',', $landingPage['store_ids']);
             foreach ($storeIds as $storeId) {
+                /** @phpstan-ignore-next-line */
                 $this->insertLandingPageStore($connection, $landingPageStoreTable, $landingPage, $storeId);
             }
         }
 
         $this->moduleDataSetup->endSetup();
+
+        return $this;
     }
 
     /**
@@ -84,9 +83,11 @@ class ConvertLandingpageEntries implements DataPatchInterface
         ];
 
         foreach ($fields as $field) {
-            if (isset($landingPage[$field])) {
-                $data[$field] = $landingPage[$field];
+            if (!isset($landingPage[$field])) {
+                continue;
             }
+
+            $data[$field] = $landingPage[$field];
         }
 
         $connection->insert($table, $data);
