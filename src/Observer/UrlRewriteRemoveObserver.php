@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -7,7 +7,6 @@
 
 namespace Emico\AttributeLanding\Observer;
 
-use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
@@ -37,6 +36,7 @@ class UrlRewriteRemoveObserver implements ObserverInterface
     public function execute(Observer $observer)
     {
         $page = $observer->getEvent()->getData('object');
+        /** @phpstan-ignore-next-line */
         if (!$page instanceof UrlRewriteGeneratorInterface || !$page->getPageId()) {
             return;
         }

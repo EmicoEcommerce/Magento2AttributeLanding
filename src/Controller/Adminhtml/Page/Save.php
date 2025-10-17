@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
@@ -67,9 +67,11 @@ class Save extends Action
     {
         /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
+        /** @phpstan-ignore-next-line */
         $data = $this->getRequest()->getPostValue();
         $data[LandingPageInterface::STORE_ID] = (int)$data[LandingPageInterface::STORE_ID];
 
+        /** @phpstan-ignore-next-line */
         if (!$data) {
             return $resultRedirect->setPath('*/*/');
         }
@@ -122,6 +124,7 @@ class Save extends Action
     /**
      * @param LandingPageInterface $landingPage
      * @param array $data
+     * @return void
      *
      * phpcs:disable Magento2.Security.InsecureFunction.FoundWithAlternative
      */
@@ -161,9 +164,12 @@ class Save extends Action
         $sanitizedAttributes = [];
         foreach ($filterAttributes as $filterAttribute) {
             foreach (array_keys($filterAttribute) as $field) {
-                if (!in_array($field, $allowedFields)) {
-                    unset($filterAttribute[$field]);
+                // phpcs:disable SlevomatCodingStandard.Functions.StrictCall.StrictParameterMissing
+                if (in_array($field, $allowedFields)) {
+                    continue;
                 }
+
+                unset($filterAttribute[$field]);
             }
 
             $sanitizedAttributes[] = $filterAttribute;

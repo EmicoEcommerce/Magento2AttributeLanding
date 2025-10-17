@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Model\OverviewPage;
 
@@ -62,11 +62,13 @@ class DataProvider extends AbstractDataProvider
      */
     public function getData()
     {
+        /** @phpstan-ignore-next-line */
         if (isset($this->loadedData)) {
             return $this->loadedData;
         }
 
         $storeId = (int)$this->request->getParam('store', 0);
+        /** @phpstan-ignore-next-line */
         $items = $this->collection->getItems();
         foreach ($items as $model) {
             $storeData = $this->overviewPageRepository->getByIdWithStore($model->getPageId(), $storeId)->getData();

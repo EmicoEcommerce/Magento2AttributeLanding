@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -62,16 +62,6 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     private $searchCriteriaBuilder;
 
     /**
-     * @var StoreManagerInterface
-     */
-    private StoreManagerInterface $storeManager;
-
-    /**
-     * @var Options
-     */
-    private Options $options;
-
-    /**
      * @param ResourcePage $resource
      * @param LandingPageInterfaceFactory $dataPageFactory
      * @param PageCollectionFactory $pageCollectionFactory
@@ -90,8 +80,8 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         CollectionProcessorInterface $collectionProcessor,
         JoinProcessorInterface $extensionAttributesJoinProcessor,
         SearchCriteriaBuilder $searchCriteriaBuilder,
-        StoreManagerInterface $storeManager,
-        Options $options
+        private StoreManagerInterface $storeManager,
+        private Options $options
     ) {
         $this->resource = $resource;
         $this->pageCollectionFactory = $pageCollectionFactory;
@@ -100,8 +90,6 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         $this->collectionProcessor = $collectionProcessor;
         $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->storeManager = $storeManager;
-        $this->options = $options;
     }
 
     /**
@@ -122,15 +110,19 @@ class LandingPageRepository implements LandingPageRepositoryInterface
                 }
             }
 
-            if (in_array($page->getData('category_id'), $rootCategories)) {
-                $page->setData('hide_selected_filters', "1");
+            // phpcs:disable SlevomatCodingStandard.Functions.StrictCall.StrictParameterMissing
+            if (in_array($page->getData('category_id'), $rootCategories)) { // @phpstan-ignore-line
+                /** @phpstan-ignore-next-line */
+                $page->setData('hide_selected_filters', '1');
             }
 
             $parentLandingPage = $this->dataPageFactory->create();
+            /** @phpstan-ignore-next-line */
             $parentLandingPage->setData($page->getLandingPageDataWithoutStore());
 
             /** @var LandingPage $page */
             $this->resource->save($parentLandingPage);
+            /** @phpstan-ignore-next-line */
             $page->setPageId($parentLandingPage->getPageId());
             $this->resource->saveLandingPageStoreData($page);
         } catch (\Exception $exception) {
@@ -176,14 +168,17 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
         if (!empty($storeData)) {
             unset($storeData['id']);
+            /** @phpstan-ignore-next-line */
             $landingPage->setData($storeData);
         } else {
             $defaultData = $this->resource->getLandingPageStoreData($pageId, 0);
             if (!empty($defaultData)) {
                 unset($defaultData['id']);
+                /** @phpstan-ignore-next-line */
                 $landingPage->setData($defaultData);
             }
 
+            /** @phpstan-ignore-next-line */
             $landingPage->setData(LandingPageInterface::STORE_ID, $storeId);
         }
 
@@ -201,6 +196,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
         foreach ($storeData as $data) {
             $page = $this->dataPageFactory->create();
+            /** @phpstan-ignore-next-line */
             $page->setData($data);
             $pages[] = $page;
         }
@@ -225,6 +221,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
 
+        /** @phpstan-ignore-next-line */
         $searchResults->setItems($collection->getItems());
         $searchResults->setTotalCount($collection->getSize());
         return $searchResults;

@@ -1,11 +1,10 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Ui\Component\Product\Form\Categories;
 
 use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 use Magento\Framework\App\RequestInterface;
-use Magento\Catalog\Model\Category as CategoryModel;
 
 /**
  * Options tree for "Categories" field

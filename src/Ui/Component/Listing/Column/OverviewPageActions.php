@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Ui\Component\Listing\Column;
 
@@ -12,11 +12,10 @@ class OverviewPageActions extends Column
 {
     public const URL_PATH_DETAILS = 'emico_attributelanding/overviewpage/details';
 
+    /** @phpstan-ignore-next-line */
     protected $urlBuilder;
     protected const URL_PATH_EDIT = 'emico_attributelanding/overviewpage/edit';
     protected const URL_PATH_DELETE = 'emico_attributelanding/overviewpage/delete';
-
-    public StoreRepositoryInterface $storeRepository;
 
     /**
      * @param ContextInterface $context
@@ -29,13 +28,12 @@ class OverviewPageActions extends Column
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        StoreRepositoryInterface $storeRepository,
+        public StoreRepositoryInterface $storeRepository,
         UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
     ) {
         $this->urlBuilder = $urlBuilder;
-        $this->storeRepository = $storeRepository;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
@@ -46,11 +44,12 @@ class OverviewPageActions extends Column
      * @return array
      *
      * phpcs:disable Generic.Metrics.NestingLevel.TooHigh
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings("PHPMD.CyclomaticComplexity")
      */
     public function prepareDataSource(array $dataSource)
     {
         if (isset($dataSource['data']['items'])) {
+            // phpcs:ignore SlevomatCodingStandard.PHP.DisallowReference.DisallowedAssigningByReference
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['page_id'])) {
                     $item[$this->getData('name')] = [

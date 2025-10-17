@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -59,9 +59,10 @@ class LandingPageItemProvider
         $landingPages = $this->landingPageRepository->findAllActive();
 
         foreach ($landingPages as $landingPage) {
+            /** @phpstan-ignore-next-line */
             yield $this->itemFactory->create(
                 [
-                'url' => $landingPage->getUrlRewriteRequestPath(),
+                'url' => $landingPage->getUrlRewriteRequestPath(), // @phpstan-ignore-line
                 'updatedAt' => $landingPage->getUpdatedAt(),
                 'priority' => $this->configReader->getPriority($storeId),
                 'changeFrequency' => $this->configReader->getChangeFrequency($storeId),

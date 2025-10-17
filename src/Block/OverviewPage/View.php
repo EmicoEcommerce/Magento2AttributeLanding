@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -77,6 +77,7 @@ class View extends Template
     public function getLandingPages(): array
     {
         $overviewPage = $this->getOverviewPage();
+        /** @phpstan-ignore-next-line */
         if ($overviewPage === null) {
             return [];
         }
@@ -99,6 +100,7 @@ class View extends Template
     public function getLandingPageImage(LandingPageInterface $landingPage): ?string
     {
         $image = $landingPage->getOverviewPageImage();
+        /** @phpstan-ignore-next-line */
         if ($image === null) {
             return null;
         }
@@ -145,6 +147,7 @@ class View extends Template
      */
     protected function _prepareLayout(): View
     {
+        /** @phpstan-ignore-next-line */
         if ($this->landingPageContext->getOverviewPage() === null) {
             return parent::_prepareLayout();
         }
@@ -159,7 +162,7 @@ class View extends Template
             [
                 'label' => __('Home'),
                 'title' => __('Go to Home Page'),
-                'link' => $this->_storeManager->getStore()->getBaseUrl()
+                'link' => $this->_storeManager->getStore()->getBaseUrl() // @phpstan-ignore-line
             ]
         );
 

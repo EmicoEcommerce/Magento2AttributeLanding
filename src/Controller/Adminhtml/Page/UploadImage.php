@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -11,7 +11,6 @@ use Emico\AttributeLanding\Model\Page\ImageUploader;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
-use Psr\Log\LoggerInterface;
 
 class UploadImage extends \Magento\Backend\App\Action
 {

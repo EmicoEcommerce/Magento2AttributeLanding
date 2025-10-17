@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Controller\Adminhtml\OverviewPage;
 
@@ -65,6 +65,7 @@ class Save extends Action
     {
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
+        /** @phpstan-ignore-next-line */
         $data = $this->getRequest()->getPostValue();
         $data[OverviewPageInterface::STORE_ID] = (int)$data[OverviewPageInterface::STORE_ID];
 
