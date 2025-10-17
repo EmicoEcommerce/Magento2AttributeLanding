@@ -97,6 +97,10 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                    <item name="showInDefault" xsi:type="boolean">1</item>
+                    <item name="showInWebsite" xsi:type="boolean">0</item>
+                    <item name="showInStore" xsi:type="boolean">1</item>
 				</item>
 			</argument>
 			<settings>

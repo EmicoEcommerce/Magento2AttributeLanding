@@ -11,6 +11,7 @@ use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
 use Magento\Framework\Event\ManagerInterface as EventManager;
+use Zend_Db_Expr;
 
 class Page extends AbstractDb
 {
@@ -52,7 +53,7 @@ class Page extends AbstractDb
             ->join(
                 ['p' => $this->getTable('emico_attributelanding_page')],
                 'ps.page_id = p.page_id',
-                ['name']
+                ['name' => new Zend_Db_Expr('COALESCE(ps.name, p.name)')]
             )
             ->where('ps.page_id = ?', $landingPageId)
             ->where('store_id = ?', $storeId);

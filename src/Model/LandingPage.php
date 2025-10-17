@@ -598,7 +598,6 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     {
         $fields = [
             LandingPageInterface::PAGE_ID,
-            LandingPageInterface::NAME,
             LandingPageInterface::CREATED_AT,
             LandingPageInterface::UPDATED_AT,
             LandingPageInterface::OVERVIEW_PAGE_ID,
@@ -606,6 +605,10 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             LandingPageInterface::URL_PATH,
             LandingPageInterface::STORE_ID,
         ];
+
+        if ($this->getData(LandingPageInterface::STORE_ID) === 0) {
+            $fields[] = LandingPageInterface::NAME;
+        }
 
         return array_combine(
             $fields,
@@ -621,6 +624,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         $fields = [
             LandingPageInterface::ACTIVE,
             LandingPageInterface::STORE_ID,
+            LandingPageInterface::NAME,
             LandingPageInterface::URL_PATH,
             LandingPageInterface::CATEGORY_ID,
             LandingPageInterface::HEADING,
