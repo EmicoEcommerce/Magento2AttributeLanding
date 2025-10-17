@@ -8,6 +8,7 @@
 namespace Emico\AttributeLanding\Model;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
+use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
@@ -58,6 +59,7 @@ class UrlRewriteService
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param UrlFinderInterface $urlFinder
      * @param LandingPageRepositoryInterface $landingPageRepository
+     * @param OverviewPageRepository $overviewPageRepository
      */
     public function __construct(
         UrlRewriteFactory $urlRewriteFactory,
@@ -65,7 +67,8 @@ class UrlRewriteService
         UrlPersistInterface $urlPersist,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         UrlFinderInterface $urlFinder,
-        LandingPageRepositoryInterface $landingPageRepository
+        LandingPageRepositoryInterface $landingPageRepository,
+        private readonly OverviewPageRepository $overviewPageRepository
     ) {
         $this->urlRewriteFactory = $urlRewriteFactory;
         $this->storeManager = $storeManager;
@@ -205,9 +208,50 @@ class UrlRewriteService
     private function generateOverviewPageRewrites(UrlRewriteGeneratorInterface $page, ?string $suffix = null): array
     {
         $urlRewritesToPersist = [];
+        $allPages = $this->overviewPageRepository->getAllPagesById($page->getPageId());
 
-        foreach ($this->getActiveStoreIds($page) as $storeId) {
-            $urlRewritesToPersist[$storeId] = $this->createUrlRewrite($page, $storeId, $suffix);
+        foreach ($allPages as $storePage) {
+            if ($storePage->getStoreId() == $page->getStoreId()) {
+                $storePage = $page;
+            }
+
+            if ($storePage->getStoreId() == 0) {
+                $urlRewritesToPersist = $this->generateOverviewPageRewritesForAllStores(
+                    $storePage,
+                    $page,
+                    $suffix,
+                    $urlRewritesToPersist
+                );
+            } else {
+                $urlRewrite = $this->createUrlRewrite($storePage, $storePage->getStoreId(), $suffix);
+                $urlRewritesToPersist[$storePage->getStoreId()] = $urlRewrite;
+            }
+        }
+
+        return $urlRewritesToPersist;
+    }
+
+    private function generateOverviewPageRewritesForAllStores(
+        OverviewPageInterface $storePage,
+        OverviewPageInterface $page,
+        ?string $suffix,
+        array $urlRewritesToPersist
+    ): array {
+        $stores = $this->storeManager->getStores();
+
+        foreach ($stores as $store) {
+            if ($store->getId() == $page->getStoreId()) {
+                $storePage = $page;
+            }
+
+            if (empty($storePage)) {
+                continue;
+            }
+
+            if (!isset($urlRewritesToPersist[$store->getId()])) {
+                $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
+                $urlRewritesToPersist[$store->getId()] = $urlRewrite;
+            }
         }
 
         return $urlRewritesToPersist;

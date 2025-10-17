@@ -26,9 +26,9 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
      * Get page_id
      * @return int|null
      */
-    public function getPageId()
+    public function getPageId(): int
     {
-        return $this->getData(self::PAGE_ID);
+        return (int)$this->getData(self::PAGE_ID);
     }
 
     /**
@@ -213,21 +213,21 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
     }
 
     /**
-     * Get active stores IDs
-     * @return array
+     * Get active stores ID
+     * @return int
      */
-    public function getStoreIds(): array
+    public function getStoreId(): int
     {
-        return explode(',', $this->getData(self::STORE_IDS));
+        return (int)$this->getData(self::STORE_ID);
     }
 
     /**
-     * @param int[] $storeIds
+     * @param int $storeId
      * @return OverviewPageInterface
      */
-    public function setStoreIds($storeIds): OverviewPageInterface
+    public function setStoreId(int $storeId): OverviewPageInterface
     {
-        return $this->setData(self::STORE_IDS, implode(',', $storeIds));
+        return $this->setData(self::STORE_ID, $storeId);
     }
 
     /**
@@ -276,5 +276,48 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
     public function getUpdatedAt(): string
     {
         return $this->getData(OverviewPageInterface::UPDATED_AT);
+    }
+
+    public function getOverviewPageDataWithoutStore(): array
+    {
+        $fields = [
+            OverviewPageInterface::PAGE_ID,
+            OverviewPageInterface::CREATED_AT,
+            OverviewPageInterface::UPDATED_AT,
+            OverviewPageInterface::URL_PATH,
+        ];
+
+        if ($this->getData(OverviewPageInterface::STORE_ID) === 0) {
+            $fields[] = OverviewPageInterface::NAME;
+        }
+
+        return array_combine(
+            $fields,
+            array_map(fn($field) => $this->getData($field), $fields)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getOverviewPageDataForStore(): array
+    {
+        $fields = [
+            OverviewPageInterface::NAME,
+            OverviewPageInterface::STORE_ID,
+            OverviewPageInterface::ACTIVE,
+            OverviewPageInterface::URL_PATH,
+            OverviewPageInterface::HEADING,
+            OverviewPageInterface::META_TITLE,
+            OverviewPageInterface::META_KEYWORDS,
+            OverviewPageInterface::META_DESCRIPTION,
+            OverviewPageInterface::CONTENT_FIRST,
+            OverviewPageInterface::CONTENT_LAST,
+        ];
+
+        return array_combine(
+            $fields,
+            array_map(fn($field) => $this->getData($field), $fields)
+        );
     }
 }
