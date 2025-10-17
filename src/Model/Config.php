@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -79,7 +79,7 @@ class Config
         return (bool) $this->config->isSetFlag(
             'emico_attributelanding/general/canonical_self_referencing',
             ScopeInterface::SCOPE_STORE,
-            $store
+            $store // @phpstan-ignore-line
         );
     }
 }

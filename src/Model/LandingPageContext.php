@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -32,6 +32,7 @@ class LandingPageContext
 
     /**
      * @param LandingPageInterface $page
+     * @return void
      */
     public function setLandingPage(LandingPageInterface $page)
     {
@@ -56,6 +57,7 @@ class LandingPageContext
 
     /**
      * @param OverviewPageInterface $overviewPage
+     * @return void
      */
     public function setOverviewPage(OverviewPageInterface $overviewPage)
     {

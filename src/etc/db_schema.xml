@@ -20,6 +20,7 @@
         <column name="page_id" xsi:type="int" nullable="false" unsigned="true" comment="Landing Page ID" />
         <column name="store_id" xsi:type="smallint" nullable="false" unsigned="true" comment="Store ID" />
         <column xsi:type="boolean" name="active" nullable="true" default="1" comment="Active state" />
+        <column xsi:type="varchar" name="name" nullable="true" comment="Name"/>
         <column xsi:type="varchar" name="url_path" nullable="false" comment="Url Path"/>
         <column xsi:type="int" name="category_id" unsigned="true" nullable="true" comment="Category Id"/>
         <column xsi:type="varchar" name="heading" nullable="true" comment="H2 Heading"/>

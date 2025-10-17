@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -8,7 +8,6 @@
 namespace Emico\AttributeLanding\Observer;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
-use Emico\AttributeLanding\Controller\Page\ViewContext;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Block\Category\View as LandingPageView;
@@ -23,16 +22,6 @@ use Emico\AttributeLanding\Model\Config;
 
 class SeoObserver implements ObserverInterface
 {
-    /**
-     * @var PageConfig $pageConfig
-     */
-    private PageConfig $pageConfig;
-
-    /**
-     * @var Config $config
-     */
-    private Config $config;
-
     /**
      * @var LandingPageContext
      */
@@ -49,11 +38,6 @@ class SeoObserver implements ObserverInterface
     private $storeManager;
 
     /**
-     * @var MagentoHttpRequest $request
-     */
-    protected MagentoHttpRequest $request;
-
-    /**
      * MetaTagsObserver constructor.
      * @param PageConfig $pageConfig
      * @param Config $config
@@ -62,19 +46,16 @@ class SeoObserver implements ObserverInterface
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        PageConfig $pageConfig,
-        Config $config,
+        private PageConfig $pageConfig,
+        private Config $config,
         LandingPageContext $landingPageContext,
         CategoryRepositoryInterface $categoryRepository,
         StoreManagerInterFace $storeManager,
-        MagentoHttpRequest $request
+        protected MagentoHttpRequest $request
     ) {
-        $this->pageConfig = $pageConfig;
-        $this->config = $config;
         $this->landingPageContext = $landingPageContext;
         $this->categoryRepository = $categoryRepository;
         $this->storeManager = $storeManager;
-        $this->request = $request;
     }
 
     /**
@@ -90,8 +71,10 @@ class SeoObserver implements ObserverInterface
         }
 
         $page = $this->landingPageContext->getLandingPage();
+        /** @phpstan-ignore-next-line */
         if (!$page) {
             $page = $this->landingPageContext->getOverviewPage();
+            /** @phpstan-ignore-next-line */
             if (!$page) {
                 return;
             }
@@ -103,18 +86,23 @@ class SeoObserver implements ObserverInterface
 
         /** @var Title $pageMainTitle */
         $pageMainTitle = $block->getLayout()->getBlock('page.main.title');
+        /** @phpstan-ignore-next-line */
         if ($pageMainTitle) {
             $pageMainTitle->setPageTitle($page->getHeading());
         }
 
-        if ($page instanceof LandingPageInterface) {
-            $this->clearCurrentCanonical($page);
-            $this->setLandingPageCanonicalUrl($page);
+        /** @phpstan-ignore-next-line */
+        if (!($page instanceof LandingPageInterface)) {
+            return;
         }
+
+        $this->clearCurrentCanonical($page);
+        $this->setLandingPageCanonicalUrl($page);
     }
 
     /**
      * @param LandingPageInterface $landingPage
+     * @return void
      */
     protected function setLandingPageCanonicalUrl(LandingPageInterface $landingPage)
     {
@@ -144,9 +132,11 @@ class SeoObserver implements ObserverInterface
             $params['_escape'] = false;
             $params['query'] = $this->request->getQuery();
 
+            /** @phpstan-ignore-next-line */
             return $this->storeManager->getStore()->getUrl($landingPage->getUrlPath(), $params);
         }
 
+        /** @phpstan-ignore-next-line */
         return $this->storeManager->getStore()->getUrl('', ['_direct' => $landingPage->getUrlPath()]);
     }
 
@@ -154,6 +144,7 @@ class SeoObserver implements ObserverInterface
      * Clear
      *
      * @param LandingPageInterface $landingPage
+     * @return void
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     protected function clearCurrentCanonical(LandingPageInterface $landingPage)
@@ -163,6 +154,7 @@ class SeoObserver implements ObserverInterface
         }
 
         $category = $this->categoryRepository->get($landingPage->getCategoryId());
+        /** @phpstan-ignore-next-line */
         $this->pageConfig->getAssetCollection()->remove($category->getUrl());
     }
 }

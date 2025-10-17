@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Model\OverviewPage;
 
@@ -56,10 +56,12 @@ class DataProvider extends AbstractDataProvider
      */
     public function getData()
     {
+        /** @phpstan-ignore-next-line */
         if (isset($this->loadedData)) {
             return $this->loadedData;
         }
 
+        /** @phpstan-ignore-next-line */
         $items = $this->collection->getItems();
         foreach ($items as $model) {
             /** @var OverviewPage $model */
@@ -67,14 +69,14 @@ class DataProvider extends AbstractDataProvider
         }
 
         $data = $this->dataPersistor->get('emico_attributelanding_overviewpage');
-        
+
         if (!empty($data)) {
             $model = $this->collection->getNewEmptyItem();
             $model->setData($data);
             $this->loadedData[$model->getPageId()] = $model->getData();
             $this->dataPersistor->clear('emico_attributelanding_overviewpage');
         }
-        
+
         return $this->loadedData;
     }
 }

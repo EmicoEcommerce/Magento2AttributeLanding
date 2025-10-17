@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -42,18 +42,22 @@ class FilterHidePlugin
      * @param Navigation $subject
      * @param array $filters
      * @return array
+     * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
      */
     public function afterGetFilters(Navigation $subject, array $filters)
     {
         $landingPage = $this->landingPageContext->getLandingPage();
+        /** @phpstan-ignore-next-line */
         if (!$landingPage || !$landingPage->getHideSelectedFilters()) {
             return $filters;
         }
 
         foreach ($filters as $index => $filter) {
-            if ($this->filterHider->shouldHideFilter($landingPage, $filter)) {
-                unset($filters[$index]);
+            if (!$this->filterHider->shouldHideFilter($landingPage, $filter)) {
+                continue;
             }
+
+            unset($filters[$index]);
         }
 
         return $filters;

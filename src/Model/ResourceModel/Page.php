@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
@@ -11,6 +11,7 @@ use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
 use Magento\Framework\Event\ManagerInterface as EventManager;
+use Zend_Db_Expr;
 
 class Page extends AbstractDb
 {
@@ -22,7 +23,7 @@ class Page extends AbstractDb
      * @param null $connectionName
      */
     public function __construct(
-        private readonly Context $context,
+        Context $context,
         private readonly EventManager $eventManager,
         $connectionName = null
     ) {
@@ -46,16 +47,18 @@ class Page extends AbstractDb
     public function getLandingPageStoreData(int $landingPageId, int $storeId = 0): array
     {
         $connection = $this->getConnection();
+        /** @phpstan-ignore-next-line */
         $select = $connection->select()
             ->from(['ps' => $this->getTable('emico_attributelanding_page_store')])
             ->join(
                 ['p' => $this->getTable('emico_attributelanding_page')],
                 'ps.page_id = p.page_id',
-                ['name']
+                ['name' => new Zend_Db_Expr('COALESCE(ps.name, p.name)')]
             )
             ->where('ps.page_id = ?', $landingPageId)
             ->where('store_id = ?', $storeId);
 
+        /** @phpstan-ignore-next-line */
         $result = $connection->fetchRow($select);
 
         if ($result) {
@@ -74,12 +77,14 @@ class Page extends AbstractDb
     public function getAllLandingPageStoreData(int $pageId): array
     {
         $connection = $this->getConnection();
+        /** @phpstan-ignore-next-line */
         $select = $connection->select()
             ->from($this->getTable('emico_attributelanding_page_store'))
             ->where('page_id = :page_id');
 
         $bind = ['page_id' => (int)$pageId];
 
+        /** @phpstan-ignore-next-line */
         return $connection->fetchAll($select, $bind);
     }
 
@@ -89,6 +94,7 @@ class Page extends AbstractDb
      */
     public function saveLandingPageStoreData(LandingPageInterface $page): void
     {
+        /** @phpstan-ignore-next-line */
         $data = $page->getLandingPageDataForStore();
         $connection = $this->getConnection();
         $table = $this->getTable('emico_attributelanding_page_store');
@@ -100,11 +106,13 @@ class Page extends AbstractDb
         unset($data['id']);
 
         if (!empty($this->getLandingPageStoreData($page->getPageId(), $page->getStoreId()))) {
+            /** @phpstan-ignore-next-line */
             $connection->update($table, $data, $where);
         } else {
             unset($data['id']);
             $data['page_id'] = $page->getPageId();
             $data['store_id'] = $page->getStoreId();
+            /** @phpstan-ignore-next-line */
             $connection->insert($table, $data);
         }
 

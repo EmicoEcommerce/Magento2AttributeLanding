@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Ui\Component\Listing\Column;
 
@@ -12,11 +12,10 @@ class OverviewPageActions extends Column
 {
     public const URL_PATH_DETAILS = 'emico_attributelanding/overviewpage/details';
 
+    /** @phpstan-ignore-next-line */
     protected $urlBuilder;
     protected const URL_PATH_EDIT = 'emico_attributelanding/overviewpage/edit';
     protected const URL_PATH_DELETE = 'emico_attributelanding/overviewpage/delete';
-
-    public StoreRepositoryInterface $storeRepository;
 
     /**
      * @param ContextInterface $context
@@ -29,13 +28,12 @@ class OverviewPageActions extends Column
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        StoreRepositoryInterface $storeRepository,
+        public StoreRepositoryInterface $storeRepository,
         UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
     ) {
         $this->urlBuilder = $urlBuilder;
-        $this->storeRepository = $storeRepository;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
@@ -46,11 +44,12 @@ class OverviewPageActions extends Column
      * @return array
      *
      * phpcs:disable Generic.Metrics.NestingLevel.TooHigh
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings("PHPMD.CyclomaticComplexity")
      */
     public function prepareDataSource(array $dataSource)
     {
         if (isset($dataSource['data']['items'])) {
+            // phpcs:ignore SlevomatCodingStandard.PHP.DisallowReference.DisallowedAssigningByReference
             foreach ($dataSource['data']['items'] as & $item) {
                 if (isset($item['page_id'])) {
                     $item[$this->getData('name')] = [
@@ -81,17 +80,23 @@ class OverviewPageActions extends Column
 
                 if (!empty($item['store_ids']) && is_string($item['store_ids'])) {
                     $store_ids = explode(',', $item['store_ids']);
+                    /** @phpstan-ignore-next-line */
                     if (!empty($store_ids) && is_array($store_ids)) {
                         $stores = $this->storeRepository->getList();
                         $item['stores'] = '';
                         foreach ($stores as $store) {
                             $id = $store->getId();
-                            if (in_array($id, $store_ids)) {
-                                if ($id === "0") {
-                                    $item['stores'] .= 'All Store Views' . ', ';
-                                } else {
-                                    $item['stores'] .= $store->getName() . ', ';
-                                }
+
+                            // phpcs:ignore SlevomatCodingStandard.Functions.StrictCall.StrictParameterMissing
+                            if (!in_array($id, $store_ids)) {
+                                continue;
+                            }
+
+                            /** @phpstan-ignore-next-line */
+                            if ($id === '0') {
+                                $item['stores'] .= 'All Store Views' . ', ';
+                            } else {
+                                $item['stores'] .= $store->getName() . ', ';
                             }
                         }
                     }

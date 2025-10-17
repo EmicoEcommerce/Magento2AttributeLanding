@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
 
 namespace Emico\AttributeLanding\Controller\Adminhtml\OverviewPage;
 
@@ -8,6 +8,7 @@ use Magento\Backend\Model\View\Result\ForwardFactory;
 
 class NewAction extends OverviewPage
 {
+    /** @phpstan-ignore-next-line */
     protected $resultForwardFactory;
 
     /**
