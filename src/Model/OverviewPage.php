@@ -24,7 +24,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
 
     /**
      * Get page_id
-     * @return int|null
+     * @return int
      */
     public function getPageId()
     {
@@ -278,6 +278,9 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
         return $this->getData(OverviewPageInterface::UPDATED_AT);
     }
 
+    /**
+     * @return array
+     */
     public function getOverviewPageDataWithoutStore(): array
     {
         $fields = [

@@ -56,6 +56,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
      * @param PageSearchResultsInterfaceFactory $searchResultsFactory
      * @param CollectionProcessorInterface $collectionProcessor
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         ResourcePage $resource,
@@ -63,7 +64,8 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
         PageCollectionFactory $pageCollectionFactory,
         PageSearchResultsInterfaceFactory $searchResultsFactory,
         CollectionProcessorInterface $collectionProcessor,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        private readonly StoreManagerInterface $storeManager
     ) {
         $this->resource = $resource;
         $this->pageCollectionFactory = $pageCollectionFactory;
@@ -173,6 +175,8 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
      */
     public function findAllActive(): array
     {
+        $storeId = $this->storeManager->getStore()->getId();
+
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter(OverviewPageInterface::ACTIVE, 1)
             ->addFilter(OverviewPageInterface::STORE_ID, [$storeId, 0], 'in')

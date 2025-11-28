@@ -18,6 +18,11 @@ class OverviewPage extends AbstractDb
         $this->_init('emico_attributelanding_overviewpage', LandingPageInterface::PAGE_ID);
     }
 
+    /**
+     * @param int $overviewPageId
+     * @param int $storeId
+     * @return array
+     */
     public function getOverviewPageStoreData(int $overviewPageId, int $storeId = 0): array
     {
         $connection = $this->getConnection();
@@ -35,6 +40,10 @@ class OverviewPage extends AbstractDb
         return [];
     }
 
+    /**
+     * @param int $overviewPageId
+     * @return array
+     */
     public function getAllOverviewPageStoreData(int $overviewPageId): array
     {
         $connection = $this->getConnection();
@@ -47,6 +56,10 @@ class OverviewPage extends AbstractDb
         return $connection->fetchAll($select, $bind);
     }
 
+    /**
+     * @param OverviewPageInterface $page
+     * @return void
+     */
     public function saveOverviewPageStoreData(OverviewPageInterface $page): void
     {
         $data = $page->getOverviewPageDataForStore();

@@ -22,7 +22,7 @@ class ConvertOverviewpageEntries implements DataPatchInterface
     }
 
     /**
-     * @inheritDoc
+     * @return void
      */
     public function apply(): void
     {

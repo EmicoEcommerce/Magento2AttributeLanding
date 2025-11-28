@@ -40,6 +40,7 @@ class View extends Action
      * @param PageFactory $resultPageFactory
      * @param LandingPageContext $landingPageContext
      * @param OverviewPageRepositoryInterface $overviewPageRepository
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         Context $context,
