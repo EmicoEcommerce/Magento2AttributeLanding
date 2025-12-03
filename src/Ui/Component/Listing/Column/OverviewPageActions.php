@@ -51,32 +51,34 @@ class OverviewPageActions extends Column
         if (isset($dataSource['data']['items'])) {
             // phpcs:ignore SlevomatCodingStandard.PHP.DisallowReference.DisallowedAssigningByReference
             foreach ($dataSource['data']['items'] as & $item) {
-                if (isset($item['page_id'])) {
-                    $item[$this->getData('name')] = [
-                        'edit' => [
-                            'href' => $this->urlBuilder->getUrl(
-                                static::URL_PATH_EDIT,
-                                [
-                                    'page_id' => $item['page_id']
-                                ]
-                            ),
-                            'label' => __('Edit')
-                        ],
-                        'delete' => [
-                            'href' => $this->urlBuilder->getUrl(
-                                static::URL_PATH_DELETE,
-                                [
-                                    'page_id' => $item['page_id']
-                                ]
-                            ),
-                            'label' => __('Delete'),
-                            'confirm' => [
-                                'title' => __('Delete overviewpage'),
-                                'message' => __('Are you sure you wan\'t to delete this overviewpage?')
-                            ]
-                        ]
-                    ];
+                if (!isset($item['page_id'])) {
+                    continue;
                 }
+
+                $item[$this->getData('name')] = [
+                    'edit' => [
+                        'href' => $this->urlBuilder->getUrl(
+                            static::URL_PATH_EDIT,
+                            [
+                                'page_id' => $item['page_id']
+                            ]
+                        ),
+                        'label' => __('Edit')
+                    ],
+                    'delete' => [
+                        'href' => $this->urlBuilder->getUrl(
+                            static::URL_PATH_DELETE,
+                            [
+                                'page_id' => $item['page_id']
+                            ]
+                        ),
+                        'label' => __('Delete'),
+                        'confirm' => [
+                            'title' => __('Delete overviewpage'),
+                            'message' => __('Are you sure you wan\'t to delete this overviewpage?')
+                        ]
+                    ]
+                ];
             }
         }
 

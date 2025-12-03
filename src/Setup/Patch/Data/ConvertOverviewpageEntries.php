@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emico\AttributeLanding\Setup\Patch\Data;
 
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
@@ -76,9 +78,11 @@ class ConvertOverviewpageEntries implements DataPatchInterface
         ];
 
         foreach ($fields as $field) {
-            if (isset($overviewPage[$field])) {
-                $data[$field] = $overviewPage[$field];
+            if (!isset($overviewPage[$field])) {
+                continue;
             }
+
+            $data[$field] = $overviewPage[$field];
         }
 
         $connection->insert($table, $data);

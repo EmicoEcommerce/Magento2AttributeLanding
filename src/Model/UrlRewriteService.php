@@ -215,11 +215,11 @@ class UrlRewriteService
         $allPages = $this->overviewPageRepository->getAllPagesById($page->getPageId());
 
         foreach ($allPages as $storePage) {
-            if ($storePage->getStoreId() == $page->getStoreId()) {
+            if ($storePage->getStoreId() === $page->getStoreId()) {
                 $storePage = $page;
             }
 
-            if ($storePage->getStoreId() == 0) {
+            if ($storePage->getStoreId() === 0) {
                 $urlRewritesToPersist = $this->generateOverviewPageRewritesForAllStores(
                     $storePage,
                     $page,
@@ -244,7 +244,7 @@ class UrlRewriteService
         $stores = $this->storeManager->getStores();
 
         foreach ($stores as $store) {
-            if ($store->getId() == $page->getStoreId()) {
+            if ($store->getId() === $page->getStoreId()) {
                 $storePage = $page;
             }
 
@@ -252,10 +252,12 @@ class UrlRewriteService
                 continue;
             }
 
-            if (!isset($urlRewritesToPersist[$store->getId()])) {
-                $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
-                $urlRewritesToPersist[$store->getId()] = $urlRewrite;
+
+            if (isset($urlRewritesToPersist[$store->getId()])) {
+                continue;
             }
+            $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
+            $urlRewritesToPersist[$store->getId()] = $urlRewrite;
         }
 
         return $urlRewritesToPersist;
