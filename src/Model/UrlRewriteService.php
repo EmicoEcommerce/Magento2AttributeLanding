@@ -251,8 +251,7 @@ class UrlRewriteService
             if (empty($storePage)) {
                 continue;
             }
-
-
+            
             if (isset($urlRewritesToPersist[$store->getId()])) {
                 continue;
             }
