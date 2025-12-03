@@ -7,7 +7,6 @@ namespace Emico\AttributeLanding\Setup\Patch\Data;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
-use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 
 class ConvertOverviewpageEntries implements DataPatchInterface
@@ -15,11 +14,9 @@ class ConvertOverviewpageEntries implements DataPatchInterface
     /**
      * ConvertLandingpageEntries constructor.
      * @param ModuleDataSetupInterface $moduleDataSetup
-     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        private readonly ModuleDataSetupInterface $moduleDataSetup,
-        private readonly StoreManagerInterface $storeManager
+        private readonly ModuleDataSetupInterface $moduleDataSetup
     ) {
     }
 
@@ -33,7 +30,6 @@ class ConvertOverviewpageEntries implements DataPatchInterface
         $connection = $this->moduleDataSetup->getConnection();
         $overviewPageTable = $this->moduleDataSetup->getTable('emico_attributelanding_overviewpage');
         $overviewPageStoreTable = $this->moduleDataSetup->getTable('emico_attributelanding_overviewpage_store');
-        $stores = $this->storeManager->getStores();
 
         $select = $connection->select()->from($overviewPageTable);
         $overviewPages = $connection->fetchAll($select);
