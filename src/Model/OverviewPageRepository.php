@@ -5,6 +5,7 @@ namespace Emico\AttributeLanding\Model;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\OverviewPageRepositoryInterface;
+use Exception;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
@@ -82,7 +83,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
         try {
             /** @var LandingPage $page */
             $this->resource->save($page); // @phpstan-ignore-line
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new CouldNotSaveException(
                 __(
                     'Could not save the page: %1',
@@ -141,7 +142,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
         try {
             /** @var LandingPage $page */
             $this->resource->delete($page); // @phpstan-ignore-line
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new CouldNotDeleteException(
                 __(
                     'Could not delete the Page: %1',

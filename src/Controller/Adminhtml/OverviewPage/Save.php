@@ -5,6 +5,7 @@ namespace Emico\AttributeLanding\Controller\Adminhtml\OverviewPage;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterfaceFactory;
 use Emico\AttributeLanding\Api\OverviewPageRepositoryInterface;
+use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Api\DataObjectHelper;
@@ -99,7 +100,7 @@ class Save extends Action
             return $resultRedirect->setPath('*/*/');
         } catch (LocalizedException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the Page.'));
         }
 

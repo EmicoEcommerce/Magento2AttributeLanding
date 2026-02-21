@@ -4,46 +4,37 @@ namespace Emico\AttributeLanding\Ui\Component\Listing\Column;
 
 use Magento\Catalog\Model\CategoryRepository;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Element\UiComponent\ContextInterface;
+use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Store\Api\StoreRepositoryInterface;
+use Magento\Ui\Component\Listing\Columns\Column;
 
-class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
+class PageActions extends Column
 {
-    /**
-     * @var \Magento\Framework\UrlInterface
-     */
-    protected $urlBuilder;
-
-    /**
-     * @var \Magento\Catalog\Model\CategoryRepository
-     */
-    public CategoryRepository $categoryRepository; // phpcs:ignore SlevomatCodingStandard.Classes.ForbiddenPublicProperty.ForbiddenPublicProperty
-
     public const URL_PATH_DETAILS = 'emico_attributelanding/page/details';
     protected const URL_PATH_EDIT = 'emico_attributelanding/page/edit';
     protected const URL_PATH_DELETE = 'emico_attributelanding/page/delete';
     protected const URL_PATH_DUPLICATE = 'emico_attributelanding/page/duplicate';
 
     /**
-     * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
-     * @param \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory
+     * @param ContextInterface $context
+     * @param UiComponentFactory $uiComponentFactory
      * @param CategoryRepository $categoryRepository
      * @param StoreRepositoryInterface $storeRepository
-     * @param \Magento\Framework\UrlInterface $urlBuilder
+     * @param UrlInterface $urlBuilder
      * @param array $components
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\View\Element\UiComponent\ContextInterface $context,
-        \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory,
-        \Magento\Catalog\Model\CategoryRepository $categoryRepository,
-        public StoreRepositoryInterface $storeRepository,
-        \Magento\Framework\UrlInterface $urlBuilder,
+        ContextInterface $context,
+        UiComponentFactory $uiComponentFactory,
+        private readonly CategoryRepository $categoryRepository,
+        private readonly StoreRepositoryInterface $storeRepository,
+        protected readonly UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
     ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->urlBuilder = $urlBuilder;
-
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 

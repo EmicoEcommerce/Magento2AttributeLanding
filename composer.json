@@ -7,7 +7,7 @@
         "magento/module-catalog": "^102.0||^103.0||^104.0"
     },
     "require-dev": {
-        "emico/code-quality": "^10.5",
+        "emico/code-quality": "~10.6.0",
         "symfony/finder": "6.4.0"
     },
     "prefer-stable": true,

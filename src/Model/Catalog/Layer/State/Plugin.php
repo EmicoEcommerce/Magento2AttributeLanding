@@ -46,7 +46,7 @@ class Plugin
     public function afterGetFilters(State $subject, $result)
     {
         /** @phpstan-ignore-next-line */
-        if (!\is_array($result) || empty($result)) {
+        if (!is_array($result) || empty($result)) {
             return $result;
         }
 

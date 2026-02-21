@@ -5,6 +5,7 @@ namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterfaceFactory;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
+use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Redirect;
@@ -71,7 +72,6 @@ class Save extends Action
         $data = $this->getRequest()->getPostValue();
         $data[LandingPageInterface::STORE_ID] = (int)$data[LandingPageInterface::STORE_ID];
 
-        /** @phpstan-ignore-next-line */
         if (!$data) {
             return $resultRedirect->setPath('*/*/');
         }
@@ -113,7 +113,7 @@ class Save extends Action
             return $resultRedirect->setPath('*/*/');
         } catch (LocalizedException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the Page.'));
         }
 
