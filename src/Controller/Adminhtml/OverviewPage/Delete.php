@@ -4,6 +4,7 @@ namespace Emico\AttributeLanding\Controller\Adminhtml\OverviewPage;
 
 use Emico\AttributeLanding\Api\OverviewPageRepositoryInterface;
 use Emico\AttributeLanding\Controller\Adminhtml\OverviewPage;
+use Exception;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Redirect;
 use Magento\Framework\Controller\ResultInterface;
@@ -46,7 +47,7 @@ class Delete extends OverviewPage
 
                 $this->messageManager->addSuccessMessage(__('You deleted the Page.'));
                 return $resultRedirect->setPath('*/*/');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
 
                 return $resultRedirect->setPath('*/*/edit', ['page_id' => $id]);

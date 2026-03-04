@@ -2,6 +2,7 @@
 
 namespace Emico\AttributeLanding\Ui\Component\Product\Form\Categories;
 
+use Magento\Catalog\Ui\Component\Product\Form\Categories\Options as MagentoOptions;
 use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 use Magento\Framework\App\RequestInterface;
@@ -9,7 +10,7 @@ use Magento\Framework\App\RequestInterface;
 /**
  * Options tree for "Categories" field
  */
-class Options extends \Magento\Catalog\Ui\Component\Product\Form\Categories\Options implements OptionSourceInterface
+class Options extends MagentoOptions implements OptionSourceInterface
 {
     /**
      * @var \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory

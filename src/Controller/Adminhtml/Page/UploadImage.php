@@ -8,11 +8,12 @@
 namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
 use Emico\AttributeLanding\Model\Page\ImageUploader;
+use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
 
-class UploadImage extends \Magento\Backend\App\Action
+class UploadImage extends Action
 {
     /**
      * @var ImageUploader

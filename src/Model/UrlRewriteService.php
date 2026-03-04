@@ -276,7 +276,7 @@ class UrlRewriteService
     protected function getActiveStoreIds(UrlRewriteGeneratorInterface $landingPage): array
     {
         // phpcs:disable SlevomatCodingStandard.Functions.StrictCall.NonStrictComparison
-        if (\in_array('0', $landingPage->getStoreIds(), false) !== false) { // @phpstan-ignore-line
+        if (in_array('0', $landingPage->getStoreIds(), false) !== false) { // @phpstan-ignore-line
             return array_map(
                 static function (StoreInterface $store) {
                     return $store->getId();
