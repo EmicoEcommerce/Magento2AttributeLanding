@@ -11,6 +11,8 @@ use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Model\LandingPageRepository;
 use Emico\AttributeLanding\Model\ResourceModel\Page\Collection;
 use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory;
+use Magento\Backend\App\Area\FrontNameResolver;
+use Magento\Backend\Model\UrlInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\App\Request\Http;
 use Magento\Ui\DataProvider\AbstractDataProvider;
@@ -48,6 +50,8 @@ class DataProvider extends AbstractDataProvider
      * @param ImageUploader $imageUploader
      * @param Http $request
      * @param LandingPageRepository $landingPageRepository
+     * @param FrontNameResolver $frontNameResolver
+     * @param UrlInterface $backendUrl
      * @param array $meta
      * @param array $data
      * @SuppressWarnings("PHPMD.ExcessiveParameterList")
@@ -61,6 +65,8 @@ class DataProvider extends AbstractDataProvider
         ImageUploader $imageUploader,
         private readonly Http $request,
         private readonly LandingPageRepository $landingPageRepository,
+        private readonly FrontNameResolver $frontNameResolver,
+        private readonly UrlInterface $backendUrl,
         array $meta = [],
         array $data = []
     ) {
@@ -120,5 +126,20 @@ class DataProvider extends AbstractDataProvider
         }
 
         return $this->loadedData;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigData()
+    {
+        $configData = parent::getConfigData();
+        $configData['admin_url'] = sprintf(
+            '%s%s/',
+            $this->backendUrl->getBaseUrl(),
+            $this->frontNameResolver->getFrontName()
+        );
+
+        return $configData;
     }
 }
