@@ -12,10 +12,12 @@ use Magento\Framework\Api\SearchCriteriaInterface;
 use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
 use Emico\AttributeLanding\Model\ResourceModel\OverviewPage as ResourcePage;
 use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Emico\AttributeLanding\Model\ResourceModel\OverviewPage\CollectionFactory as PageCollectionFactory;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterfaceFactory;
+use Magento\Store\Model\StoreManagerInterface;
 
 class OverviewPageRepository implements OverviewPageRepositoryInterface
 {
@@ -90,7 +92,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
             $this->resource->save($parentOverviewPage); // @phpstan-ignore-line
             $page->setPageId($parentOverviewPage->getPageId());
             $this->resource->saveOverviewPageStoreData($page);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new CouldNotSaveException(
                 __(
                     'Could not save the page: %1',
@@ -171,7 +173,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
 
     /**
      * @return OverviewPageInterface[]
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function findAllActive(): array
     {
@@ -257,7 +259,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
     {
         try {
             $this->resource->saveOverviewPageStoreData($page);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new CouldNotSaveException(
                 __(
                     'Could not save the overview page store data: %1',
