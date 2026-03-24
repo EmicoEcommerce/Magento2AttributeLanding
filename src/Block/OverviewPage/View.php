@@ -12,6 +12,8 @@ use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Emico\AttributeLanding\Model\Page\ImageUploader;
+use Exception;
+use Magento\Framework\View\Element\Template\Context;
 use Magento\Theme\Block\Html\Breadcrumbs;
 use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\Exception\LocalizedException;
@@ -48,7 +50,7 @@ class View extends Template
 
     /**
      * View constructor.
-     * @param Template\Context $context
+     * @param Context $context
      * @param LandingPageContext $landingPageContext
      * @param LandingPageRepositoryInterface $landingPageRepository
      * @param ImageUploader $imageUploader
@@ -56,7 +58,7 @@ class View extends Template
      * @param LoggerInterface $logger
      */
     public function __construct(
-        Template\Context $context,
+        Context $context,
         LandingPageContext $landingPageContext,
         LandingPageRepositoryInterface $landingPageRepository,
         ImageUploader $imageUploader,
@@ -132,7 +134,7 @@ class View extends Template
     {
         try {
             return $this->pageFilter->filter($content);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->critical($e->getMessage());
             return '';
         }

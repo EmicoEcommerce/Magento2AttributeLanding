@@ -11,7 +11,9 @@ use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Api\Data\StoreInterface;
+use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\UrlRewrite\Model\UrlFinderInterface;
 use Magento\UrlRewrite\Model\UrlPersistInterface;
@@ -58,6 +60,7 @@ class UrlRewriteService
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param UrlFinderInterface $urlFinder
      * @param LandingPageRepositoryInterface $landingPageRepository
+     * @param Config $config
      */
     public function __construct(
         UrlRewriteFactory $urlRewriteFactory,
@@ -65,7 +68,8 @@ class UrlRewriteService
         UrlPersistInterface $urlPersist,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         UrlFinderInterface $urlFinder,
-        LandingPageRepositoryInterface $landingPageRepository
+        LandingPageRepositoryInterface $landingPageRepository,
+        private readonly Config $config,
     ) {
         $this->urlRewriteFactory = $urlRewriteFactory;
         $this->storeManager = $storeManager;
@@ -244,17 +248,35 @@ class UrlRewriteService
             ? $page->getUrlRewriteRequestPath()
             : $page->getUrlPath() . $suffix; // @phpstan-ignore-line
 
-        $requestPath = trim($requestPath, '/');
+        if ($this->shouldStripRequestPath($suffix)) {
+            $requestPath = trim($requestPath, '/');
+        }
 
         $urlRewrite->setRequestPath($requestPath);
 
         return $urlRewrite;
     }
 
+    /**
+     * @param string|null $newSuffix
+     * @return bool
+     * @throws NoSuchEntityException
+     */
+    private function shouldStripRequestPath(?string $newSuffix): bool
+    {
+        /** @var Store $store */
+        $store = $this->storeManager->getStore();
+        $suffix = $newSuffix ?? $this->config->getCategoryUrlSuffix($store);
+        return !(
+            $suffix === '/' &&
+            $this->config->isAppendCategoryUrlSuffix($store)
+        );
+    }
+
     protected function getActiveStoreIds(UrlRewriteGeneratorInterface $landingPage): array
     {
         // phpcs:disable SlevomatCodingStandard.Functions.StrictCall.NonStrictComparison
-        if (\in_array('0', $landingPage->getStoreIds(), false) !== false) { // @phpstan-ignore-line
+        if (in_array('0', $landingPage->getStoreIds(), false) !== false) { // @phpstan-ignore-line
             return array_map(
                 static function (StoreInterface $store) {
                     return $store->getId();

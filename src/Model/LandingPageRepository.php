@@ -11,6 +11,7 @@ use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Ui\Component\Product\Form\Categories\Options;
+use Exception;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
@@ -125,7 +126,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
             /** @phpstan-ignore-next-line */
             $page->setPageId($parentLandingPage->getPageId());
             $this->resource->saveLandingPageStoreData($page);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new CouldNotSaveException(
                 __(
                     'Could not save the page: %1',
@@ -237,7 +238,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         try {
             /** @var LandingPage $page */
             $this->resource->delete($page);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new CouldNotDeleteException(
                 __(
                     'Could not delete the Page: %1',

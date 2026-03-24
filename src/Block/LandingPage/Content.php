@@ -9,8 +9,10 @@ namespace Emico\AttributeLanding\Block\LandingPage;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
+use Exception;
 use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
 use Psr\Log\LoggerInterface;
 
 class Content extends Template
@@ -32,12 +34,12 @@ class Content extends Template
 
     /**
      * PageContent constructor.
-     * @param Template\Context $context
+     * @param Context $context
      * @param LandingPageContext $landingPageContext
      * @param FilterProvider $filterProvider
      */
     public function __construct(
-        Template\Context $context,
+        Context $context,
         LandingPageContext $landingPageContext,
         FilterProvider $filterProvider,
         LoggerInterface $logger
@@ -80,7 +82,7 @@ class Content extends Template
     {
         try {
             return $this->pageFilter->filter($content);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->critical($e->getMessage());
             return '';
         }

@@ -4,6 +4,7 @@ namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Controller\Adminhtml\Page;
+use Exception;
 use Magento\Backend\App\Action\Context;
 
 class Delete extends Page
@@ -44,7 +45,7 @@ class Delete extends Page
 
                 $this->messageManager->addSuccessMessage(__('You deleted the Page.'));
                 return $resultRedirect->setPath('*/*/');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
 
                 return $resultRedirect->setPath('*/*/edit', ['page_id' => $id]);
