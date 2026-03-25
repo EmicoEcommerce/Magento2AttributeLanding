@@ -10,7 +10,6 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 class ConvertLandingpageEntries implements DataPatchInterface
 {
     /**
-     * ConvertLandingpageEntries constructor.
      * @param ModuleDataSetupInterface $moduleDataSetup
      */
     public function __construct(
@@ -18,8 +17,9 @@ class ConvertLandingpageEntries implements DataPatchInterface
     ) {
     }
 
+
     /**
-     * @inheritDoc
+     * @return $this
      */
     public function apply(): ConvertLandingpageEntries
     {
@@ -36,7 +36,7 @@ class ConvertLandingpageEntries implements DataPatchInterface
             $storeIds = explode(',', $landingPage['store_ids']);
             foreach ($storeIds as $storeId) {
                 /** @phpstan-ignore-next-line */
-                $this->insertLandingPageStore($connection, $landingPageStoreTable, $landingPage, $storeId);
+                $this->insertLandingPageStore($connection, $landingPageStoreTable, $landingPage, (int)$storeId);
             }
         }
 
@@ -94,15 +94,16 @@ class ConvertLandingpageEntries implements DataPatchInterface
     }
 
     /**
-     * @inheritDoc
+     * @return array|string[]
      */
     public static function getDependencies(): array
     {
         return [];
     }
 
+
     /**
-     * @inheritDoc
+     * @return array|string[]
      */
     public function getAliases(): array
     {

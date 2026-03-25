@@ -197,7 +197,7 @@ class UrlRewriteService
             }
 
             /** @phpstan-ignore-next-line */
-            $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
+            $urlRewrite = $this->createUrlRewrite($storePage,(int) $store->getId(), $suffix);
             $urlRewritesToPersist[$store->getId()] = $urlRewrite;
         }
 
@@ -212,7 +212,7 @@ class UrlRewriteService
     private function generateOverviewPageRewrites(UrlRewriteGeneratorInterface $page, ?string $suffix = null): array
     {
         $urlRewritesToPersist = [];
-        $allPages = $this->overviewPageRepository->getAllPagesById($page->getPageId());
+        $allPages = $this->overviewPageRepository->getAllPagesById((int)$page->getPageId());
 
         foreach ($allPages as $storePage) {
             if ($storePage->getStoreId() === $page->getStoreId()) {
@@ -235,9 +235,17 @@ class UrlRewriteService
         return $urlRewritesToPersist;
     }
 
+    /**
+     * @param UrlRewriteGeneratorInterface $storePage
+     * @param UrlRewriteGeneratorInterface $page
+     * @param string|null $suffix
+     * @param array $urlRewritesToPersist
+     *
+     * @return array
+     */
     private function generateOverviewPageRewritesForAllStores(
-        OverviewPageInterface $storePage,
-        OverviewPageInterface $page,
+        UrlRewriteGeneratorInterface $storePage,
+        UrlRewriteGeneratorInterface $page,
         ?string $suffix,
         array $urlRewritesToPersist
     ): array {
@@ -255,7 +263,8 @@ class UrlRewriteService
             if (isset($urlRewritesToPersist[$store->getId()])) {
                 continue;
             }
-            $urlRewrite = $this->createUrlRewrite($storePage, $store->getId(), $suffix);
+
+            $urlRewrite = $this->createUrlRewrite($storePage, (int)$store->getId(), $suffix);
             $urlRewritesToPersist[$store->getId()] = $urlRewrite;
         }
 
