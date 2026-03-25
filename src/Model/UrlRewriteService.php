@@ -8,7 +8,6 @@
 namespace Emico\AttributeLanding\Model;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
-use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
@@ -197,7 +196,7 @@ class UrlRewriteService
             }
 
             /** @phpstan-ignore-next-line */
-            $urlRewrite = $this->createUrlRewrite($storePage,(int) $store->getId(), $suffix);
+            $urlRewrite = $this->createUrlRewrite($storePage, (int) $store->getId(), $suffix);
             $urlRewritesToPersist[$store->getId()] = $urlRewrite;
         }
 

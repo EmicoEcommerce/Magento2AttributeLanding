@@ -17,7 +17,6 @@ class ConvertLandingpageEntries implements DataPatchInterface
     ) {
     }
 
-
     /**
      * @return $this
      */
@@ -100,7 +99,6 @@ class ConvertLandingpageEntries implements DataPatchInterface
     {
         return [];
     }
-
 
     /**
      * @return array|string[]
