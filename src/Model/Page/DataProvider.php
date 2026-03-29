@@ -129,7 +129,7 @@ class DataProvider extends AbstractDataProvider
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getConfigData()
     {
