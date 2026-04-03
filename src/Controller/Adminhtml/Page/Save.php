@@ -160,7 +160,7 @@ class Save extends Action
      */
     protected function sanitizeFilterAttributes(array $filterAttributes): array
     {
-        $allowedFields = ['attribute', 'value'];
+        $allowedFields = ['attribute', 'value', 'attribute_other', 'attribute_value_other'];
         $sanitizedAttributes = [];
         foreach ($filterAttributes as $filterAttribute) {
             foreach (array_keys($filterAttribute) as $field) {
