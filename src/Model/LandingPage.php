@@ -356,9 +356,17 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     /**
      * @return array
      */
+    public function getFrontendFilterAttributes(): array
+    {
+        return $this->getUnserializedFilterAttributes();
+    }
+
+    /**
+     * @return array
+     */
     public function getFilters(): array
     {
-        $unserializedFilters = $this->getUnserializedFilterAttributes();
+        $unserializedFilters = $this->getFrontendFilterAttributes();
         /** @phpstan-ignore-next-line */
         if (!is_array($unserializedFilters)) {
             return [];
