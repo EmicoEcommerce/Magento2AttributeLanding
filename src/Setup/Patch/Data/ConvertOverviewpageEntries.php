@@ -12,7 +12,6 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 class ConvertOverviewpageEntries implements DataPatchInterface
 {
     /**
-     * ConvertLandingpageEntries constructor.
      * @param ModuleDataSetupInterface $moduleDataSetup
      */
     public function __construct(
