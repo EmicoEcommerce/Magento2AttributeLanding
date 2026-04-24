@@ -136,7 +136,8 @@ class Save extends Action
             $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] =
                 $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['file'];
         } else {
-            unset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE]);
+            $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] =
+                $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['name'];
         }
 
         $filterAttributes = $data[LandingPageInterface::FILTER_ATTRIBUTES] ?? [];
@@ -160,7 +161,7 @@ class Save extends Action
      */
     protected function sanitizeFilterAttributes(array $filterAttributes): array
     {
-        $allowedFields = ['attribute', 'value'];
+        $allowedFields = ['attribute', 'value', 'attribute_other', 'attribute_value_other'];
         $sanitizedAttributes = [];
         foreach ($filterAttributes as $filterAttribute) {
             foreach (array_keys($filterAttribute) as $field) {

@@ -51,58 +51,34 @@ class OverviewPageActions extends Column
         if (isset($dataSource['data']['items'])) {
             // phpcs:ignore SlevomatCodingStandard.PHP.DisallowReference.DisallowedAssigningByReference
             foreach ($dataSource['data']['items'] as & $item) {
-                if (isset($item['page_id'])) {
-                    $item[$this->getData('name')] = [
-                        'edit' => [
-                            'href' => $this->urlBuilder->getUrl(
-                                static::URL_PATH_EDIT,
-                                [
-                                    'page_id' => $item['page_id']
-                                ]
-                            ),
-                            'label' => __('Edit')
-                        ],
-                        'delete' => [
-                            'href' => $this->urlBuilder->getUrl(
-                                static::URL_PATH_DELETE,
-                                [
-                                    'page_id' => $item['page_id']
-                                ]
-                            ),
-                            'label' => __('Delete'),
-                            'confirm' => [
-                                'title' => __('Delete overviewpage'),
-                                'message' => __('Are you sure you wan\'t to delete this overviewpage?')
+                if (!isset($item['page_id'])) {
+                    continue;
+                }
+
+                $item[$this->getData('name')] = [
+                    'edit' => [
+                        'href' => $this->urlBuilder->getUrl(
+                            static::URL_PATH_EDIT,
+                            [
+                                'page_id' => $item['page_id']
                             ]
+                        ),
+                        'label' => __('Edit')
+                    ],
+                    'delete' => [
+                        'href' => $this->urlBuilder->getUrl(
+                            static::URL_PATH_DELETE,
+                            [
+                                'page_id' => $item['page_id']
+                            ]
+                        ),
+                        'label' => __('Delete'),
+                        'confirm' => [
+                            'title' => __('Delete overviewpage'),
+                            'message' => __('Are you sure you wan\'t to delete this overviewpage?')
                         ]
-                    ];
-                }
-
-                if (!empty($item['store_ids']) && is_string($item['store_ids'])) {
-                    $store_ids = explode(',', $item['store_ids']);
-                    /** @phpstan-ignore-next-line */
-                    if (!empty($store_ids) && is_array($store_ids)) {
-                        $stores = $this->storeRepository->getList();
-                        $item['stores'] = '';
-                        foreach ($stores as $store) {
-                            $id = $store->getId();
-
-                            // phpcs:ignore SlevomatCodingStandard.Functions.StrictCall.StrictParameterMissing
-                            if (!in_array($id, $store_ids)) {
-                                continue;
-                            }
-
-                            /** @phpstan-ignore-next-line */
-                            if ($id === '0') {
-                                $item['stores'] .= 'All Store Views' . ', ';
-                            } else {
-                                $item['stores'] .= $store->getName() . ', ';
-                            }
-                        }
-                    }
-                } else {
-                    $item['stores'] = 'All Store Views';
-                }
+                    ]
+                ];
             }
         }
 
