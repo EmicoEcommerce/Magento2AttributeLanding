@@ -36,7 +36,7 @@ class ConvertOverviewpageEntries implements DataPatchInterface
         foreach ($overviewPages as $overviewPage) {
             $storeIds = explode(',', $overviewPage['store_ids']);
             foreach ($storeIds as $storeId) {
-                $this->insertOverviewPageStore($connection, $overviewPageStoreTable, $overviewPage, $storeId);
+                $this->insertOverviewPageStore($connection, $overviewPageStoreTable, $overviewPage, (int) $storeId);
             }
         }
 
