@@ -12,24 +12,13 @@ use Emico\AttributeLanding\Api\Data\FilterInterface;
 class Filter implements FilterInterface
 {
     /**
-     * @var string
-     */
-    private $facet;
-
-    /**
-     * @var string
-     */
-    private $value;
-
-    /**
      * Filter constructor.
+     *
      * @param string $facet
-     * @param string $value
+     * @param array  $value
      */
-    public function __construct(string $facet, string $value)
+    public function __construct(private readonly string $facet, private readonly array $value)
     {
-        $this->facet = $facet;
-        $this->value = $value;
     }
 
     /**
@@ -41,9 +30,9 @@ class Filter implements FilterInterface
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getValue(): string
+    public function getValue(): array
     {
         return $this->value;
     }
