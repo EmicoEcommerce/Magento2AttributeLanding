@@ -1,28 +1,32 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
  */
 
+declare(strict_types=1);
+
 namespace Emico\AttributeLanding\Model;
 
-use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
+use Emico\AttributeLanding\Api\Data\LandingPageInterfaceFactory;
+use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
+use Emico\AttributeLanding\Api\Data\PageSearchResultsInterface;
+use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
+use Emico\AttributeLanding\Model\ResourceModel\Page as ResourcePage;
+use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
 use Emico\AttributeLanding\Ui\Component\Product\Form\Categories\Options;
 use Exception;
+use Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface;
+use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
-use Emico\AttributeLanding\Model\ResourceModel\Page as ResourcePage;
-use Magento\Framework\Exception\CouldNotSaveException;
-use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
-use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
-use Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface;
-use Emico\AttributeLanding\Api\Data\LandingPageInterfaceFactory;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 
 class LandingPageRepository implements LandingPageRepositoryInterface
@@ -123,7 +127,6 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
             /** @var LandingPage $page */
             $this->resource->save($parentLandingPage);
-            /** @phpstan-ignore-next-line */
             $page->setPageId($parentLandingPage->getPageId());
             $this->resource->saveLandingPageStoreData($page);
         } catch (Exception $exception) {
@@ -208,7 +211,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getList(SearchCriteriaInterface $criteria)
+    public function getList(SearchCriteriaInterface $searchCriteria): PageSearchResultsInterface
     {
         $collection = $this->pageCollectionFactory->create();
 
@@ -217,14 +220,15 @@ class LandingPageRepository implements LandingPageRepositoryInterface
             LandingPageInterface::class
         );
 
-        $this->collectionProcessor->process($criteria, $collection);
+        $this->collectionProcessor->process($searchCriteria, $collection);
 
         $searchResults = $this->searchResultsFactory->create();
-        $searchResults->setSearchCriteria($criteria);
+        $searchResults->setSearchCriteria($searchCriteria);
 
         /** @phpstan-ignore-next-line */
         $searchResults->setItems($collection->getItems());
         $searchResults->setTotalCount($collection->getSize());
+
         return $searchResults;
     }
 
@@ -260,7 +264,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
     /**
      * @return LandingPageInterface[]
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function findAllActive(): array
     {
@@ -277,8 +281,9 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
     /**
      * @param OverviewPageInterface $overviewPage
+     *
      * @return LandingPageInterface[]
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function findAllByOverviewPage(OverviewPageInterface $overviewPage): array
     {

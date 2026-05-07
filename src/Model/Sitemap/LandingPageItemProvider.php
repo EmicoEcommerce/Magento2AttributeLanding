@@ -1,9 +1,11 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
  */
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Model\Sitemap;
 
@@ -12,8 +14,8 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Sitemap\Model\ItemProvider\CategoryConfigReader;
 use Magento\Sitemap\Model\ItemProvider\ConfigReaderInterface;
-use Magento\Sitemap\Model\SitemapItemInterfaceFactory;
 use Magento\Sitemap\Model\SitemapItemInterface;
+use Magento\Sitemap\Model\SitemapItemInterfaceFactory;
 
 class LandingPageItemProvider
 {
@@ -62,7 +64,7 @@ class LandingPageItemProvider
             /** @phpstan-ignore-next-line */
             yield $this->itemFactory->create(
                 [
-                'url' => $landingPage->getUrlRewriteRequestPath(), // @phpstan-ignore-line
+                'url' => $landingPage->getUrlRewriteRequestPath(),
                 'updatedAt' => $landingPage->getUpdatedAt(),
                 'priority' => $this->configReader->getPriority($storeId),
                 'changeFrequency' => $this->configReader->getChangeFrequency($storeId),

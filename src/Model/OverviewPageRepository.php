@@ -1,22 +1,25 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Model;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
+use Emico\AttributeLanding\Api\Data\OverviewPageInterfaceFactory;
+use Emico\AttributeLanding\Api\Data\PageSearchResultsInterface;
+use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
 use Emico\AttributeLanding\Api\OverviewPageRepositoryInterface;
+use Emico\AttributeLanding\Model\ResourceModel\OverviewPage as ResourcePage;
+use Emico\AttributeLanding\Model\ResourceModel\OverviewPage\CollectionFactory as PageCollectionFactory;
 use Exception;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
-use Emico\AttributeLanding\Model\ResourceModel\OverviewPage as ResourcePage;
+use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Exception\CouldNotDeleteException;
-use Emico\AttributeLanding\Model\ResourceModel\OverviewPage\CollectionFactory as PageCollectionFactory;
-use Emico\AttributeLanding\Api\Data\OverviewPageInterfaceFactory;
 use Magento\Store\Model\StoreManagerInterface;
 
 class OverviewPageRepository implements OverviewPageRepositoryInterface
@@ -25,34 +28,29 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
      * @var ResourcePage
      */
     protected $resource;
-
     /**
      * @var PageSearchResultsInterfaceFactory
      */
     protected $searchResultsFactory;
-
     /**
      * @var PageCollectionFactory
      */
     protected $pageCollectionFactory;
-
     /**
      * @var OverviewPageInterfaceFactory
      */
     protected $dataPageFactory;
-
     /**
      * @var SearchCriteriaBuilder
      */
     private $searchCriteriaBuilder;
-
     /**
      * @var CollectionProcessorInterface
      */
     private $collectionProcessor;
 
     /**
-     * @param ResourcePage $resource
+     * @param ResourcePage          $resource
      * @param OverviewPageInterfaceFactory $dataPageFactory
      * @param PageCollectionFactory $pageCollectionFactory
      * @param PageSearchResultsInterfaceFactory $searchResultsFactory
@@ -67,7 +65,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
         PageSearchResultsInterfaceFactory $searchResultsFactory,
         CollectionProcessorInterface $collectionProcessor,
         SearchCriteriaBuilder $searchCriteriaBuilder,
-        private readonly StoreManagerInterface $storeManager
+        private readonly StoreManagerInterface $storeManager,
     ) {
         $this->resource = $resource;
         $this->pageCollectionFactory = $pageCollectionFactory;
@@ -79,34 +77,34 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
 
     /**
      * @param OverviewPageInterface $page
+     *
      * @return OverviewPageInterface
      * @throws CouldNotSaveException
      */
     public function save(OverviewPageInterface $page): OverviewPageInterface
     {
         try {
-            /** @var OverviewPage $page */
             $parentOverviewPage = $this->dataPageFactory->create();
             $parentOverviewPage->setData($page->getOverviewPageDataWithoutStore());
 
-            $this->resource->save($parentOverviewPage); // @phpstan-ignore-line
+            $this->resource->save($parentOverviewPage);
             $page->setPageId($parentOverviewPage->getPageId());
             $this->resource->saveOverviewPageStoreData($page);
         } catch (Exception $exception) {
             throw new CouldNotSaveException(
                 __(
                     'Could not save the page: %1',
-                    $exception->getMessage()
-                )
+                    $exception->getMessage(),
+                ),
             );
         }
 
-        /** @phpstan-ignore-next-line */
         return $page;
     }
 
     /**
      * @param int $pageId
+     *
      * @return OverviewPageInterface
      * @throws NoSuchEntityException
      */
@@ -126,23 +124,25 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getList(SearchCriteriaInterface $criteria)
+    public function getList(SearchCriteriaInterface $searchCriteria): PageSearchResultsInterface
     {
         $collection = $this->pageCollectionFactory->create();
 
-        $this->collectionProcessor->process($criteria, $collection);
+        $this->collectionProcessor->process($searchCriteria, $collection);
 
         $searchResults = $this->searchResultsFactory->create();
-        $searchResults->setSearchCriteria($criteria);
+        $searchResults->setSearchCriteria($searchCriteria);
 
         /** @phpstan-ignore-next-line */
         $searchResults->setItems($collection->getItems());
         $searchResults->setTotalCount($collection->getSize());
+
         return $searchResults;
     }
 
     /**
      * @param OverviewPageInterface $page
+     *
      * @return bool
      * @throws CouldNotDeleteException
      */
@@ -155,8 +155,8 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
             throw new CouldNotDeleteException(
                 __(
                     'Could not delete the Page: %1',
-                    $exception->getMessage()
-                )
+                    $exception->getMessage(),
+                ),
             );
         }
 
@@ -185,12 +185,14 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
             ->create();
 
         $result = $this->getList($searchCriteria);
+
         /** @phpstan-ignore-next-line */
         return $result->getItems();
     }
 
     /**
      * @param LandingPageInterface $landingPage
+     *
      * @return OverviewPageInterface
      * @throws NoSuchEntityException
      */
@@ -207,6 +209,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
     /**
      * @param int $pageId
      * @param int $storeId
+     *
      * @return OverviewPageInterface
      * @throws NoSuchEntityException
      */
@@ -234,6 +237,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
 
     /**
      * @param int $pageId
+     *
      * @return OverviewPageInterface[]
      */
     public function getAllPagesById(int $pageId): array
@@ -252,6 +256,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
 
     /**
      * @param OverviewPageInterface $page
+     *
      * @return void
      * @throws CouldNotSaveException
      */
@@ -263,8 +268,8 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
             throw new CouldNotSaveException(
                 __(
                     'Could not save the overview page store data: %1',
-                    $exception->getMessage()
-                )
+                    $exception->getMessage(),
+                ),
             );
         }
     }

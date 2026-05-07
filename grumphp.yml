@@ -30,6 +30,7 @@ grumphp:
       short_open_tag: true
 
     composer:
+      no_check_lock: true
       no_check_publish: true
       with_dependencies: false
       strict: false

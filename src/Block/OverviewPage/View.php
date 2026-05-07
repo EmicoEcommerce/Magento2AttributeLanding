@@ -1,9 +1,11 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Block\OverviewPage;
 
@@ -13,12 +15,12 @@ use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Emico\AttributeLanding\Model\Page\ImageUploader;
 use Exception;
-use Magento\Framework\View\Element\Template\Context;
-use Magento\Theme\Block\Html\Breadcrumbs;
 use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Theme\Block\Html\Breadcrumbs;
 use Psr\Log\LoggerInterface;
 
 class View extends Template
@@ -164,7 +166,7 @@ class View extends Template
             [
                 'label' => __('Home'),
                 'title' => __('Go to Home Page'),
-                'link' => $this->_storeManager->getStore()->getBaseUrl() // @phpstan-ignore-line
+                'link' => $this->_storeManager->getStore()->getBaseUrl(),
             ]
         );
 

@@ -19,5 +19,5 @@ jobs:
           composer2 config gitlab-token.git.emico.io ${{ secrets.GITLAB_TOKEN }}
           composer2 install --dev --prefer-dist --no-scripts --no-progress --optimize-autoloader --no-interaction -vvv
           composer2 show
-          vendor/bin/grumphp run --tasks=phpmd,phpcs,xmllint,phplint,composer --no-interaction
+          vendor/bin/grumphp run --no-interaction
         shell: bash

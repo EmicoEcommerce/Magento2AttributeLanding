@@ -1,9 +1,12 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
- * @author Bram Gerritsen <bgerritsen@emico.nl>
+ * @author        Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
+ * @noinspection  PhpUnnecessaryFullyQualifiedNameInspection
  */
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Api\Data;
 
@@ -13,6 +16,7 @@ interface OverviewPageSearchResultsInterface extends SearchResultsInterface
 {
     /**
      * Get Page list.
+     *
      * @return \Emico\AttributeLanding\Api\Data\OverviewPageInterface[]
      */
     public function getItems(): array;

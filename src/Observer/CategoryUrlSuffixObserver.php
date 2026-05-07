@@ -1,18 +1,20 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
  * @author : Edwin Jacobs, email: ejacobs@emico.nl.
  * @copyright : Copyright Emico B.V. 2020.
  */
 
+declare(strict_types=1);
+
 namespace Emico\AttributeLanding\Observer;
 
 use Emico\AttributeLanding\Model\Config;
+use Emico\AttributeLanding\Model\UrlRewriteService;
 use Magento\Catalog\Model\System\Config\Backend\Catalog\Url\Rewrite\Suffix;
 use Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Emico\AttributeLanding\Model\UrlRewriteService;
 
 /**
  * Update landing page url rewrites if category url suffix changes

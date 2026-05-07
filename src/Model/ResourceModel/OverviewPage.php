@@ -1,16 +1,22 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
 
+declare(strict_types=1);
+
 namespace Emico\AttributeLanding\Model\ResourceModel;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
+/**
+ * @method AdapterInterface getConnection()
+ */
 class OverviewPage extends AbstractDb
 {
     protected function _construct()

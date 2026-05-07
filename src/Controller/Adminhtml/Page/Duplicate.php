@@ -1,4 +1,6 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
@@ -64,7 +66,7 @@ class Duplicate extends Page
 
         try {
             /** @var LandingPage $existingLandingPage */
-            $existingLandingPage = $this->landingPageRepository->getById($id); // @phpstan-ignore-line
+            $existingLandingPage = $this->landingPageRepository->getById($id);
 
             /** @var LandingPage $newLandingPage */
             $newLandingPage = $this->landingPageFactory->create();

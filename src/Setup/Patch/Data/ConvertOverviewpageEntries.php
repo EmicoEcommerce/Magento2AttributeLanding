@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Emico\AttributeLanding\Setup\Patch\Data;
 
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 
 class ConvertOverviewpageEntries implements DataPatchInterface
 {
@@ -15,14 +15,22 @@ class ConvertOverviewpageEntries implements DataPatchInterface
      * @param ModuleDataSetupInterface $moduleDataSetup
      */
     public function __construct(
-        private readonly ModuleDataSetupInterface $moduleDataSetup
+        private readonly ModuleDataSetupInterface $moduleDataSetup,
     ) {
     }
 
     /**
-     * @return void
+     * @inheritDoc
      */
-    public function apply(): void
+    public static function getDependencies(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return static
+     */
+    public function apply(): static
     {
         $this->moduleDataSetup->startSetup();
 
@@ -36,24 +44,34 @@ class ConvertOverviewpageEntries implements DataPatchInterface
         foreach ($overviewPages as $overviewPage) {
             $storeIds = explode(',', $overviewPage['store_ids']);
             foreach ($storeIds as $storeId) {
-                $this->insertOverviewPageStore($connection, $overviewPageStoreTable, $overviewPage, $storeId);
+                $this->insertOverviewPageStore($connection, $overviewPageStoreTable, $overviewPage, (int) $storeId);
             }
         }
 
         $this->moduleDataSetup->endSetup();
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAliases(): array
+    {
+        return [];
     }
 
     /**
      * @param AdapterInterface $connection
      * @param string $table
-     * @param array $overviewPage
-     * @param int $storeId
+     * @param array  $overviewPage
+     * @param int    $storeId
      */
     private function insertOverviewPageStore(
         AdapterInterface $connection,
         string $table,
         array $overviewPage,
-        int $storeId
+        int $storeId,
     ): void {
         $data = [
             'page_id' => $overviewPage['page_id'],
@@ -81,21 +99,5 @@ class ConvertOverviewpageEntries implements DataPatchInterface
         }
 
         $connection->insert($table, $data);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function getDependencies(): array
-    {
-        return [];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAliases(): array
-    {
-        return [];
     }
 }
