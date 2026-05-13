@@ -150,7 +150,13 @@ class UrlFinder
 
         $landingPageLookup = [];
         foreach ($this->landingPageRepository->getList($searchCriteria)->getItems() as $landingPage) {
-            $hash = $this->createHashForFilters($landingPage->getFilters(), $landingPage->getCategoryId());
+            try {
+                $filters = $landingPage->getFilters();
+            } catch (\Throwable $e) {
+                continue;
+            }
+
+            $hash = $this->createHashForFilters($filters, $landingPage->getCategoryId());
             /** @phpstan-ignore-next-line */
             $storeId = $landingPage->getData('store_id');
             /** @phpstan-ignore-next-line */

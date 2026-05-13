@@ -346,11 +346,22 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function getUnserializedFilterAttributes(): array
     {
-        if ($this->getFilterAttributes() === null) {
+        $raw = $this->getFilterAttributes();
+        if ($raw === null || $raw === '') {
             return [];
         }
 
-        return unserialize($this->getFilterAttributes());
+        try {
+            $result = unserialize($raw, ['allowed_classes' => false]);
+        } catch (\Throwable $e) {
+            return [];
+        }
+
+        if (!is_array($result)) {
+            return [];
+        }
+
+        return $result;
     }
 
     /**
