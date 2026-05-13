@@ -84,10 +84,12 @@
                 <label translate="true">ID</label>
             </settings>
         </column>
-        <column name="name" sortOrder="35">
+        <column class="Emico\AttributeLanding\Ui\Component\Listing\Column\StoreUrls" name="name" sortOrder="35">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Name</label>
+                <sortable>false</sortable>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
             </settings>
         </column>
         <column name="created_at" sortOrder="47">
@@ -100,6 +102,14 @@
             <settings>
                 <filter>text</filter>
                 <label translate="true">Updated at</label>
+            </settings>
+        </column>
+        <column class="Emico\AttributeLanding\Ui\Component\Listing\Column\StoreUrls" name="store_urls" sortOrder="49">
+            <settings>
+                <label translate="true">Store URLs</label>
+                <sortable>false</sortable>
+                <filter>text</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
             </settings>
         </column>
         <actionsColumn class="Emico\AttributeLanding\Ui\Component\Listing\Column\PageActions" name="actions" sortOrder="50">

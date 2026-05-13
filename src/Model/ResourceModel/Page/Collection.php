@@ -27,8 +27,6 @@ class Collection extends AbstractCollection
     }
 
     /**
-     * Initialize select with join
-     *
      * @return $this
      */
     protected function _initSelect()
