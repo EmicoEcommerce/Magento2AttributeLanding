@@ -46,12 +46,12 @@ class StoreUrls extends Column
             $storeNames[(int) $store->getId()] = $store->getName();
         }
 
-        foreach ($dataSource['data']['items'] as &$item) {
-            $columnName = $this->getData('name');
-            $raw = $item[$columnName] ?? '';
+        $columnName = $this->getData('name');
+        foreach (array_keys($dataSource['data']['items']) as $index) {
+            $raw = $dataSource['data']['items'][$index][$columnName] ?? '';
 
             if ($raw === '' || $raw === null) {
-                $item[$columnName] = '';
+                $dataSource['data']['items'][$index][$columnName] = '';
                 continue;
             }
 
@@ -67,7 +67,7 @@ class StoreUrls extends Column
                 $lines[] = sprintf('%s: %s', $storeName, $urlPath);
             }
 
-            $item[$columnName] = implode('<br/>', $lines);
+            $dataSource['data']['items'][$index][$columnName] = implode('<br/>', $lines);
         }
 
         return $dataSource;

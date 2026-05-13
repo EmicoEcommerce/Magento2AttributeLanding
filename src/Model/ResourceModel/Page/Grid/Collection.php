@@ -4,13 +4,7 @@ declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Model\ResourceModel\Page\Grid;
 
-use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
-use Magento\Framework\Data\Collection\EntityFactoryInterface;
-use Magento\Framework\DB\Adapter\AdapterInterface;
-use Magento\Framework\Event\ManagerInterface;
-use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult;
-use Psr\Log\LoggerInterface;
 use Zend_Db_Expr;
 
 class Collection extends SearchResult
