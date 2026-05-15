@@ -3,6 +3,7 @@
 /**
  * @author        Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
+ * @noinspection PhpMissingReturnTypeInspection
  * @noinspection  PhpUnnecessaryFullyQualifiedNameInspection
  */
 
@@ -19,5 +20,5 @@ interface OverviewPageSearchResultsInterface extends SearchResultsInterface
      *
      * @return \Emico\AttributeLanding\Api\Data\OverviewPageInterface[]
      */
-    public function getItems(): array;
+    public function getItems();
 }

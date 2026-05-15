@@ -29,14 +29,15 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * LandingPage constructor.
-     * @param Context $context
-     * @param Registry $registry
+     *
+     * @param Context                    $context
+     * @param Registry                   $registry
      * @param ExtensionAttributesFactory $extensionFactory
-     * @param AttributeValueFactory $customAttributeFactory
-     * @param Config $config
-     * @param AbstractResource|null $resource
-     * @param AbstractDb|null $resourceCollection
-     * @param array $data
+     * @param AttributeValueFactory      $customAttributeFactory
+     * @param Config                     $config
+     * @param AbstractResource|null      $resource
+     * @param AbstractDb|null            $resourceCollection
+     * @param array                      $data
      */
     public function __construct(
         Context $context,
@@ -46,7 +47,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         protected Config $config,
         ?AbstractResource $resource = null,
         ?AbstractDb $resourceCollection = null,
-        array $data = []
+        array $data = [],
     ) {
         parent::__construct(
             $context,
@@ -55,7 +56,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             $customAttributeFactory,
             $resource,
             $resourceCollection,
-            $data
+            $data,
         );
     }
 
@@ -77,7 +78,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function getPageId(): int
     {
-        return (int)$this->getData(self::PAGE_ID);
+        return (int) $this->getData(self::PAGE_ID);
     }
 
     /**
@@ -94,6 +95,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get active
+     *
      * @return bool
      */
     public function isActive(): bool
@@ -138,6 +140,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get name
+     *
      * @return string
      */
     public function getName(): string
@@ -159,6 +162,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get url_path
+     *
      * @return string|null
      */
     public function getUrlPath(): ?string
@@ -180,11 +184,14 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get category_id
+     *
      * @return int|null
      */
     public function getCategoryId(): ?int
     {
-        return $this->getData(self::CATEGORY_ID);
+        $categoryId = $this->getData(self::CATEGORY_ID);
+
+        return $categoryId === null ? null : (int) $categoryId;
     }
 
     /**
@@ -201,6 +208,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get heading
+     *
      * @return string|null
      */
     public function getHeading(): ?string
@@ -222,6 +230,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get header_image
+     *
      * @return string|null
      */
     public function getHeaderImage(): ?string
@@ -243,6 +252,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get meta_title
+     *
      * @return string|null
      */
     public function getMetaTitle(): ?string
@@ -264,6 +274,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get meta_keywords
+     *
      * @return string|null
      */
     public function getMetaKeywords(): ?string
@@ -285,6 +296,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get meta_description
+     *
      * @return string|null
      */
     public function getMetaDescription(): ?string
@@ -306,6 +318,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get content_first
+     *
      * @return string|null
      */
     public function getContentFirst(): ?string
@@ -456,6 +469,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get tweakwise_builder_template
+     *
      * @return string|null
      */
     public function getTweakwiseBuilderTemplate(): ?string
@@ -477,15 +491,17 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * Get active store ID
+     *
      * @return int
      */
     public function getStoreId(): int
     {
-        return (int)$this->getData(self::STORE_ID);
+        return (int) $this->getData(self::STORE_ID);
     }
 
     /**
      * @param int $storeId
+     *
      * @return LandingPageInterface
      */
     public function setStoreId(int $storeId): LandingPageInterface
@@ -540,6 +556,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * @param string|null $overviewPageId
+     *
      * @return LandingPageInterface
      */
     public function setOverviewPageId(?string $overviewPageId): LandingPageInterface
@@ -561,6 +578,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * @param string|null $overviewPageImage
+     *
      * @return LandingPageInterface
      */
     public function setOverviewPageImage(?string $overviewPageImage): LandingPageInterface
@@ -579,6 +597,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * @param bool $isFilterLinkAllowed
+     *
      * @return LandingPageInterface
      */
     public function setIsFilterLinkAllowed(bool $isFilterLinkAllowed = true): LandingPageInterface
@@ -597,6 +616,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * @param bool $hideSelectedFilters
+     *
      * @return LandingPageInterface
      */
     public function setHideSelectedFilters(bool $hideSelectedFilters = true): LandingPageInterface
@@ -659,7 +679,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
         return array_combine(
             $fields,
-            array_map(fn($field) => $this->getData($field), $fields)
+            array_map(fn($field) => $this->getData($field), $fields),
         );
     }
 
@@ -692,7 +712,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
         return array_combine(
             $fields,
-            array_map(fn($field) => $this->getData($field), $fields)
+            array_map(fn($field) => $this->getData($field), $fields),
         );
     }
 }
