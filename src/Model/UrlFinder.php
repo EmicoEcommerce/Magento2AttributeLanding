@@ -1,9 +1,11 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
  */
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Model;
 
@@ -84,7 +86,6 @@ class UrlFinder
             $this->landingPageLookup = $this->loadPageLookupArray();
         }
 
-        /** @phpstan-ignore-next-line */
         $storePrefix = $this->storeManager->getStore()->getBaseUrl();
 
         if (!isset($this->landingPageLookup[$this->storeManager->getStore()->getId()][$filterHash])) {
@@ -153,7 +154,6 @@ class UrlFinder
             $hash = $this->createHashForFilters($landingPage->getFilters(), $landingPage->getCategoryId());
             /** @phpstan-ignore-next-line */
             $storeId = $landingPage->getData('store_id');
-            /** @phpstan-ignore-next-line */
             $landingPageLookup[$storeId][$hash] = $landingPage->getUrlRewriteRequestPath();
         }
 

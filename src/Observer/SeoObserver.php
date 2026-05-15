@@ -1,65 +1,52 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
- * @author Bram Gerritsen <bgerritsen@emico.nl>
+ * @author        Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Observer;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
+use Emico\AttributeLanding\Block\OverviewPage\View as OverviewPageView;
+use Emico\AttributeLanding\Model\Config;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Block\Category\View as LandingPageView;
-use Emico\AttributeLanding\Block\OverviewPage\View as OverviewPageView;
 use Magento\Framework\App\Request\Http as MagentoHttpRequest;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\View\Page\Config as PageConfig;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Theme\Block\Html\Title;
-use Emico\AttributeLanding\Model\Config;
 
 class SeoObserver implements ObserverInterface
 {
     /**
-     * @var LandingPageContext
-     */
-    private $landingPageContext;
-
-    /**
-     * @var CategoryRepositoryInterface
-     */
-    private $categoryRepository;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
      * MetaTagsObserver constructor.
-     * @param PageConfig $pageConfig
-     * @param Config $config
-     * @param LandingPageContext $landingPageContext
+     *
+     * @param PageConfig            $pageConfig
+     * @param Config                $config
+     * @param LandingPageContext    $landingPageContext
      * @param CategoryRepositoryInterface $categoryRepository
      * @param StoreManagerInterface $storeManager
+     * @param MagentoHttpRequest    $request
      */
     public function __construct(
-        private PageConfig $pageConfig,
-        private Config $config,
-        LandingPageContext $landingPageContext,
-        CategoryRepositoryInterface $categoryRepository,
-        StoreManagerInterFace $storeManager,
-        protected MagentoHttpRequest $request
+        private readonly PageConfig $pageConfig,
+        private readonly Config $config,
+        private readonly LandingPageContext $landingPageContext,
+        private readonly CategoryRepositoryInterface $categoryRepository,
+        private readonly StoreManagerInterface $storeManager,
+        protected MagentoHttpRequest $request,
     ) {
-        $this->landingPageContext = $landingPageContext;
-        $this->categoryRepository = $categoryRepository;
-        $this->storeManager = $storeManager;
     }
 
     /**
      * @param Observer $observer
+     *
      * @return void
      * @throws \Exception
      */
@@ -102,6 +89,7 @@ class SeoObserver implements ObserverInterface
 
     /**
      * @param LandingPageInterface $landingPage
+     *
      * @return void
      */
     protected function setLandingPageCanonicalUrl(LandingPageInterface $landingPage)
@@ -111,12 +99,13 @@ class SeoObserver implements ObserverInterface
         $this->pageConfig->addRemotePageAsset(
             $canonicalUrl,
             'canonical',
-            ['attributes' => ['rel' => 'canonical']]
+            ['attributes' => ['rel' => 'canonical']],
         );
     }
 
     /**
      * @param LandingPageInterface $landingPage
+     *
      * @return null|string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
@@ -144,6 +133,7 @@ class SeoObserver implements ObserverInterface
      * Clear
      *
      * @param LandingPageInterface $landingPage
+     *
      * @return void
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */

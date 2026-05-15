@@ -1,16 +1,18 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
 
+declare(strict_types=1);
+
 namespace Emico\AttributeLanding\Model\ResourceModel;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
+use Magento\Framework\Event\ManagerInterface as EventManager;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
-use Magento\Framework\Event\ManagerInterface as EventManager;
 use Zend_Db_Expr;
 
 class Page extends AbstractDb

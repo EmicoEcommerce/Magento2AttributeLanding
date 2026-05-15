@@ -1,9 +1,11 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Model\Page;
 
@@ -113,7 +115,6 @@ class ImageUploader
             return self::MEDIA_PATH_OVERVIEW . '/' . $filename;
         }
 
-        /** @phpstan-ignore-next-line */
         return $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . self::MEDIA_PATH_OVERVIEW . '/' . $filename;
     }
 }
