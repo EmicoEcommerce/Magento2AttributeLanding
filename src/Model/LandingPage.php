@@ -136,7 +136,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function getName(): string
     {
-        return $this->getData(self::NAME);
+        return $this->getData(self::NAME) ?? '';
     }
 
     /**
