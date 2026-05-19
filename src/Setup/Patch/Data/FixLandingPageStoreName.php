@@ -31,12 +31,12 @@ class FixLandingPageStoreName implements DataPatchInterface
         $storeTable = $this->moduleDataSetup->getTable('emico_attributelanding_page_store');
         $pageTable = $this->moduleDataSetup->getTable('emico_attributelanding_page');
 
+        $select = $connection->select()
+            ->join(['p' => $pageTable], 's.page_id = p.page_id', ['name' => 'p.name'])
+            ->where('s.name IS NULL');
+
         $connection->query(
-            sprintf(
-                'UPDATE %s s JOIN %s p ON s.page_id = p.page_id SET s.name = p.name WHERE s.name IS NULL',
-                $storeTable,
-                $pageTable
-            )
+            $connection->updateFromSelect($select, ['s' => $storeTable])
         );
 
         $this->moduleDataSetup->endSetup();
