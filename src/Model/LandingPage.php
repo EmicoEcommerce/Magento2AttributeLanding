@@ -611,10 +611,9 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             LandingPageInterface::OVERVIEW_PAGE_ID,
             LandingPageInterface::OVERVIEW_PAGE_IMAGE,
             LandingPageInterface::URL_PATH,
-            LandingPageInterface::STORE_ID,
         ];
 
-        if ($this->getData(LandingPageInterface::STORE_ID) === 0) {
+        if ((int) $this->getData(LandingPageInterface::STORE_ID) === 0) {
             $fields[] = LandingPageInterface::NAME;
         }
 
