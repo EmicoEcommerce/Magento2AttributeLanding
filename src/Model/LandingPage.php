@@ -735,5 +735,6 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         if (is_string($value) && $value !== '') {
             return [$value];
         }
+        return [];
     }
 }
