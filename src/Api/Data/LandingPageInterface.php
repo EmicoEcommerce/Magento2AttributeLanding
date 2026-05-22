@@ -187,8 +187,7 @@ interface LandingPageInterface extends ExtensibleDataInterface, UrlRewriteGenera
     public function getFilters(): array;
 
     /**
-     * @return mixed[]
-     * @noinspection PhpPluralMixedCanBeReplacedWithArrayInspection
+     * @return string[]
      */
     public function getUnserializedFilterAttributes(): array;
 
