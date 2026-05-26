@@ -15,7 +15,12 @@ interface FilterInterface
     public function getFacet(): string;
 
     /**
+     * @return string
+     */
+    public function getValue(): string;
+
+    /**
      * @return string[]
      */
-    public function getValue(): array;
+    public function getValues(): array;
 }

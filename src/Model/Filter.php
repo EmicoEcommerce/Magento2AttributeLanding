@@ -14,10 +14,10 @@ class Filter implements FilterInterface
     /**
      * Filter constructor.
      *
-     * @param string $facet
-     * @param array  $value
+     * @param string   $facet
+     * @param string[] $values
      */
-    public function __construct(private readonly string $facet, private readonly array $value)
+    public function __construct(private readonly string $facet, private readonly array $values)
     {
     }
 
@@ -30,10 +30,18 @@ class Filter implements FilterInterface
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getValue(): array
+    public function getValue(): string
     {
-        return $this->value;
+        return $this->values[0] ?? '';
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getValues(): array
+    {
+        return $this->values;
     }
 }

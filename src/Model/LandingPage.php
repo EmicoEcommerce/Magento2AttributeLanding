@@ -13,7 +13,6 @@ use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
-use TypeError;
 
 /**
  * @SuppressWarnings("PHPMD.ExcessivePublicCount")
@@ -721,16 +720,9 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     private function normalizeFilterValues(mixed $value): array
     {
-        try {
-            $filterValue = json_decode($value, true);
-        } catch (TypeError $e) {
-            $filterValue = $value;
-        }
-        if (is_array($filterValue)) {
-            return $filterValue;
-        }
-        if ($filterValue && is_string($filterValue) && $filterValue !== '') {
-            return [$filterValue];
+        $decoded = json_decode((string) $value, true);
+        if (is_array($decoded)) {
+            return $decoded;
         }
         if (is_string($value) && $value !== '') {
             return [$value];
