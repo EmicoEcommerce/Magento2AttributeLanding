@@ -22,6 +22,13 @@ Run installers
 php bin/magento setup:upgrade
 ```
 
+## Configuration
+Configuration can be found under `Stores -> Configuration -> Emico Extensions -> Attribute landing pages -> General`.
+
+- **Allow crosslink**: Allow landing pages to be crosslinked from within layered navigation filters. When enabled, if a visitor selects a combination of filters that exactly matches a landing page definition, they will be redirected to that landing page.
+- **Append Category url suffix to landingpage Urls**: When enabled, the configured category URL suffix (e.g. `.html`) will be appended to landing page URLs. Changing this setting will update all landing page URLs — flush the cache and update any hardcoded links after saving.
+- **Canonical link self referencing**: When enabled, the canonical link tag on a landing page points to the landing page's own URL instead of the underlying category URL.
+
 ## Contributors 
 If you want to create a pull request as a contributor, use the guidelines of semantic-release. semantic-release automates the whole package release workflow including: determining the next version number, generating the release notes, and publishing the package.
 By adhering to the commit message format, a release is automatically created with the commit messages as release notes. Follow the guidelines as described in: https://github.com/semantic-release/semantic-release?tab=readme-ov-file#commit-message-format.
