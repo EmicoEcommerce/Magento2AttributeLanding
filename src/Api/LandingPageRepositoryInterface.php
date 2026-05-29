@@ -29,7 +29,7 @@ interface LandingPageRepositoryInterface
 
     /**
      * Retrieve Page matching the specified criteria.
-     * @param SearchCriteriaInterface $searchCriteria
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
      * @return \Emico\AttributeLanding\Api\Data\PageSearchResultsInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
@@ -53,13 +53,13 @@ interface LandingPageRepositoryInterface
     public function deleteById(int $pageId): bool;
 
     /**
-     * @return LandingPageInterface[]
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface[]
      */
     public function findAllActive(): array;
 
     /**
-     * @param OverviewPageInterface $overviewPage
-     * @return LandingPageInterface[]
+     * @param \Emico\AttributeLanding\Api\Data\OverviewPageInterface $overviewPage
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface[]
      */
     public function findAllByOverviewPage(OverviewPageInterface $overviewPage): array;
 }
