@@ -1,0 +1,33 @@
+include:
+  - project: 'ci-cd/semantic-release'
+    ref: main
+    file: 'semantic-release.yml'
+
+  - project: 'ci-cd/composer-configuration'
+    ref: main
+    file: 'package.yml'
+
+  - project: 'ci-cd/magento-module'
+    ref: master
+    file: 'codeception-ci.yml'
+
+  - project: 'ci-cd/magento-module'
+    ref: master
+    file: 'codequality-ci.yml'
+
+  - project: 'ci-cd/github-release'
+    ref: main
+    file: 'github-release.yml'
+
+variables:
+  MAGENTO_PHP_VERSION: '8.1'
+
+magento-module/test/functional:
+  variables:
+    MIN_PHP_VERSION: '8.1'
+
+release:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: on_success
+    - when: never

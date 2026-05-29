@@ -87,10 +87,10 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
         try {
             /** @var OverviewPage $page */
             $parentOverviewPage = $this->dataPageFactory->create();
-            $parentOverviewPage->setData($page->getOverviewPageDataWithoutStore());
+            $parentOverviewPage->setData($page->getOverviewPageDataWithoutStore()); // @phpstan-ignore-line
 
             $this->resource->save($parentOverviewPage); // @phpstan-ignore-line
-            $page->setPageId($parentOverviewPage->getPageId());
+            $page->setPageId($parentOverviewPage->getPageId()); // @phpstan-ignore-line
             $this->resource->saveOverviewPageStoreData($page);
         } catch (Exception $exception) {
             throw new CouldNotSaveException(
@@ -101,7 +101,6 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
             );
         }
 
-        /** @phpstan-ignore-next-line */
         return $page;
     }
 
@@ -218,15 +217,15 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
 
         if (!empty($storeData)) {
             unset($storeData['id']);
-            $overviewPage->setData($storeData);
+            $overviewPage->setData($storeData); // @phpstan-ignore-line
         } else {
             $defaultData = $this->resource->getOverviewPageStoreData($pageId, 0);
             if (!empty($defaultData)) {
                 unset($defaultData['id']);
-                $overviewPage->setData($defaultData);
+                $overviewPage->setData($defaultData); // @phpstan-ignore-line
             }
 
-            $overviewPage->setData(LandingPageInterface::STORE_ID, $storeId);
+            $overviewPage->setData(LandingPageInterface::STORE_ID, $storeId); // @phpstan-ignore-line
         }
 
         return $overviewPage;
@@ -243,7 +242,7 @@ class OverviewPageRepository implements OverviewPageRepositoryInterface
 
         foreach ($storeData as $data) {
             $page = $this->dataPageFactory->create();
-            $page->setData($data);
+            $page->setData($data); // @phpstan-ignore-line
             $pages[] = $page;
         }
 

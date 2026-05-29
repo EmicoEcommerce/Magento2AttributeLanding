@@ -1,0 +1,49 @@
+actor: FunctionalTester
+suite_namespace: Tweakwise\Test\Functional
+modules:
+  enabled:
+    - Asserts
+    - \Emico\CodeCept\Module\Magento2
+    - \Emico\CodeCept\Module\Mocking
+    - \Emico\CodeCept\Module\Fixtures
+    - \Emico\CodeCept\Module\Config
+    - \Emico\CodeCept\Module\Queue
+  config:
+    \Emico\CodeCept\Module\Magento2:
+      url: 'https://tweakwise.test'
+      store_code: 'default'
+      configuration_bootstrap:
+        queue:
+          amqp:
+            host: 127.0.0.1
+            port: 5672
+            user: tweakwise
+            password: tweakwise
+            virtualhost: tweakwise
+      configuration:
+        # Keep in mind when changing the configuration to flush Magento cache
+        default:
+          web:
+            unsecure:
+              base_url: 'https://tweakwise.test/'
+            secure:
+              base_url: 'https://tweakwise.test/'
+        websites:
+          magento:
+            web:
+              unsecure:
+                base_url: 'https://tweakwise.test/'
+              secure:
+                base_url: 'https://tweakwise.test/'
+    \Emico\CodeCept\Module\Config:
+      depends:
+        - \Emico\CodeCept\Module\Magento2
+    \Emico\CodeCept\Module\Mocking:
+      depends:
+        - \Emico\CodeCept\Module\Magento2
+    \Emico\CodeCept\Module\Fixtures:
+      depends:
+        - \Emico\CodeCept\Module\Magento2
+    \Emico\CodeCept\Module\Queue:
+      depends:
+        - \Emico\CodeCept\Module\Magento2

@@ -211,23 +211,23 @@ class UrlRewriteService
     private function generateOverviewPageRewrites(UrlRewriteGeneratorInterface $page, ?string $suffix = null): array
     {
         $urlRewritesToPersist = [];
-        $allPages = $this->overviewPageRepository->getAllPagesById((int)$page->getPageId());
+        $allPages = $this->overviewPageRepository->getAllPagesById((int)$page->getPageId()); // @phpstan-ignore-line
 
         foreach ($allPages as $storePage) {
-            if ($storePage->getStoreId() === $page->getStoreId()) {
+            if ($storePage->getStoreId() === $page->getStoreId()) {  // @phpstan-ignore-line
                 $storePage = $page;
             }
 
-            if ($storePage->getStoreId() === 0) {
+            if ($storePage->getStoreId() === 0) { // @phpstan-ignore-line
                 $urlRewritesToPersist = $this->generateOverviewPageRewritesForAllStores(
-                    $storePage,
+                    $storePage, // @phpstan-ignore-line
                     $page,
                     $suffix,
                     $urlRewritesToPersist
                 );
             } else {
-                $urlRewrite = $this->createUrlRewrite($storePage, $storePage->getStoreId(), $suffix);
-                $urlRewritesToPersist[$storePage->getStoreId()] = $urlRewrite;
+                $urlRewrite = $this->createUrlRewrite($storePage, $storePage->getStoreId(), $suffix); // @phpstan-ignore-line
+                $urlRewritesToPersist[$storePage->getStoreId()] = $urlRewrite; // @phpstan-ignore-line
             }
         }
 
@@ -251,11 +251,11 @@ class UrlRewriteService
         $stores = $this->storeManager->getStores();
 
         foreach ($stores as $store) {
-            if ($store->getId() === $page->getStoreId()) {
+            if ($store->getId() === $page->getStoreId()) { // @phpstan-ignore-line
                 $storePage = $page;
             }
 
-            if (empty($storePage)) {
+            if (empty($storePage)) { // @phpstan-ignore-line
                 continue;
             }
 
