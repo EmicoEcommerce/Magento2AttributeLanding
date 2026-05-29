@@ -26,7 +26,12 @@
     "repositories": {
         "emico": {
             "type": "composer",
-            "url": "https://git.emico.io/api/v4/group/239/-/packages/composer/"
+            "url": "https://git.emico.io/api/v4/group/239/-/packages/composer/",
+            "only": [
+                "emico/code-quality",
+                "emico/codeception-m2",
+                "hipex/magento-2-psr7-bridge"
+            ]
         },
         "magento": {
             "type": "composer",
