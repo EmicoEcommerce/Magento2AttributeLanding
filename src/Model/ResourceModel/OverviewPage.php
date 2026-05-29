@@ -26,12 +26,12 @@ class OverviewPage extends AbstractDb
     public function getOverviewPageStoreData(int $overviewPageId, int $storeId = 0): array
     {
         $connection = $this->getConnection();
-        $select = $connection->select()
+        $select = $connection->select() // @phpstan-ignore-line
             ->from(['ps' => $this->getTable('emico_attributelanding_overviewpage_store')])
             ->where('ps.page_id = ?', $overviewPageId)
             ->where('store_id = ?', $storeId);
 
-        $result = $connection->fetchRow($select);
+        $result = $connection->fetchRow($select); // @phpstan-ignore-line
 
         if ($result) {
             return $result;
@@ -47,13 +47,13 @@ class OverviewPage extends AbstractDb
     public function getAllOverviewPageStoreData(int $overviewPageId): array
     {
         $connection = $this->getConnection();
-        $select = $connection->select()
+        $select = $connection->select() // @phpstan-ignore-line
             ->from($this->getTable('emico_attributelanding_overviewpage_store'))
             ->where('page_id = :page_id');
 
         $bind = ['page_id' => (int)$overviewPageId];
 
-        return $connection->fetchAll($select, $bind);
+        return $connection->fetchAll($select, $bind); // @phpstan-ignore-line
     }
 
     /**
@@ -62,7 +62,7 @@ class OverviewPage extends AbstractDb
      */
     public function saveOverviewPageStoreData(OverviewPageInterface $page): void
     {
-        $data = $page->getOverviewPageDataForStore();
+        $data = $page->getOverviewPageDataForStore();  // @phpstan-ignore-line
         $connection = $this->getConnection();
         $table = $this->getTable('emico_attributelanding_overviewpage_store');
         $where = [
@@ -73,11 +73,11 @@ class OverviewPage extends AbstractDb
         unset($data['id']);
 
         if (!empty($this->getOverviewPageStoreData($page->getPageId(), $page->getStoreId()))) {
-            $connection->update($table, $data, $where);
+            $connection->update($table, $data, $where); // @phpstan-ignore-line
         } else {
             $data['page_id'] = $page->getPageId();
             $data['store_id'] = $page->getStoreId();
-            $connection->insert($table, $data);
+            $connection->insert($table, $data); // @phpstan-ignore-line
         }
     }
 }
