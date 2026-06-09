@@ -1,51 +1,54 @@
 {
     "name": "emico/m2-attributelanding",
     "description": "Attribute landing pages for Magento 2",
+    "type": "magento2-module",
     "require": {
-        "php": "^8.1",
-        "magento/module-catalog": "^102.0||^103.0||^104.0",
+        "php": "^8.2",
+        "magento/module-catalog": "^102.0 || ^103.0 || ^104.0",
         "magento/module-layered-navigation": "^100.4",
-        "magento/module-sitemap": "^100.2||^100.4"
+        "magento/module-sitemap": "^100.2"
     },
     "require-dev": {
-        "emico/code-quality": "^10.8"
+        "emico/code-quality": "^10.8",
+        "emico/codeception-m2": "^6.17"
     },
-    "prefer-stable": true,
-    "type": "magento2-module",
     "suggest": {
         "emico/m2-attributelanding-tweakwise": "Install to use attributelanding page in combination with Tweakwise"
     },
-    "autoload": {
-        "files": [
-            "src/registration.php"
-        ],
-        "psr-4": {
-            "Emico\\AttributeLanding\\": "src"
-        }
-    },
     "repositories": {
         "emico": {
-            "type": "composer",
-            "url": "https://git.emico.io/api/v4/group/239/-/packages/composer/",
             "only": [
                 "emico/code-quality",
                 "emico/codeception-m2",
                 "hipex/magento-2-psr7-bridge"
-            ]
+            ],
+            "type": "composer",
+            "url": "https://git.emico.io/api/v4/group/239/-/packages/composer/"
         },
         "magento": {
             "type": "composer",
             "url": "https://repo.magento.com/"
         }
     },
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Emico\\AttributeLanding\\": "src"
+        },
+        "files": [
+            "src/registration.php"
+        ]
+    },
     "config": {
-        "sort-packages": true,
         "allow-plugins": {
-            "magento/composer-dependency-version-audit-plugin": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
-            "phpstan/extension-installer": true,
+            "emico/code-quality": true,
+            "emico/codeception-m2": true,
+            "magento/composer-dependency-version-audit-plugin": true,
+            "magento/magento-composer-installer": true,
             "phpro/grumphp": true,
-            "emico/code-quality": true
-        }
+            "phpstan/extension-installer": true
+        },
+        "sort-packages": true
     }
 }

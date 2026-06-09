@@ -72,7 +72,7 @@ class Breadcrumbs extends CatalogBreadcrumbs
 
         /** @phpstan-ignore-next-line */
         if ($landingPage->getOverviewPageId() !== null) {
-            $overviewPage = $this->overviewPageRepository->getById($landingPage->getOverviewPageId()); // @phpstan-ignore-line
+            $overviewPage = $this->overviewPageRepository->getById($landingPage->getOverviewPageId());
             /** @phpstan-ignore-next-line */
             $breadcrumbsBlock->addCrumb(
                 'overviewpage',

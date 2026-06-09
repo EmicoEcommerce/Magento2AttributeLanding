@@ -5,6 +5,7 @@
  * @copyright (c) Emico B.V. 2019
  * @noinspection  PhpFullyQualifiedNameUsageInspection
  * @noinspection  PhpUnnecessaryFullyQualifiedNameInspection
+ * @phpcs:disable EmicoMagento2.Classes.UnsupportedTypesInApiInterface.UnsupportedTypesInApiInterface
  */
 
 declare(strict_types=1);
