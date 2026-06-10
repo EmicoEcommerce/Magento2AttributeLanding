@@ -8,6 +8,7 @@ use Emico\AttributeLanding\Model\ResourceModel\Page as PageResourceModel;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\Registry;
 use Magento\Framework\Model\Context;
@@ -17,9 +18,12 @@ use Magento\Framework\Model\ResourceModel\AbstractResource;
  * @SuppressWarnings("PHPMD.ExcessivePublicCount")
  * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  */
-class LandingPage extends AbstractExtensibleModel implements LandingPageInterface, UrlRewriteGeneratorInterface
+class LandingPage extends AbstractExtensibleModel
+    implements LandingPageInterface, UrlRewriteGeneratorInterface, IdentityInterface
 {
-    protected $_eventPrefix = 'emico_attributelanding_page';
+    public const string CACHE_TAG = 'emico_attributelanding_page';
+
+    protected $_eventPrefix = self::CACHE_TAG;
 
     /**
      * @var Config
@@ -633,5 +637,13 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             $fields,
             array_map(fn($field) => $this->getData($field), $fields)
         );
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getIdentities(): array
+    {
+        return [self::CACHE_TAG . '_' . $this->getId()];
     }
 }
