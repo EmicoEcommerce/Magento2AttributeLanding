@@ -11,11 +11,12 @@ use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Exception;
 use Magento\Cms\Model\Template\FilterProvider;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Psr\Log\LoggerInterface;
 
-class Content extends Template
+class Content extends Template implements IdentityInterface
 {
     /**
      * @var LandingPageContext
@@ -86,5 +87,13 @@ class Content extends Template
             $this->logger->critical($e->getMessage());
             return '';
         }
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getIdentities(): array
+    {
+        return $this->getLandingPage()->getIdentities();
     }
 }
