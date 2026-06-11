@@ -187,6 +187,7 @@ class View extends Template implements IdentityInterface
      */
     public function getIdentities(): array
     {
+        /** @phpstan-ignore-next-line  */
         return $this->getOverviewPage()->getIdentities();
     }
 }

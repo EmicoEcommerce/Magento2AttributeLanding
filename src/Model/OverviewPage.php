@@ -8,12 +8,11 @@ use Emico\AttributeLanding\Model\ResourceModel\OverviewPage as PageResourceModel
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 
-class OverviewPage extends AbstractModel
-    implements OverviewPageInterface, UrlRewriteGeneratorInterface, IdentityInterface
+class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRewriteGeneratorInterface, IdentityInterface
 {
-    public const string CACHE_TAG = 'emico_attributelanding_overviewpage';
+    public const CACHE_TAG = 'emico_attributelanding_overviewpage';
 
-    protected $_eventPrefix = self::CACHE_TAG;
+    protected $_eventPrefix = 'emico_attributelanding_overviewpage';
 
     /**
      * Initialize resource model

@@ -18,12 +18,11 @@ use Magento\Framework\Model\ResourceModel\AbstractResource;
  * @SuppressWarnings("PHPMD.ExcessivePublicCount")
  * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  */
-class LandingPage extends AbstractExtensibleModel
-    implements LandingPageInterface, UrlRewriteGeneratorInterface, IdentityInterface
+class LandingPage extends AbstractExtensibleModel implements LandingPageInterface, UrlRewriteGeneratorInterface, IdentityInterface
 {
-    public const string CACHE_TAG = 'emico_attributelanding_page';
+    public const CACHE_TAG = 'emico_attributelanding_page';
 
-    protected $_eventPrefix = self::CACHE_TAG;
+    protected $_eventPrefix = 'emico_attributelanding_page';
 
     /**
      * @var Config
