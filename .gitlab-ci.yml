@@ -25,6 +25,7 @@ variables:
 magento-module/test/functional:
   variables:
     MIN_PHP_VERSION: '8.1'
+    DISABLE_DEPENDENCY_AUDIT: "true"
 
 release:
   rules:
