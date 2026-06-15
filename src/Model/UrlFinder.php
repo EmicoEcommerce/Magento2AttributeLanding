@@ -10,6 +10,7 @@ namespace Emico\AttributeLanding\Model;
 use Emico\AttributeLanding\Api\Data\FilterInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
+use Exception;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\CacheInterface;
 use Magento\Framework\Serialize\SerializerInterface;
@@ -149,7 +150,13 @@ class UrlFinder
 
         $landingPageLookup = [];
         foreach ($this->landingPageRepository->getList($searchCriteria)->getItems() as $landingPage) {
-            $hash = $this->createHashForFilters($landingPage->getFilters(), $landingPage->getCategoryId());
+            try {
+                $filters = $landingPage->getFilters();
+            } catch (Exception $e) {
+                continue;
+            }
+
+            $hash = $this->createHashForFilters($filters, $landingPage->getCategoryId());
             /** @phpstan-ignore-next-line */
             $storeId = $landingPage->getData('store_id');
             /** @phpstan-ignore-next-line */
