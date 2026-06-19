@@ -3,12 +3,12 @@
     "description": "Attribute landing pages for Magento 2",
     "require": {
         "php": "^8.1",
-        "magento/module-sitemap": "^100.2||^100.4",
-        "magento/module-catalog": "^102.0||^103.0||^104.0"
+        "magento/module-catalog": "^102.0||^103.0||^104.0",
+        "magento/module-layered-navigation": "^100.4",
+        "magento/module-sitemap": "^100.2||^100.4"
     },
     "require-dev": {
-        "emico/code-quality": "~10.6.0",
-        "symfony/finder": "6.4.0"
+        "emico/code-quality": "^10.8"
     },
     "prefer-stable": true,
     "type": "magento2-module",
@@ -24,13 +24,18 @@
         }
     },
     "repositories": {
+        "emico": {
+            "type": "composer",
+            "url": "https://git.emico.io/api/v4/group/239/-/packages/composer/",
+            "only": [
+                "emico/code-quality",
+                "emico/codeception-m2",
+                "hipex/magento-2-psr7-bridge"
+            ]
+        },
         "magento": {
             "type": "composer",
             "url": "https://repo.magento.com/"
-        },
-        "emico/code-quality": {
-            "type": "vcs",
-            "url": "https://git.emico.io/composer-packages/generic/codequality.git"
         }
     },
     "config": {

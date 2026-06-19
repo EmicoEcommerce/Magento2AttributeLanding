@@ -3,7 +3,6 @@
 namespace Emico\AttributeLanding\Model;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
-use Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Emico\AttributeLanding\Model\ResourceModel\Page as PageResourceModel;
 use Magento\Framework\Api\AttributeValueFactory;
@@ -108,26 +107,6 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     public function setActive($active): LandingPageInterface
     {
         return $this->setData(self::ACTIVE, $active);
-    }
-
-    /**
-     * Retrieve existing extension attributes object or create a new one.
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
-     */
-    public function getExtensionAttributes()
-    {
-        /** @phpstan-ignore-next-line */
-        return $this->_getExtensionAttributes();
-    }
-
-    /**
-     * Set an extension attributes object.
-     * @param \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface $extensionAttributes
-     * @return $this
-     */
-    public function setExtensionAttributes(LandingPageExtensionInterface $extensionAttributes): LandingPageInterface
-    {
-        return $this->_setExtensionAttributes($extensionAttributes);
     }
 
     /**
@@ -611,10 +590,9 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             LandingPageInterface::OVERVIEW_PAGE_ID,
             LandingPageInterface::OVERVIEW_PAGE_IMAGE,
             LandingPageInterface::URL_PATH,
-            LandingPageInterface::STORE_ID,
         ];
 
-        if ($this->getData(LandingPageInterface::STORE_ID) === 0) {
+        if ((int) $this->getData(LandingPageInterface::STORE_ID) === 0) {
             $fields[] = LandingPageInterface::NAME;
         }
 

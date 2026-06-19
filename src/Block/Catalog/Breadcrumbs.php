@@ -92,13 +92,13 @@ class Breadcrumbs extends CatalogBreadcrumbs
             [
                 'label' => __('Home'),
                 'title' => __('Go to Home Page'),
-                'link' => $this->_storeManager->getStore()->getBaseUrl() // @phpstan-ignore-line
+                'link' => $this->_storeManager->getStore()->getBaseUrl()
             ]
         );
 
         /** @phpstan-ignore-next-line */
         if ($landingPage->getOverviewPageId() !== null) {
-            $overviewPage = $this->overviewPageRepository->getById($landingPage->getOverviewPageId());
+            $overviewPage = $this->overviewPageRepository->getById($landingPage->getOverviewPageId()); // @phpstan-ignore-line
             /** @phpstan-ignore-next-line */
             $breadcrumbsBlock->addCrumb(
                 'overviewpage',
