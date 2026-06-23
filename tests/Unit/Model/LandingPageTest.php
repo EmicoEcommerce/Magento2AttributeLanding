@@ -10,6 +10,10 @@ use Emico\AttributeLanding\Model\LandingPage;
 use Emico\CodeCept\Test\Unit;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
+use Magento\Framework\App\CacheInterface;
+use Magento\Framework\App\State;
+use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\Model\ActionValidator\RemoveAction;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 use Mockery;
@@ -34,16 +38,16 @@ class LandingPageTest extends Unit
 
         $this->context = Mockery::mock(Context::class)->makePartial();
         $this->context->shouldReceive('getEventDispatcher')->andReturn(
-            Mockery::mock(\Magento\Framework\Event\ManagerInterface::class)->shouldIgnoreMissing()
+            Mockery::mock(ManagerInterface::class)->shouldIgnoreMissing()
         );
         $this->context->shouldReceive('getCacheManager')->andReturn(
-            Mockery::mock(\Magento\Framework\App\CacheInterface::class)->shouldIgnoreMissing()
+            Mockery::mock(CacheInterface::class)->shouldIgnoreMissing()
         );
         $this->context->shouldReceive('getAppState')->andReturn(
-            Mockery::mock(\Magento\Framework\App\State::class)->makePartial()
+            Mockery::mock(State::class)->makePartial()
         );
         $this->context->shouldReceive('getActionValidator')->andReturn(
-            Mockery::mock(\Magento\Framework\Model\ActionValidator\RemoveAction::class)->shouldIgnoreMissing()
+            Mockery::mock(RemoveAction::class)->shouldIgnoreMissing()
         );
 
         $this->registry = Mockery::mock(Registry::class)->shouldIgnoreMissing();
