@@ -3,10 +3,6 @@ include:
     ref: main
     file: 'semantic-release.yml'
 
-  - project: 'ci-cd/composer-configuration'
-    ref: main
-    file: 'package.yml'
-
   - project: 'ci-cd/magento-module'
     ref: master
     file: 'codeception-ci.yml'
