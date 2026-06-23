@@ -10,21 +10,31 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Api\StoreRepositoryInterface;
-use PHPUnit\Framework\MockObject\MockObject;
+use Mockery;
+use Mockery\MockInterface;
+use Tweakwise\Test\Support\UnitTester;
 
 class StoreUrlsTest extends Unit
 {
-    private ContextInterface|MockObject $context;
-    private UiComponentFactory|MockObject $uiComponentFactory;
-    private StoreRepositoryInterface|MockObject $storeRepository;
+    protected UnitTester $tester;
+
+    private ContextInterface|MockInterface $context;
+    private UiComponentFactory|MockInterface $uiComponentFactory;
+    private StoreRepositoryInterface|MockInterface $storeRepository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->context = $this->createMock(ContextInterface::class);
-        $this->uiComponentFactory = $this->createMock(UiComponentFactory::class);
-        $this->storeRepository = $this->createMock(StoreRepositoryInterface::class);
+        $this->context = Mockery::mock(ContextInterface::class);
+        $this->uiComponentFactory = Mockery::mock(UiComponentFactory::class);
+        $this->storeRepository = Mockery::mock(StoreRepositoryInterface::class);
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        Mockery::close();
     }
 
     public function testPrepareDataSourceReturnsInputWhenItemsAreMissing(): void
@@ -32,12 +42,12 @@ class StoreUrlsTest extends Unit
         $subject = $this->createSubject('store_urls');
         $dataSource = ['data' => []];
 
-        self::assertSame($dataSource, $subject->prepareDataSource($dataSource));
+        $this->assertSame($dataSource, $subject->prepareDataSource($dataSource));
     }
 
     public function testPrepareDataSourceFormatsStoreUrls(): void
     {
-        $this->storeRepository->method('getList')->willReturn([
+        $this->storeRepository->shouldReceive('getList')->andReturn([
             $this->createStore(1, 'Default Store'),
         ]);
 
@@ -51,16 +61,16 @@ class StoreUrlsTest extends Unit
             ],
         ]);
 
-        self::assertSame(
+        $this->assertSame(
             'Global: global-url<br/>Default Store: default/url<br/>Store 2: second/url',
             $result['data']['items'][0]['store_urls']
         );
-        self::assertSame('', $result['data']['items'][1]['store_urls']);
+        $this->assertSame('', $result['data']['items'][1]['store_urls']);
     }
 
     public function testPrepareDataSourceUsesConfiguredColumnName(): void
     {
-        $this->storeRepository->method('getList')->willReturn([
+        $this->storeRepository->shouldReceive('getList')->andReturn([
             $this->createStore(1, 'Default Store'),
         ]);
 
@@ -73,7 +83,7 @@ class StoreUrlsTest extends Unit
             ],
         ]);
 
-        self::assertSame('Default Store: Landing Page Name', $result['data']['items'][0]['name']);
+        $this->assertSame('Default Store: Landing Page Name', $result['data']['items'][0]['name']);
     }
 
     private function createSubject(string $columnName): StoreUrls
@@ -87,11 +97,11 @@ class StoreUrlsTest extends Unit
         );
     }
 
-    private function createStore(int $id, string $name): StoreInterface
+    private function createStore(int $id, string $name): StoreInterface|MockInterface
     {
-        $store = $this->createMock(StoreInterface::class);
-        $store->method('getId')->willReturn($id);
-        $store->method('getName')->willReturn($name);
+        $store = Mockery::mock(StoreInterface::class);
+        $store->shouldReceive('getId')->andReturn($id);
+        $store->shouldReceive('getName')->andReturn($name);
 
         return $store;
     }

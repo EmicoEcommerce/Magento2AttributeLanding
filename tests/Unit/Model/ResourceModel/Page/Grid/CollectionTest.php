@@ -10,33 +10,40 @@ use Magento\Framework\DB\Adapter\Pdo\Mysql;
 use Magento\Framework\DB\Select;
 use Magento\Framework\DB\Select\SelectRenderer;
 use Magento\Framework\Event\ManagerInterface;
-use PHPUnit\Framework\MockObject\MockObject;
+use Mockery;
+use Mockery\MockInterface;
+use Tweakwise\Test\Support\UnitTester;
 use Zend_Db_Expr;
 
 class CollectionTest extends Unit
 {
-    private Mysql|MockObject $connection;
-    private SelectRenderer|MockObject $selectRenderer;
-    private ManagerInterface|MockObject $eventManager;
+    protected UnitTester $tester;
+
+    private Mysql|MockInterface $connection;
+    private SelectRenderer|MockInterface $selectRenderer;
+    private ManagerInterface|MockInterface $eventManager;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->selectRenderer = $this->createMock(SelectRenderer::class);
-        $this->eventManager = $this->createMock(ManagerInterface::class);
+        $this->selectRenderer = Mockery::mock(SelectRenderer::class);
+        $this->eventManager = Mockery::mock(ManagerInterface::class);
 
-        $this->connection = $this->getMockBuilder(Mysql::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['quoteIdentifier', 'quoteInto', 'select'])
-            ->getMock();
-        $this->connection->method('quoteIdentifier')->willReturnCallback(
+        $this->connection = Mockery::mock(Mysql::class)->makePartial();
+        $this->connection->shouldReceive('quoteIdentifier')->andReturnUsing(
             static fn (string $identifier): string => $identifier
         );
-        $this->connection->method('quoteInto')->willReturnCallback(
+        $this->connection->shouldReceive('quoteInto')->andReturnUsing(
             static fn (string $text, mixed $value): string => str_replace('?', sprintf("'%s'", (string) $value), $text)
         );
-        $this->connection->method('select')->willReturnCallback(fn (): Select => $this->createSelect());
+        $this->connection->shouldReceive('select')->andReturnUsing(fn (): Select => $this->createSelect());
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        Mockery::close();
     }
 
     public function testBeforeLoadAddsStoreJoinAndAggregatedColumns(): void
@@ -50,13 +57,13 @@ class CollectionTest extends Unit
         $from = $select->getPart(Select::FROM);
         $columns = $select->getPart(Select::COLUMNS);
 
-        self::assertArrayHasKey('emico_attributelanding_page_store', $from);
-        self::assertSame(['main_table.page_id'], $select->getPart(Select::GROUP));
-        self::assertCount(3, $columns);
-        self::assertSame('store_urls', $columns[1][2]);
-        self::assertInstanceOf(Zend_Db_Expr::class, $columns[1][1]);
-        self::assertSame('name', $columns[2][2]);
-        self::assertInstanceOf(Zend_Db_Expr::class, $columns[2][1]);
+        $this->assertArrayHasKey('emico_attributelanding_page_store', $from);
+        $this->assertSame(['main_table.page_id'], $select->getPart(Select::GROUP));
+        $this->assertCount(3, $columns);
+        $this->assertSame('store_urls', $columns[1][2]);
+        $this->assertInstanceOf(Zend_Db_Expr::class, $columns[1][1]);
+        $this->assertSame('name', $columns[2][2]);
+        $this->assertInstanceOf(Zend_Db_Expr::class, $columns[2][1]);
     }
 
     public function testAddFieldToFilterAddsHavingForStoreUrls(): void
@@ -68,8 +75,8 @@ class CollectionTest extends Unit
 
         $having = implode(' ', $select->getPart(Select::HAVING));
 
-        self::assertStringContainsString('GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id', $having);
-        self::assertStringContainsString("'%default/url%'", $having);
+        $this->assertStringContainsString('GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id', $having);
+        $this->assertStringContainsString("'%default/url%'", $having);
     }
 
     public function testAddFieldToFilterAddsHavingForName(): void
@@ -81,9 +88,9 @@ class CollectionTest extends Unit
 
         $having = implode(' ', $select->getPart(Select::HAVING));
 
-        self::assertStringContainsString('GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id', $having);
-        self::assertStringContainsString('emico_attributelanding_page_store.name', $having);
-        self::assertStringContainsString("'%Landing Page%'", $having);
+        $this->assertStringContainsString('GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id', $having);
+        $this->assertStringContainsString('emico_attributelanding_page_store.name', $having);
+        $this->assertStringContainsString("'%Landing Page%'", $having);
     }
 
     public function testGetSelectCountSqlWrapsGroupedQueryWhenHavingIsPresent(): void
@@ -98,12 +105,12 @@ class CollectionTest extends Unit
         $from = $countSelect->getPart(Select::FROM);
         $innerSelect = reset($from)['tableName'];
 
-        self::assertInstanceOf(Select::class, $innerSelect);
-        self::assertArrayHasKey('emico_attributelanding_page_store', $innerSelect->getPart(Select::FROM));
-        self::assertSame(['main_table.page_id'], $innerSelect->getPart(Select::GROUP));
+        $this->assertInstanceOf(Select::class, $innerSelect);
+        $this->assertArrayHasKey('emico_attributelanding_page_store', $innerSelect->getPart(Select::FROM));
+        $this->assertSame(['main_table.page_id'], $innerSelect->getPart(Select::GROUP));
     }
 
-    private function createSubject(Select $select)
+    private function createSubject(Select $select): GridCollection
     {
         return new class ($select, $this->connection, $this->eventManager) extends GridCollection {
             public function __construct(
