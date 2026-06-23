@@ -320,15 +320,4 @@ interface LandingPageInterface extends ExtensibleDataInterface
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
     public function setHideSelectedFilters(bool $hideSelectedFilters = true): LandingPageInterface;
-
-    /**
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
-     */
-    public function getExtensionAttributes(): ?LandingPageExtensionInterface;
-
-    /**
-     * @param \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface $extensionAttributes
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
-     */
-    public function setExtensionAttributes(LandingPageExtensionInterface $extensionAttributes): LandingPageInterface;
 }
