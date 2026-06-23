@@ -641,7 +641,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function getExtensionAttributes(): ?LandingPageExtensionInterface
     {
-        return $this->_getExtensionAttributes();
+        return $this->_getExtensionAttributes(); // @phpstan-ignore return.type
     }
 
     /**
