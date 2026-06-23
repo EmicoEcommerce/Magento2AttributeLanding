@@ -29,6 +29,7 @@ class CollectionTest extends Unit
 
         $this->selectRenderer = Mockery::mock(SelectRenderer::class);
         $this->eventManager = Mockery::mock(ManagerInterface::class);
+        $this->eventManager->shouldReceive('dispatch')->andReturnNull();
 
         $this->connection = Mockery::mock(Mysql::class)->makePartial();
         $this->connection->shouldReceive('quoteIdentifier')->andReturnUsing(
