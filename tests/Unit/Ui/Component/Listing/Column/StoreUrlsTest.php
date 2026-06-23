@@ -11,6 +11,7 @@ use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Api\StoreRepositoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+
 class StoreUrlsTest extends Unit
 {
     private ContextInterface|MockObject $context;

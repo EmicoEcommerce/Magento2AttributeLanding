@@ -50,7 +50,7 @@ class StoreUrls extends Column
         foreach (array_keys($dataSource['data']['items']) as $index) {
             $raw = $dataSource['data']['items'][$index][$columnName] ?? '';
 
-            if ($raw === '' || $raw === null) {
+            if ($raw === '') {
                 $dataSource['data']['items'][$index][$columnName] = '';
                 continue;
             }

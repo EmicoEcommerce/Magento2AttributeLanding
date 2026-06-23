@@ -103,46 +103,43 @@ class CollectionTest extends Unit
         self::assertSame(['main_table.page_id'], $innerSelect->getPart(Select::GROUP));
     }
 
-    private function createSubject(Select $select): TestGridCollection
+    private function createSubject(Select $select)
     {
-        return new TestGridCollection($select, $this->connection, $this->eventManager);
+        return new class ($select, $this->connection, $this->eventManager) extends GridCollection {
+            public function __construct(
+                Select $select,
+                Mysql $connection,
+                ManagerInterface $eventManager
+            ) {
+                $this->_select = $select;
+                $this->_conn = $connection;
+                $this->_eventManager = $eventManager;
+            }
+
+            public function beforeLoad(): self
+            {
+                return $this->_beforeLoad();
+            }
+
+            public function getConnection()
+            {
+                return $this->_conn;
+            }
+
+            public function getSelect()
+            {
+                return $this->_select;
+            }
+
+            public function getTable($table)
+            {
+                return $table;
+            }
+        };
     }
 
     private function createSelect(): Select
     {
         return new Select($this->connection, $this->selectRenderer);
-    }
-}
-
-class TestGridCollection extends GridCollection
-{
-    public function __construct(
-        Select $select,
-        Mysql $connection,
-        ManagerInterface $eventManager
-    ) {
-        $this->_select = $select;
-        $this->_conn = $connection;
-        $this->_eventManager = $eventManager;
-    }
-
-    public function beforeLoad(): self
-    {
-        return $this->_beforeLoad();
-    }
-
-    public function getConnection()
-    {
-        return $this->_conn;
-    }
-
-    public function getSelect()
-    {
-        return $this->_select;
-    }
-
-    public function getTable($table)
-    {
-        return $table;
     }
 }
