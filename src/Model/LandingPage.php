@@ -637,18 +637,18 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
+     * @return \Magento\Framework\Api\ExtensionAttributesInterface|null
      */
-    public function getExtensionAttributes(): ?LandingPageExtensionInterface
+    public function getExtensionAttributes(): ?\Magento\Framework\Api\ExtensionAttributesInterface
     {
         return $this->_getExtensionAttributes(); // @phpstan-ignore return.type
     }
 
     /**
-     * @param \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface $extensionAttributes
+     * @param \Magento\Framework\Api\ExtensionAttributesInterface $extensionAttributes
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setExtensionAttributes(LandingPageExtensionInterface $extensionAttributes): LandingPageInterface
+    public function setExtensionAttributes(\Magento\Framework\Api\ExtensionAttributesInterface $extensionAttributes): LandingPageInterface
     {
         return $this->_setExtensionAttributes($extensionAttributes);
     }

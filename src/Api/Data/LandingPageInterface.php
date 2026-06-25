@@ -8,6 +8,7 @@
 namespace Emico\AttributeLanding\Api\Data;
 
 use Magento\Framework\Api\ExtensibleDataInterface;
+use Magento\Framework\Api\ExtensionAttributesInterface;
 
 interface LandingPageInterface extends ExtensibleDataInterface
 {
@@ -321,16 +322,14 @@ interface LandingPageInterface extends ExtensibleDataInterface
      */
     public function setHideSelectedFilters(bool $hideSelectedFilters = true): LandingPageInterface;
 
-    // phpcs:disable EmicoMagento2.Classes.UnsupportedTypesInApiInterface
     /**
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
+     * @return \Magento\Framework\Api\ExtensionAttributesInterface|null
      */
-    public function getExtensionAttributes(): ?LandingPageExtensionInterface;
+    public function getExtensionAttributes(): ?ExtensionAttributesInterface;
 
     /**
-     * @param \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface $extensionAttributes
+     * @param \Magento\Framework\Api\ExtensionAttributesInterface $extensionAttributes
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setExtensionAttributes(LandingPageExtensionInterface $extensionAttributes): LandingPageInterface;
-    // phpcs:enable EmicoMagento2.Classes.UnsupportedTypesInApiInterface
+    public function setExtensionAttributes(ExtensionAttributesInterface $extensionAttributes): LandingPageInterface;
 }
