@@ -7,37 +7,28 @@ namespace Tweakwise\Test\Functional\Model;
 use Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface;
 use Emico\AttributeLanding\Model\LandingPage;
 use Emico\CodeCept\Test\Unit;
-use Mockery;
 
 class LandingPageTest extends Unit
 {
     private LandingPage $subject;
 
-    protected function setUp(): void
+    protected function _before(): void
     {
-        parent::setUp();
-
         $this->subject = $this->tester->getObjectManager()->get(LandingPage::class);
     }
 
     public function testGetExtensionAttributesReturnsFactoryValueWhenNotSet(): void
     {
-        $this->assertInstanceOf(LandingPageExtensionInterface::class, $this->subject->getExtensionAttributes());
+        $this->tester->assertInstanceOf(LandingPageExtensionInterface::class, $this->subject->getExtensionAttributes());
     }
 
     public function testSetAndGetExtensionAttributesRoundTrip(): void
     {
-        $extensionAttributes = Mockery::mock(LandingPageExtensionInterface::class);
+        $extensionAttributes = $this->createMock(LandingPageExtensionInterface::class);
 
         $result = $this->subject->setExtensionAttributes($extensionAttributes);
 
-        $this->assertSame($this->subject, $result);
-        $this->assertSame($extensionAttributes, $this->subject->getExtensionAttributes());
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        Mockery::close();
+        $this->tester->assertSame($this->subject, $result);
+        $this->tester->assertSame($extensionAttributes, $this->subject->getExtensionAttributes());
     }
 }
