@@ -3,10 +3,6 @@ include:
     ref: main
     file: 'semantic-release.yml'
 
-  - project: 'ci-cd/composer-configuration'
-    ref: main
-    file: 'package.yml'
-
   - project: 'ci-cd/magento-module'
     ref: master
     file: 'codeception-ci.yml'
@@ -25,6 +21,7 @@ variables:
 magento-module/test/functional:
   variables:
     MIN_PHP_VERSION: '8.1'
+    DISABLE_DEPENDENCY_AUDIT: "true"
 
 release:
   rules:
