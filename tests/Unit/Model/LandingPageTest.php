@@ -15,20 +15,19 @@ use Magento\Framework\App\State;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Model\ActionValidator\RemoveAction;
 use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Registry;
 use Mockery;
 use Mockery\MockInterface;
-use Tweakwise\Test\Support\UnitTester;
 
 class LandingPageTest extends Unit
 {
-    protected UnitTester $tester;
-
     private Context|MockInterface $context;
     private Registry|MockInterface $registry;
     private ExtensionAttributesFactory|MockInterface $extensionFactory;
     private AttributeValueFactory|MockInterface $customAttributeFactory;
     private Config|MockInterface $config;
+    private LandingPageExtensionInterface|MockInterface $defaultExtensionAttributes;
 
     private LandingPage $subject;
 
@@ -53,29 +52,31 @@ class LandingPageTest extends Unit
         $this->registry = Mockery::mock(Registry::class)->shouldIgnoreMissing();
 
         $this->extensionFactory = Mockery::mock(ExtensionAttributesFactory::class)->shouldIgnoreMissing();
+        $this->defaultExtensionAttributes = Mockery::mock(LandingPageExtensionInterface::class);
+        $this->extensionFactory->shouldReceive('create')
+            ->with(LandingPage::class, [])
+            ->andReturn($this->defaultExtensionAttributes);
 
         $this->customAttributeFactory = Mockery::mock(AttributeValueFactory::class)->shouldIgnoreMissing();
 
         $this->config = Mockery::mock(Config::class)->shouldIgnoreMissing();
+
+        $resource = Mockery::mock(AbstractDb::class);
+        $resource->shouldReceive('getIdFieldName')->andReturn('page_id');
 
         $this->subject = new LandingPage(
             $this->context,
             $this->registry,
             $this->extensionFactory,
             $this->customAttributeFactory,
-            $this->config
+            $this->config,
+            $resource
         );
     }
 
-    protected function tearDown(): void
+    public function testGetExtensionAttributesReturnsFactoryValueWhenNotSet(): void
     {
-        parent::tearDown();
-        Mockery::close();
-    }
-
-    public function testGetExtensionAttributesReturnsNullWhenNotSet(): void
-    {
-        $this->tester->assertNull($this->subject->getExtensionAttributes());
+        $this->assertSame($this->defaultExtensionAttributes, $this->subject->getExtensionAttributes());
     }
 
     public function testSetAndGetExtensionAttributesRoundTrip(): void
@@ -84,7 +85,13 @@ class LandingPageTest extends Unit
 
         $result = $this->subject->setExtensionAttributes($extensionAttributes);
 
-        $this->tester->assertSame($this->subject, $result);
-        $this->tester->assertSame($extensionAttributes, $this->subject->getExtensionAttributes());
+        $this->assertSame($this->subject, $result);
+        $this->assertSame($extensionAttributes, $this->subject->getExtensionAttributes());
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        Mockery::close();
     }
 }

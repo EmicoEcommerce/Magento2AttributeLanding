@@ -69,7 +69,6 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     protected function _construct()
     {
         $this->_init(PageResourceModel::class);
-        parent::_construct();
     }
 
     /**
@@ -637,18 +636,18 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
-     * @return \Magento\Framework\Api\ExtensionAttributesInterface|null
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
      */
-    public function getExtensionAttributes(): ?\Magento\Framework\Api\ExtensionAttributesInterface
+    public function getExtensionAttributes(): ?LandingPageExtensionInterface
     {
         return $this->_getExtensionAttributes(); // @phpstan-ignore return.type
     }
 
     /**
-     * @param \Magento\Framework\Api\ExtensionAttributesInterface $extensionAttributes
+     * @param \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface $extensionAttributes
      * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
      */
-    public function setExtensionAttributes(\Magento\Framework\Api\ExtensionAttributesInterface $extensionAttributes): LandingPageInterface
+    public function setExtensionAttributes(LandingPageExtensionInterface $extensionAttributes): LandingPageInterface
     {
         return $this->_setExtensionAttributes($extensionAttributes);
     }
