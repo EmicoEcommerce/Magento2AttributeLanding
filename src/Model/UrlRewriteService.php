@@ -1,24 +1,28 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
  * @author : Edwin Jacobs, email: ejacobs@emico.nl.
  * @copyright : Copyright Emico B.V. 2020.
  */
 
+declare(strict_types=1);
+
 namespace Emico\AttributeLanding\Model;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
+use Exception;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\UrlRewrite\Model\Exception\UrlAlreadyExistsException;
 use Magento\UrlRewrite\Model\UrlFinderInterface;
 use Magento\UrlRewrite\Model\UrlPersistInterface;
-use Magento\UrlRewrite\Service\V1\Data\UrlRewriteFactory;
 use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
+use Magento\UrlRewrite\Service\V1\Data\UrlRewriteFactory;
 
 class UrlRewriteService
 {
@@ -108,7 +112,6 @@ class UrlRewriteService
 
         $landingPages = $this->landingPageRepository->getList($searchCriteria);
         foreach ($landingPages->getItems() as $page) {
-            /** @phpstan-ignore-next-line */
             $this->generateRewrite($page, $newSuffix);
         }
     }
@@ -116,8 +119,9 @@ class UrlRewriteService
     /**
      * @param UrlRewriteGeneratorInterface $page
      * @param string|null $suffix
+     *
      * @return void
-     * @throws \Magento\UrlRewrite\Model\Exception\UrlAlreadyExistsException|\Exception
+     * @throws UrlAlreadyExistsException|Exception
      */
     public function generateRewrite(UrlRewriteGeneratorInterface $page, ?string $suffix = null)
     {
@@ -145,7 +149,6 @@ class UrlRewriteService
         $allPages = $this->landingPageRepository->getAllPagesById($page->getPageId());
 
         foreach ($allPages as $storePage) {
-            /** @phpstan-ignore-next-line */
             if ($storePage->getStoreId() === $page->getStoreId()) {
                 $storePage = $page;
             }
@@ -195,7 +198,6 @@ class UrlRewriteService
                 continue;
             }
 
-            /** @phpstan-ignore-next-line */
             $urlRewrite = $this->createUrlRewrite($storePage, (int) $store->getId(), $suffix);
             $urlRewritesToPersist[$store->getId()] = $urlRewrite;
         }
@@ -211,23 +213,23 @@ class UrlRewriteService
     private function generateOverviewPageRewrites(UrlRewriteGeneratorInterface $page, ?string $suffix = null): array
     {
         $urlRewritesToPersist = [];
-        $allPages = $this->overviewPageRepository->getAllPagesById((int)$page->getPageId()); // @phpstan-ignore-line
+        $allPages = $this->overviewPageRepository->getAllPagesById((int)$page->getPageId());
 
         foreach ($allPages as $storePage) {
-            if ($storePage->getStoreId() === $page->getStoreId()) {  // @phpstan-ignore-line
+            if ($storePage->getStoreId() === $page->getStoreId()) {
                 $storePage = $page;
             }
 
-            if ($storePage->getStoreId() === 0) { // @phpstan-ignore-line
+            if ($storePage->getStoreId() === 0) {
                 $urlRewritesToPersist = $this->generateOverviewPageRewritesForAllStores(
-                    $storePage, // @phpstan-ignore-line
+                    $storePage,
                     $page,
                     $suffix,
                     $urlRewritesToPersist
                 );
             } else {
-                $urlRewrite = $this->createUrlRewrite($storePage, $storePage->getStoreId(), $suffix); // @phpstan-ignore-line
-                $urlRewritesToPersist[$storePage->getStoreId()] = $urlRewrite; // @phpstan-ignore-line
+                $urlRewrite = $this->createUrlRewrite($storePage, $storePage->getStoreId(), $suffix);
+                $urlRewritesToPersist[$storePage->getStoreId()] = $urlRewrite;
             }
         }
 
@@ -251,12 +253,8 @@ class UrlRewriteService
         $stores = $this->storeManager->getStores();
 
         foreach ($stores as $store) {
-            if ($store->getId() === $page->getStoreId()) { // @phpstan-ignore-line
+            if ($store->getId() === $page->getStoreId()) {
                 $storePage = $page;
-            }
-
-            if (empty($storePage)) { // @phpstan-ignore-line
-                continue;
             }
 
             if (isset($urlRewritesToPersist[$store->getId()])) {
@@ -328,8 +326,8 @@ class UrlRewriteService
 
     protected function getActiveStoreIds(UrlRewriteGeneratorInterface $landingPage): array
     {
-        // phpcs:disable SlevomatCodingStandard.Functions.StrictCall.NonStrictComparison
-        if (in_array('0', $landingPage->getStoreIds(), false) !== false) { // @phpstan-ignore-line
+        // phpcs:disable SlevomatCodingStandard.Functions.StrictCall.StrictParameterMissing
+        if (in_array('0', $landingPage->getStoreIds()) !== false) {
             return array_map(
                 static function (StoreInterface $store) {
                     return $store->getId();
@@ -338,7 +336,6 @@ class UrlRewriteService
             );
         }
 
-        /** @phpstan-ignore-next-line */
         return $landingPage->getStoreIds();
     }
 }

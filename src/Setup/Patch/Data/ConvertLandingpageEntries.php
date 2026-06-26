@@ -1,11 +1,13 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Setup\Patch\Data;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
-use Magento\Framework\DB\Adapter\AdapterInterface;
 
 class ConvertLandingpageEntries implements DataPatchInterface
 {
@@ -15,6 +17,14 @@ class ConvertLandingpageEntries implements DataPatchInterface
     public function __construct(
         private readonly ModuleDataSetupInterface $moduleDataSetup,
     ) {
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public static function getDependencies(): array
+    {
+        return [];
     }
 
     /**
@@ -34,7 +44,7 @@ class ConvertLandingpageEntries implements DataPatchInterface
         foreach ($landingPages as $landingPage) {
             $storeIds = explode(',', $landingPage['store_ids']);
             foreach ($storeIds as $storeId) {
-                $this->insertLandingPageStore($connection, $landingPageStoreTable, $landingPage, (int)$storeId);
+                $this->insertLandingPageStore($connection, $landingPageStoreTable, $landingPage, (int) $storeId);
             }
         }
 
@@ -44,16 +54,24 @@ class ConvertLandingpageEntries implements DataPatchInterface
     }
 
     /**
+     * @return array|string[]
+     */
+    public function getAliases(): array
+    {
+        return [];
+    }
+
+    /**
      * @param AdapterInterface $connection
      * @param string $table
-     * @param array $landingPage
-     * @param int $storeId
+     * @param array  $landingPage
+     * @param int    $storeId
      */
     private function insertLandingPageStore(
         AdapterInterface $connection,
         string $table,
         array $landingPage,
-        int $storeId
+        int $storeId,
     ): void {
         $data = [
             'page_id' => $landingPage['page_id'],
@@ -77,7 +95,7 @@ class ConvertLandingpageEntries implements DataPatchInterface
             LandingPageInterface::CANONICAL_URL,
             LandingPageInterface::HIDE_SELECTED_FILTERS,
             LandingPageInterface::TWEAKWISE_SORT_TEMPLATE,
-            LandingPageInterface::TWEAKWISE_BUILDER_TEMPLATE
+            LandingPageInterface::TWEAKWISE_BUILDER_TEMPLATE,
         ];
 
         foreach ($fields as $field) {
@@ -89,21 +107,5 @@ class ConvertLandingpageEntries implements DataPatchInterface
         }
 
         $connection->insert($table, $data);
-    }
-
-    /**
-     * @return array|string[]
-     */
-    public static function getDependencies(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array|string[]
-     */
-    public function getAliases(): array
-    {
-        return [];
     }
 }

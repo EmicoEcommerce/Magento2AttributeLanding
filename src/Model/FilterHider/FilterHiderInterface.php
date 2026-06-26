@@ -1,10 +1,12 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Model\FilterHider;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
-use Magento\Catalog\Model\Layer\Filter\Item;
 use Magento\Catalog\Model\Layer\Filter\FilterInterface;
+use Magento\Catalog\Model\Layer\Filter\Item;
 
 /**
  * @copyright (c) Emico B.V. 2019
