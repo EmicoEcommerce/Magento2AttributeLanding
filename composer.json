@@ -45,7 +45,9 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "phpstan/extension-installer": true,
             "phpro/grumphp": true,
-            "emico/code-quality": true
+            "emico/code-quality": true,
+            "magento/magento-composer-installer": true,
+            "emico/codeception-m2": true
         }
     }
 }
