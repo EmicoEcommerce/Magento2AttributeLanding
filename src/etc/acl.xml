@@ -14,6 +14,13 @@
                         <resource id="Emico_AttributeLanding::overviewpage_management" sortOrder="20" title="Manage overview pages"/>
                     </resource>
                 </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Emico_AttributeLanding::config" title="Emico Attribute Landing" sortOrder="10"/>
+                        </resource>
+                    </resource>
+                </resource>
             </resource>
 		</resources>
 	</acl>
