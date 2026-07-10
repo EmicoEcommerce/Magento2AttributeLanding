@@ -46,6 +46,13 @@ interface LandingPageInterface extends ExtensibleDataInterface, UrlRewriteGenera
     public const STORE_ID                   = 'store_id';
 
     /**
+     * Retrieve existing extension attributes object or create a new one.
+     *
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
+     */
+    public function getExtensionAttributes(): ?LandingPageExtensionInterface;
+
+    /**
      * Set an extension attributes object.
      *
      * @param \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface $extensionAttributes
@@ -53,13 +60,6 @@ interface LandingPageInterface extends ExtensibleDataInterface, UrlRewriteGenera
      * @return static
      */
     public function setExtensionAttributes(LandingPageExtensionInterface $extensionAttributes): static;
-
-    /**
-     * Retrieve existing extension attributes object or create a new one.
-     *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
-     */
-    public function getExtensionAttributes(): ?LandingPageExtensionInterface;
 
     /**
      * Get store_id
@@ -178,9 +178,9 @@ interface LandingPageInterface extends ExtensibleDataInterface, UrlRewriteGenera
      *
      * @param string|null $filterAttributes
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setFilterAttributes(?string $filterAttributes): LandingPageInterface;
+    public function setFilterAttributes(?string $filterAttributes): static;
 
     /**
      * @return \Emico\AttributeLanding\Api\Data\FilterInterface[]
@@ -232,140 +232,140 @@ interface LandingPageInterface extends ExtensibleDataInterface, UrlRewriteGenera
     /**
      * @param int $storeId
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setStoreId(int $storeId): LandingPageInterface;
+    public function setStoreId(int $storeId): static;
 
     /**
      * @param string|null $active
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setActive(?string $active): LandingPageInterface;
+    public function setActive(?string $active): static;
 
     /**
      * @param string|null $name
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setName(?string $name): LandingPageInterface;
+    public function setName(?string $name): static;
 
     /**
      * @param int|null $categoryId
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setCategoryId(?int $categoryId): LandingPageInterface;
+    public function setCategoryId(?int $categoryId): static;
 
     /**
      * @param string|null $heading
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setHeading(?string $heading): LandingPageInterface;
+    public function setHeading(?string $heading): static;
 
     /**
      * @param string|null $headerImage
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setHeaderImage(?string $headerImage): LandingPageInterface;
+    public function setHeaderImage(?string $headerImage): static;
 
     /**
      * @param string|null $metaTitle
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setMetaTitle(?string $metaTitle): LandingPageInterface;
+    public function setMetaTitle(?string $metaTitle): static;
 
     /**
      * @param string|null $metaKeywords
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setMetaKeywords(?string $metaKeywords): LandingPageInterface;
+    public function setMetaKeywords(?string $metaKeywords): static;
 
     /**
      * @param string|null $metaDescription
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setMetaDescription(?string $metaDescription): LandingPageInterface;
+    public function setMetaDescription(?string $metaDescription): static;
 
     /**
      * @param string|null $contentFirst
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setContentFirst(?string $contentFirst): LandingPageInterface;
+    public function setContentFirst(?string $contentFirst): static;
 
     /**
      * @param string|null $contentLast
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setContentLast(?string $contentLast): LandingPageInterface;
+    public function setContentLast(?string $contentLast): static;
 
     /**
      * @param string|null $tweakwiseFilterTemplate
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setTweakwiseFilterTemplate(?string $tweakwiseFilterTemplate): LandingPageInterface;
+    public function setTweakwiseFilterTemplate(?string $tweakwiseFilterTemplate): static;
 
     /**
      * @param string|null $tweakwiseSortTemplate
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setTweakwiseSortTemplate(?string $tweakwiseSortTemplate): LandingPageInterface;
+    public function setTweakwiseSortTemplate(?string $tweakwiseSortTemplate): static;
 
     /**
      * @param string|null $tweakwiseBuilderTemplate
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setTweakwiseBuilderTemplate(?string $tweakwiseBuilderTemplate): LandingPageInterface;
+    public function setTweakwiseBuilderTemplate(?string $tweakwiseBuilderTemplate): static;
 
     /**
      * @param string|null $overviewPageId
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setOverviewPageId(?string $overviewPageId): LandingPageInterface;
+    public function setOverviewPageId(?string $overviewPageId): static;
 
     /**
      * @param string|null $overviewPageImage
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setOverviewPageImage(?string $overviewPageImage): LandingPageInterface;
+    public function setOverviewPageImage(?string $overviewPageImage): static;
 
     /**
      * @param string|null $urlPath
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setUrlPath(?string $urlPath): LandingPageInterface;
+    public function setUrlPath(?string $urlPath): static;
 
     /**
      * @param string|null $canonicalUrl
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setCanonicalUrl(?string $canonicalUrl): LandingPageInterface;
+    public function setCanonicalUrl(?string $canonicalUrl): static;
 
     /**
      * @param bool $isFilterLinkAllowed
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setIsFilterLinkAllowed(bool $isFilterLinkAllowed = true): LandingPageInterface;
+    public function setIsFilterLinkAllowed(bool $isFilterLinkAllowed = true): static;
 
     /**
      * @param bool $hideSelectedFilters
      *
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     * @return static
      */
-    public function setHideSelectedFilters(bool $hideSelectedFilters = true): LandingPageInterface;
+    public function setHideSelectedFilters(bool $hideSelectedFilters = true): static;
 }
