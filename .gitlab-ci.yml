@@ -11,9 +11,13 @@ include:
     ref: master
     file: 'codequality-ci.yml'
 
-  - project: 'ci-cd/github-release'
+  - project: 'ci-cd/tweakwise'
     ref: main
     file: 'github-release.yml'
+
+  - project: 'ci-cd/tweakwise'
+    ref: main
+    file: 'demo-pipeline-trigger.yml'
 
 variables:
   MAGENTO_PHP_VERSION: '8.1'
