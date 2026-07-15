@@ -2,6 +2,7 @@
 
 namespace Emico\AttributeLanding\Model;
 
+use Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Emico\AttributeLanding\Model\ResourceModel\Page as PageResourceModel;
@@ -68,7 +69,6 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     protected function _construct()
     {
         $this->_init(PageResourceModel::class);
-        parent::_construct();
     }
 
     /**
@@ -633,5 +633,22 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             $fields,
             array_map(fn($field) => $this->getData($field), $fields)
         );
+    }
+
+    /**
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
+     */
+    public function getExtensionAttributes(): ?LandingPageExtensionInterface
+    {
+        return $this->_getExtensionAttributes(); // @phpstan-ignore return.type
+    }
+
+    /**
+     * @param \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface $extensionAttributes
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     */
+    public function setExtensionAttributes(LandingPageExtensionInterface $extensionAttributes): LandingPageInterface
+    {
+        return $this->_setExtensionAttributes($extensionAttributes);
     }
 }
