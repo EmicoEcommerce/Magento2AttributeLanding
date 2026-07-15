@@ -20,11 +20,11 @@ include:
     file: 'demo-pipeline-trigger.yml'
 
 variables:
-  MAGENTO_PHP_VERSION: '8.1'
+  MAGENTO_PHP_VERSION: '8.2'
 
 magento-module/test/functional:
   variables:
-    MIN_PHP_VERSION: '8.1'
+    MIN_PHP_VERSION: '8.2'
     DISABLE_DEPENDENCY_AUDIT: "true"
 
 release:
