@@ -144,9 +144,10 @@ class CollectionTest extends Unit
 
         $joinCount = 0;
         foreach ($innerSelect->getPart(Select::FROM) as $part) {
-            if ($part['tableName'] === 'emico_attributelanding_page_store') {
-                $joinCount++;
+            if ($part['tableName'] !== 'emico_attributelanding_page_store') {
+                continue;
             }
+            $joinCount++;
         }
 
         $this->assertSame(1, $joinCount);

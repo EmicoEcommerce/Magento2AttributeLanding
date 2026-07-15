@@ -76,10 +76,14 @@ class Collection extends SearchResult
     public function addFieldToFilter($field, $condition = null)
     {
         if ($field === 'store_urls') {
-            if (is_array($condition) && !isset($condition['like'])) {
-                return parent::addFieldToFilter($field, $condition);
+            if (is_array($condition)) {
+                if (!isset($condition['like'])) {
+                    return parent::addFieldToFilter($field, $condition);
+                }
+                $value = $condition['like'];
+            } else {
+                $value = $condition;
             }
-            $value = is_array($condition) ? $condition['like'] : $condition;
             $value = trim((string) $value, '%');
             $this->getSelect()->having(
                 'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id, \':\', emico_attributelanding_page_store.url_path) ORDER BY emico_attributelanding_page_store.store_id SEPARATOR \',\') LIKE ?',
@@ -89,10 +93,14 @@ class Collection extends SearchResult
         }
 
         if ($field === 'name') {
-            if (is_array($condition) && !isset($condition['like'])) {
-                return parent::addFieldToFilter($field, $condition);
+            if (is_array($condition)) {
+                if (!isset($condition['like'])) {
+                    return parent::addFieldToFilter($field, $condition);
+                }
+                $value = $condition['like'];
+            } else {
+                $value = $condition;
             }
-            $value = is_array($condition) ? $condition['like'] : $condition;
             $value = trim((string) $value, '%');
             $this->getSelect()->having(
                 'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id, \':\', emico_attributelanding_page_store.name) ORDER BY emico_attributelanding_page_store.store_id SEPARATOR \',\') LIKE ?',
