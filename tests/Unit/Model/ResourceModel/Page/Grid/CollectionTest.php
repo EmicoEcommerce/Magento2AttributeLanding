@@ -111,6 +111,47 @@ class CollectionTest extends Unit
         $this->assertSame(['main_table.page_id'], $innerSelect->getPart(Select::GROUP));
     }
 
+    public function testAddFieldToFilterFallsBackToParentWhenConditionHasNoLikeKey(): void
+    {
+        $select = $this->createSelect();
+        $select->from(['main_table' => 'emico_attributelanding_page'], ['page_id']);
+
+        $subject = $this->createSubject($select);
+        $subject->addFieldToFilter('store_urls', ['eq' => 'foo']);
+
+        $where = implode(' ', $select->getPart(Select::WHERE));
+
+        $this->assertSame([], $select->getPart(Select::HAVING));
+        $this->assertStringContainsString('foo', $where);
+    }
+
+    public function testGetSelectCountSqlDoesNotDuplicateJoinWhenAlreadyPresent(): void
+    {
+        $select = $this->createSelect();
+        $select->from(['main_table' => 'emico_attributelanding_page'], ['page_id']);
+        $select->joinLeft(
+            ['emico_attributelanding_page_store' => 'emico_attributelanding_page_store'],
+            'main_table.page_id = emico_attributelanding_page_store.page_id',
+            []
+        );
+        $select->having('COUNT(*) > ?', 0);
+
+        $subject = $this->createSubject($select);
+        $countSelect = $subject->getSelectCountSql();
+
+        $from = $countSelect->getPart(Select::FROM);
+        $innerSelect = reset($from)['tableName'];
+
+        $joinCount = 0;
+        foreach ($innerSelect->getPart(Select::FROM) as $part) {
+            if ($part['tableName'] === 'emico_attributelanding_page_store') {
+                $joinCount++;
+            }
+        }
+
+        $this->assertSame(1, $joinCount);
+    }
+
     private function createSubject(Select $select): GridCollection
     {
         return new class ($select, $this->connection, $this->eventManager) extends GridCollection {

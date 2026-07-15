@@ -52,12 +52,15 @@ class Collection extends SearchResult
             return $countSelect;
         }
 
-        $countSelect->joinLeft(
-            ['emico_attributelanding_page_store' => $this->getTable('emico_attributelanding_page_store')],
-            'main_table.page_id = emico_attributelanding_page_store.page_id',
-            []
-        );
-        $countSelect->group('main_table.page_id');
+        $from = $countSelect->getPart(Select::FROM);
+        if (!isset($from['emico_attributelanding_page_store'])) {
+            $countSelect->joinLeft(
+                ['emico_attributelanding_page_store' => $this->getTable('emico_attributelanding_page_store')],
+                'main_table.page_id = emico_attributelanding_page_store.page_id',
+                []
+            );
+            $countSelect->group('main_table.page_id');
+        }
 
         return $this->getConnection()->select()->from($countSelect, [new Zend_Db_Expr('COUNT(*)')]);
     }
@@ -73,7 +76,10 @@ class Collection extends SearchResult
     public function addFieldToFilter($field, $condition = null)
     {
         if ($field === 'store_urls') {
-            $value = is_array($condition) ? ($condition['like'] ?? reset($condition)) : $condition;
+            if (is_array($condition) && !isset($condition['like'])) {
+                return parent::addFieldToFilter($field, $condition);
+            }
+            $value = is_array($condition) ? $condition['like'] : $condition;
             $value = trim((string) $value, '%');
             $this->getSelect()->having(
                 'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id, \':\', emico_attributelanding_page_store.url_path) ORDER BY emico_attributelanding_page_store.store_id SEPARATOR \',\') LIKE ?',
@@ -83,7 +89,10 @@ class Collection extends SearchResult
         }
 
         if ($field === 'name') {
-            $value = is_array($condition) ? ($condition['like'] ?? reset($condition)) : $condition;
+            if (is_array($condition) && !isset($condition['like'])) {
+                return parent::addFieldToFilter($field, $condition);
+            }
+            $value = is_array($condition) ? $condition['like'] : $condition;
             $value = trim((string) $value, '%');
             $this->getSelect()->having(
                 'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id, \':\', emico_attributelanding_page_store.name) ORDER BY emico_attributelanding_page_store.store_id SEPARATOR \',\') LIKE ?',
