@@ -728,5 +728,4 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         }
         return [];
     }
-
 }
