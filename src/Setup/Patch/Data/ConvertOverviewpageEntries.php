@@ -20,9 +20,9 @@ class ConvertOverviewpageEntries implements DataPatchInterface
     }
 
     /**
-     * @return void
+     * @return $this
      */
-    public function apply(): void
+    public function apply(): ConvertOverviewpageEntries
     {
         $this->moduleDataSetup->startSetup();
 
@@ -41,6 +41,8 @@ class ConvertOverviewpageEntries implements DataPatchInterface
         }
 
         $this->moduleDataSetup->endSetup();
+
+        return $this;
     }
 
     /**

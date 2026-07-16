@@ -21,6 +21,7 @@ use Magento\Framework\Registry;
 class LandingPage extends AbstractExtensibleModel implements LandingPageInterface, UrlRewriteGeneratorInterface
 {
     protected $_eventPrefix = 'emico_attributelanding_page';
+
     /**
      * @var Config
      */
@@ -69,7 +70,6 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     protected function _construct()
     {
         $this->_init(PageResourceModel::class);
-        parent::_construct();
     }
 
     /**
@@ -672,10 +672,9 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             LandingPageInterface::OVERVIEW_PAGE_ID,
             LandingPageInterface::OVERVIEW_PAGE_IMAGE,
             LandingPageInterface::URL_PATH,
-            LandingPageInterface::STORE_ID,
         ];
 
-        if ($this->getData(LandingPageInterface::STORE_ID) === 0) {
+        if ((int) $this->getData(LandingPageInterface::STORE_ID) === 0) {
             $fields[] = LandingPageInterface::NAME;
         }
 
@@ -728,5 +727,22 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             return [$value];
         }
         return [];
+    }
+
+    /**
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
+     */
+    public function getExtensionAttributes(): ?LandingPageExtensionInterface
+    {
+        return $this->_getExtensionAttributes(); // @phpstan-ignore return.type
+    }
+
+    /**
+     * @param \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface $extensionAttributes
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     */
+    public function setExtensionAttributes(LandingPageExtensionInterface $extensionAttributes): LandingPageInterface
+    {
+        return $this->_setExtensionAttributes($extensionAttributes);
     }
 }

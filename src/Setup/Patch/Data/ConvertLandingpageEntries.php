@@ -34,7 +34,6 @@ class ConvertLandingpageEntries implements DataPatchInterface
         foreach ($landingPages as $landingPage) {
             $storeIds = explode(',', $landingPage['store_ids']);
             foreach ($storeIds as $storeId) {
-                /** @phpstan-ignore-next-line */
                 $this->insertLandingPageStore($connection, $landingPageStoreTable, $landingPage, (int)$storeId);
             }
         }

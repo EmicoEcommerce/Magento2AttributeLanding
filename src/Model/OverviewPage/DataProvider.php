@@ -45,8 +45,8 @@ class DataProvider extends AbstractDataProvider
         $requestFieldName,
         CollectionFactory $collectionFactory,
         DataPersistorInterface $dataPersistor,
-        private readonly Http $request,
-        private readonly overviewPageRepository $overviewPageRepository,
+        private readonly Http $request, // @phpstan-ignore-line
+        private readonly OverviewPageRepository $overviewPageRepository, // @phpstan-ignore-line
         array $meta = [],
         array $data = []
     ) {
@@ -67,8 +67,8 @@ class DataProvider extends AbstractDataProvider
             return $this->loadedData;
         }
 
-        $storeId = (int)$this->request->getParam('store', 0);
         /** @phpstan-ignore-next-line */
+        $storeId = (int)$this->request->getParam('store', 0);
         $items = $this->collection->getItems();
         foreach ($items as $model) {
             $storeData = $this->overviewPageRepository->getByIdWithStore($model->getPageId(), $storeId)->getData();

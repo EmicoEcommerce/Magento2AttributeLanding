@@ -50,7 +50,7 @@ class SeoObserver implements ObserverInterface
         private Config $config,
         LandingPageContext $landingPageContext,
         CategoryRepositoryInterface $categoryRepository,
-        StoreManagerInterFace $storeManager,
+        StoreManagerInterface $storeManager,
         protected MagentoHttpRequest $request
     ) {
         $this->landingPageContext = $landingPageContext;
