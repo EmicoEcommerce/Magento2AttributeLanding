@@ -13,6 +13,7 @@ use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Emico\AttributeLanding\Model\Page\ImageUploader;
 use Exception;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Theme\Block\Html\Breadcrumbs;
 use Magento\Cms\Model\Template\FilterProvider;
@@ -21,7 +22,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Template;
 use Psr\Log\LoggerInterface;
 
-class View extends Template
+class View extends Template implements IdentityInterface
 {
     /**
      * @var LandingPageContext
@@ -164,7 +165,7 @@ class View extends Template
             [
                 'label' => __('Home'),
                 'title' => __('Go to Home Page'),
-                'link' => $this->_storeManager->getStore()->getBaseUrl() // @phpstan-ignore-line
+                'link' => $this->_storeManager->getStore()->getBaseUrl()
             ]
         );
 
@@ -179,5 +180,14 @@ class View extends Template
         );
 
         return parent::_prepareLayout();
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getIdentities(): array
+    {
+        /** @phpstan-ignore-next-line  */
+        return $this->getOverviewPage()->getIdentities();
     }
 }

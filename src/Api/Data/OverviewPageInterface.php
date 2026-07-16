@@ -104,7 +104,7 @@ interface OverviewPageInterface
 
     /**
      * @param int $storeId
-     * @return OverviewPageInterface
+     * @return \Emico\AttributeLanding\Api\Data\OverviewPageInterface
      */
     public function setStoreId(int $storeId): OverviewPageInterface;
 }

@@ -85,7 +85,6 @@ class UrlFinder
             $this->landingPageLookup = $this->loadPageLookupArray();
         }
 
-        /** @phpstan-ignore-next-line */
         $storePrefix = $this->storeManager->getStore()->getBaseUrl();
 
         if (!isset($this->landingPageLookup[$this->storeManager->getStore()->getId()][$filterHash])) {
