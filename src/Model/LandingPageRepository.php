@@ -170,13 +170,13 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         if (!empty($storeData)) {
             unset($storeData['id']);
             /** @phpstan-ignore-next-line */
-            $landingPage->setData($storeData);
+            $landingPage->setData(array_merge($landingPage->getData(), $storeData));
         } else {
             $defaultData = $this->resource->getLandingPageStoreData($pageId, 0);
             if (!empty($defaultData)) {
                 unset($defaultData['id']);
                 /** @phpstan-ignore-next-line */
-                $landingPage->setData($defaultData);
+                $landingPage->setData(array_merge($landingPage->getData(), $defaultData));
             }
 
             /** @phpstan-ignore-next-line */
