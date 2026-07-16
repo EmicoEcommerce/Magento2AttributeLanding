@@ -121,7 +121,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      *
      * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
      */
-    public function getExtensionAttributes()
+    public function getExtensionAttributes(): ?LandingPageExtensionInterface
     {
         /** @phpstan-ignore-next-line */
         return $this->_getExtensionAttributes();
@@ -729,20 +729,4 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         return [];
     }
 
-    /**
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
-     */
-    public function getExtensionAttributes(): ?LandingPageExtensionInterface
-    {
-        return $this->_getExtensionAttributes(); // @phpstan-ignore return.type
-    }
-
-    /**
-     * @param \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface $extensionAttributes
-     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
-     */
-    public function setExtensionAttributes(LandingPageExtensionInterface $extensionAttributes): LandingPageInterface
-    {
-        return $this->_setExtensionAttributes($extensionAttributes);
-    }
 }
