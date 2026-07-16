@@ -3,10 +3,6 @@ include:
     ref: main
     file: 'semantic-release.yml'
 
-  - project: 'ci-cd/composer-configuration'
-    ref: main
-    file: 'package.yml'
-
   - project: 'ci-cd/magento-module'
     ref: master
     file: 'codeception-ci.yml'
@@ -15,16 +11,21 @@ include:
     ref: master
     file: 'codequality-ci.yml'
 
-  - project: 'ci-cd/github-release'
+  - project: 'ci-cd/tweakwise'
     ref: main
     file: 'github-release.yml'
 
+  - project: 'ci-cd/tweakwise'
+    ref: main
+    file: 'demo-pipeline-trigger.yml'
+
 variables:
-  MAGENTO_PHP_VERSION: '8.1'
+  MAGENTO_PHP_VERSION: '8.2'
 
 magento-module/test/functional:
   variables:
-    MIN_PHP_VERSION: '8.1'
+    MIN_PHP_VERSION: '8.2'
+    DISABLE_DEPENDENCY_AUDIT: "true"
 
 release:
   rules:

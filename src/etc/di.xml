@@ -19,15 +19,14 @@
                 type="Emico\AttributeLanding\Model\FilterHider\MagentoFilterHider"/>
     <preference for="Magento\Catalog\Block\Breadcrumbs" type="Emico\AttributeLanding\Block\Catalog\Breadcrumbs"/>
 
-    <virtualType name="Emico\AttributeLanding\Model\ResourceModel\Page\Grid\Collection"
-                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+    <type name="Emico\AttributeLanding\Model\ResourceModel\Page\Grid\Collection">
         <arguments>
             <argument name="mainTable" xsi:type="string">emico_attributelanding_page</argument>
             <argument name="resourceModel" xsi:type="string">
                 Emico\AttributeLanding\Model\ResourceModel\Page\Collection
             </argument>
         </arguments>
-    </virtualType>
+    </type>
 
     <virtualType name="Emico\AttributeLanding\Model\ResourceModel\OverviewPage\Grid\Collection"
                  type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
