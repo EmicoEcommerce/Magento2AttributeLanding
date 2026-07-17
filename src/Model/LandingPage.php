@@ -9,6 +9,7 @@ use Emico\AttributeLanding\Model\ResourceModel\Page as PageResourceModel;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
@@ -18,8 +19,10 @@ use Magento\Framework\Registry;
  * @SuppressWarnings("PHPMD.ExcessivePublicCount")
  * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  */
-class LandingPage extends AbstractExtensibleModel implements LandingPageInterface, UrlRewriteGeneratorInterface
+class LandingPage extends AbstractExtensibleModel implements LandingPageInterface, UrlRewriteGeneratorInterface, IdentityInterface
 {
+    public const CACHE_TAG = 'emico_attributelanding_page';
+
     protected $_eventPrefix = 'emico_attributelanding_page';
 
     /**
@@ -717,6 +720,19 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         );
     }
 
+    /**
+     * @return string[]
+     */
+    public function getIdentities(): array
+    {
+        return [self::CACHE_TAG . '_' . $this->getId()];
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return array|string[]
+     */
     private function normalizeFilterValues(mixed $value): array
     {
         $decoded = json_decode((string) $value, true);
@@ -727,5 +743,22 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             return [$value];
         }
         return [];
+    }
+
+    /**
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface|null
+     */
+    public function getExtensionAttributes(): ?LandingPageExtensionInterface
+    {
+        return $this->_getExtensionAttributes(); // @phpstan-ignore return.type
+    }
+
+    /**
+     * @param \Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface $extensionAttributes
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     */
+    public function setExtensionAttributes(LandingPageExtensionInterface $extensionAttributes): LandingPageInterface
+    {
+        return $this->_setExtensionAttributes($extensionAttributes);
     }
 }
