@@ -6,19 +6,11 @@ namespace Tweakwise\Test\Unit\Model;
 
 use Emico\AttributeLanding\Model\LandingPage;
 use Emico\CodeCept\Test\Unit;
-use Magento\Framework\Serialize\SerializerInterface;
 use Tweakwise\Test\Support\UnitTester;
 
 class LandingPageTest extends Unit
 {
     protected UnitTester $tester;
-    private SerializerInterface $serializer;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->serializer = $this->tester->getObjectManager()->get(SerializerInterface::class);
-    }
 
     public function testGetUnserializedFilterAttributesReturnsEmptyArrayForNull(): void
     {
@@ -38,7 +30,7 @@ class LandingPageTest extends Unit
     public function testGetUnserializedFilterAttributesReturnsEmptyArrayForScalarPayload(): void
     {
         $subject = $this->createSubject();
-        $subject->setFilterAttributes($this->serializer->serialize('not-an-array'));
+        $subject->setFilterAttributes(serialize('not-an-array'));
 
         $this->assertSame([], $subject->getUnserializedFilterAttributes());
     }
@@ -50,7 +42,7 @@ class LandingPageTest extends Unit
             ['attribute' => 'color', 'value' => 'green'],
             ['attribute' => 'size', 'value' => 'm'],
         ];
-        $subject->setFilterAttributes($this->serializer->serialize($expected));
+        $subject->setFilterAttributes(serialize($expected));
 
         $this->assertSame($expected, $subject->getUnserializedFilterAttributes());
     }
