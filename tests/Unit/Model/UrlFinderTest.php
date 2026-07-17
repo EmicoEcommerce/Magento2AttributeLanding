@@ -118,5 +118,4 @@ class UrlFinderTest extends Unit
 
         return $filter;
     }
-
 }
