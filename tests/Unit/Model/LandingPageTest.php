@@ -30,7 +30,7 @@ class LandingPageTest extends Unit
     public function testGetUnserializedFilterAttributesReturnsEmptyArrayForScalarPayload(): void
     {
         $subject = $this->createSubject();
-        $subject->setFilterAttributes(serialize('not-an-array'));
+        $subject->setFilterAttributes('s:12:"not-an-array";');
 
         $this->assertSame([], $subject->getUnserializedFilterAttributes());
     }
@@ -42,7 +42,10 @@ class LandingPageTest extends Unit
             ['attribute' => 'color', 'value' => 'green'],
             ['attribute' => 'size', 'value' => 'm'],
         ];
-        $subject->setFilterAttributes(serialize($expected));
+        $subject->setFilterAttributes(
+            'a:2:{i:0;a:2:{s:9:"attribute";s:5:"color";s:5:"value";s:5:"green";}'
+            . 'i:1;a:2:{s:9:"attribute";s:4:"size";s:5:"value";s:1:"m";}}'
+        );
 
         $this->assertSame($expected, $subject->getUnserializedFilterAttributes());
     }
