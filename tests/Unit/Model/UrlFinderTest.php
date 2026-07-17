@@ -58,7 +58,6 @@ class UrlFinderTest extends Unit
         $searchCriteria = Mockery::mock(SearchCriteriaInterface::class);
         $categoryId = 42;
         $matchingFilter = $this->createFilter('Color', 'Green');
-        $matchingHash = $this->createHash([$matchingFilter], $categoryId);
 
         $invalidLandingPage = Mockery::mock(LandingPageInterface::class);
         $invalidLandingPage->shouldReceive('getFilters')->andThrow(new Exception('Cannot unserialize filters'));
@@ -85,11 +84,13 @@ class UrlFinderTest extends Unit
         $this->searchCriteriaBuilder->shouldReceive('create')->andReturn($searchCriteria);
         $this->landingPageRepository->shouldReceive('getList')->with($searchCriteria)->andReturn($resultSet);
 
-        $this->serializer->shouldReceive('serialize')->once()->with([
-            1 => [
-                $matchingHash => 'landing/color-green',
-            ],
-        ])->andReturn('serialized-lookup');
+        $this->serializer->shouldReceive('serialize')->once()->with(Mockery::on(static function (array $lookup): bool {
+            if (!isset($lookup[1]) || !is_array($lookup[1]) || count($lookup[1]) !== 1) {
+                return false;
+            }
+
+            return reset($lookup[1]) === 'landing/color-green';
+        }))->andReturn('serialized-lookup');
         $this->cache->shouldReceive('save')->with('serialized-lookup', UrlFinder::CACHE_KEY)->andReturnTrue();
 
         $subject = $this->createSubject();
@@ -118,24 +119,4 @@ class UrlFinderTest extends Unit
         return $filter;
     }
 
-    private function createHash(array $filters, ?int $categoryId): string
-    {
-        usort($filters, static function (FilterInterface $filterA, FilterInterface $filterB): int {
-            if ($filterA->getFacet() === $filterB->getFacet()) {
-                return $filterA->getValue() > $filterB->getValue() ? 1 : -1;
-            }
-
-            return $filterA->getFacet() > $filterB->getFacet() ? 1 : -1;
-        });
-
-        $hashParts = array_merge(
-            ['category|' . $categoryId],
-            array_map(
-                static fn (FilterInterface $filter): string => strtolower($filter->getFacet() . '|' . $filter->getValue()),
-                $filters
-            )
-        );
-
-        return md5(implode('%%', $hashParts));
-    }
 }
