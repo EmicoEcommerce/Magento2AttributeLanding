@@ -5,10 +5,13 @@ namespace Emico\AttributeLanding\Model;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Emico\AttributeLanding\Model\ResourceModel\OverviewPage as PageResourceModel;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 
-class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRewriteGeneratorInterface
+class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRewriteGeneratorInterface, IdentityInterface
 {
+    public const CACHE_TAG = 'emico_attributelanding_overviewpage';
+
     protected $_eventPrefix = 'emico_attributelanding_overviewpage';
 
     /**
@@ -322,5 +325,13 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
             $fields,
             array_map(fn($field) => $this->getData($field), $fields)
         );
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getIdentities(): array
+    {
+        return [self::CACHE_TAG . '_' . $this->getId()];
     }
 }
