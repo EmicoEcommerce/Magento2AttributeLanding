@@ -10,6 +10,7 @@ namespace Emico\AttributeLanding\Model;
 use Emico\AttributeLanding\Api\Data\FilterInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
+use Throwable;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\CacheInterface;
 use Magento\Framework\Serialize\SerializerInterface;
@@ -151,7 +152,7 @@ class UrlFinder
         foreach ($this->landingPageRepository->getList($searchCriteria)->getItems() as $landingPage) {
             try {
                 $filters = $landingPage->getFilters();
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 continue;
             }
 
