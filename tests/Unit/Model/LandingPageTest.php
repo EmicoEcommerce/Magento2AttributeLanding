@@ -50,6 +50,34 @@ class LandingPageTest extends Unit
         $this->assertSame($expected, $subject->getUnserializedFilterAttributes());
     }
 
+    public function testGetFiltersKeepsEveryValueOfAMultiselectFilter(): void
+    {
+        $subject = $this->createSubject();
+        $subject->setFilterAttributes(
+            'a:1:{i:0;a:2:{s:9:"attribute";s:10:"promotions";s:5:"value";'
+            . 'a:2:{i:0;s:9:"anwb_1711";i:1;s:9:"anwb_1945";}}}'
+        );
+
+        $filters = $subject->getFilters();
+
+        $this->assertCount(1, $filters);
+        $this->assertSame('promotions', $filters[0]->getFacet());
+        $this->assertSame(['anwb_1711', 'anwb_1945'], $filters[0]->getValues());
+    }
+
+    public function testGetFiltersReadsValuesStoredBySingleSelect(): void
+    {
+        $subject = $this->createSubject();
+        $subject->setFilterAttributes(
+            'a:1:{i:0;a:2:{s:9:"attribute";s:10:"promotions";s:5:"value";s:9:"anwb_1711";}}'
+        );
+
+        $filters = $subject->getFilters();
+
+        $this->assertCount(1, $filters);
+        $this->assertSame(['anwb_1711'], $filters[0]->getValues());
+    }
+
     private function createSubject(): LandingPage
     {
         /** @var LandingPage $subject */
