@@ -54,28 +54,28 @@ class LandingPageTest extends Unit
     {
         $subject = $this->createSubject();
         $subject->setFilterAttributes(
-            'a:1:{i:0;a:2:{s:9:"attribute";s:10:"promotions";s:5:"value";'
-            . 'a:2:{i:0;s:9:"anwb_1711";i:1;s:9:"anwb_1945";}}}'
+            'a:1:{i:0;a:2:{s:9:"attribute";s:5:"color";s:5:"value";'
+            . 'a:2:{i:0;s:5:"green";i:1;s:4:"blue";}}}'
         );
 
         $filters = $subject->getFilters();
 
         $this->assertCount(1, $filters);
-        $this->assertSame('promotions', $filters[0]->getFacet());
-        $this->assertSame(['anwb_1711', 'anwb_1945'], $filters[0]->getValues());
+        $this->assertSame('color', $filters[0]->getFacet());
+        $this->assertSame(['green', 'blue'], $filters[0]->getValues());
     }
 
     public function testGetFiltersReadsValuesStoredBySingleSelect(): void
     {
         $subject = $this->createSubject();
         $subject->setFilterAttributes(
-            'a:1:{i:0;a:2:{s:9:"attribute";s:10:"promotions";s:5:"value";s:9:"anwb_1711";}}'
+            'a:1:{i:0;a:2:{s:9:"attribute";s:5:"color";s:5:"value";s:5:"green";}}'
         );
 
         $filters = $subject->getFilters();
 
         $this->assertCount(1, $filters);
-        $this->assertSame(['anwb_1711'], $filters[0]->getValues());
+        $this->assertSame(['green'], $filters[0]->getValues());
     }
 
     private function createSubject(): LandingPage
