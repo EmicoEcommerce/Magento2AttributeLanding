@@ -60,11 +60,13 @@ class CollectionTest extends Unit
 
         $this->assertArrayHasKey('emico_attributelanding_page_store', $from);
         $this->assertSame(['main_table.page_id'], $select->getPart(Select::GROUP));
-        $this->assertCount(3, $columns);
+        $this->assertCount(4, $columns);
         $this->assertSame('store_urls', $columns[1][2]);
         $this->assertInstanceOf(Zend_Db_Expr::class, $columns[1][1]);
         $this->assertSame('name', $columns[2][2]);
         $this->assertInstanceOf(Zend_Db_Expr::class, $columns[2][1]);
+        $this->assertSame('active', $columns[3][1]);
+        $this->assertSame('active', $columns[3][2]);
     }
 
     public function testAddFieldToFilterAddsHavingForStoreUrls(): void

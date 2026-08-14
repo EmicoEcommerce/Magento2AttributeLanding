@@ -743,17 +743,18 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     /**
      * @param mixed $value
      *
-     * @return array|string[]
+     * @return string[]
      */
     private function normalizeFilterValues(mixed $value): array
     {
-        $decoded = json_decode((string) $value, true);
-        if (is_array($decoded)) {
-            return $decoded;
+        if (is_array($value)) {
+            return array_values($value);
         }
+
         if (is_string($value) && $value !== '') {
             return [$value];
         }
+
         return [];
     }
 }
