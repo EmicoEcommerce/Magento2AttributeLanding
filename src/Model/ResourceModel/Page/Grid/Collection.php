@@ -31,6 +31,7 @@ class Collection extends SearchResult
                         'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id, \':\', emico_attributelanding_page_store.name) '
                         . 'ORDER BY emico_attributelanding_page_store.store_id SEPARATOR \',\')'
                     ),
+                    'active' => 'emico_attributelanding_page_store.active',
                 ]
             )
             ->group('main_table.page_id');
