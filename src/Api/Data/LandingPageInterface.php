@@ -198,9 +198,9 @@ interface LandingPageInterface extends ExtensibleDataInterface, UrlRewriteGenera
     public function getOverviewPageId(): int;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOverviewPageImage(): string;
+    public function getOverviewPageImage(): ?string;
 
     /**
      * @return bool
@@ -215,9 +215,9 @@ interface LandingPageInterface extends ExtensibleDataInterface, UrlRewriteGenera
     public function getHideSelectedFilters(): bool;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCanonicalUrl(): string;
+    public function getCanonicalUrl(): ?string;
 
     /**
      * @return string

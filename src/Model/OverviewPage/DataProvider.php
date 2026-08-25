@@ -71,7 +71,7 @@ class DataProvider extends AbstractDataProvider
             $storeData = $this->overviewPageRepository->getByIdWithStore($model->getPageId(), $storeId)->getData();
 
             /** @var OverviewPage $model */
-            $this->loadedData[$model->getPageId()] = array_map(fn($value) => $value, $storeData);
+            $this->loadedData[$model->getPageId()] = $storeData;
         }
 
         $data = $this->dataPersistor->get('emico_attributelanding_overviewpage');

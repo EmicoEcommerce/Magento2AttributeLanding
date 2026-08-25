@@ -110,11 +110,11 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     /**
      * Set active
      *
-     * @param string $active
+     * @param string|null $active
      *
      * @return static
      */
-    public function setActive($active): static
+    public function setActive(?string $active): static
     {
         return $this->setData(self::ACTIVE, $active);
     }
@@ -572,9 +572,9 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOverviewPageImage(): string
+    public function getOverviewPageImage(): ?string
     {
         return $this->getData(LandingPageInterface::OVERVIEW_PAGE_IMAGE);
     }
@@ -628,9 +628,9 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCanonicalUrl(): string
+    public function getCanonicalUrl(): ?string
     {
         return $this->getData(LandingPageInterface::CANONICAL_URL);
     }
