@@ -1,89 +1,64 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
- * @author Bram Gerritsen <bgerritsen@emico.nl>
+ * @author        Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
  */
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Model;
 
 use Emico\AttributeLanding\Api\Data\FilterInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
-use Throwable;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\CacheInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Store\Model\StoreManager;
+use Throwable;
 
 class UrlFinder
 {
     public const CACHE_KEY = 'attributelanding.lookup.filter_url';
-
-    /**
-     * @var LandingPageRepositoryInterface
-     */
-    private $landingPageRepository;
-
     /**
      * @var array
      */
-    private $landingPageLookup;
-
-    /**
-     * @var CacheInterface
-     */
-    private $cache;
-
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
-     * @var SearchCriteriaBuilder
-     */
-    private $searchCriteriaBuilder;
-
-    /**
-     * @var StoreManager
-     */
-    private $storeManager;
+    private array $landingPageLookup;
 
     /**
      * UrlFinder constructor.
+     *
      * @param LandingPageRepositoryInterface $landingPageRepository
-     * @param CacheInterface $cache
-     * @param SerializerInterface $serializer
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param CacheInterface                 $cache
+     * @param SerializerInterface            $serializer
+     * @param SearchCriteriaBuilder          $searchCriteriaBuilder
+     * @param StoreManager                   $storeManager
      */
     public function __construct(
-        LandingPageRepositoryInterface $landingPageRepository,
-        CacheInterface $cache,
-        SerializerInterface $serializer,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        StoreManager $storeManager
+        private readonly LandingPageRepositoryInterface $landingPageRepository,
+        private readonly CacheInterface $cache,
+        private readonly SerializerInterface $serializer,
+        private readonly SearchCriteriaBuilder $searchCriteriaBuilder,
+        private readonly StoreManager $storeManager,
     ) {
-        $this->landingPageRepository = $landingPageRepository;
-        $this->cache = $cache;
-        $this->serializer = $serializer;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->storeManager = $storeManager;
     }
 
     /**
      * @param Filter[] $filters
      * @param int|null $categoryId
+     *
      * @return string|null
+     * @throws LocalizedException|NoSuchEntityException
      */
-    public function findUrlByFilters(array $filters, ?int $categoryId = null)
+    public function findUrlByFilters(array $filters, ?int $categoryId = null): ?string
     {
         $result = null;
         $filterHash = $this->createHashForFilters($filters, $categoryId);
 
-        if ($this->landingPageLookup === null) {
-            $this->landingPageLookup = $this->loadPageLookupArray();
-        }
+        $this->landingPageLookup ??= $this->loadPageLookupArray();
 
         $storePrefix = $this->storeManager->getStore()->getBaseUrl();
 
@@ -100,7 +75,7 @@ class UrlFinder
             $result = $this->landingPageLookup[$this->storeManager->getStore()->getId()][$filterHash];
         }
 
-        if (strpos($result, 'http') === false) {
+        if (!str_contains($result, 'http')) {
             //add store url if link doesn't start with http
             $result = $storePrefix . $result;
         }
@@ -109,8 +84,9 @@ class UrlFinder
     }
 
     /**
-     * @param array $filters
+     * @param array    $filters
      * @param int|null $categoryId
+     *
      * @return string
      *
      * phpcs:disable Magento2.Security.InsecureFunction.FoundWithAlternative
@@ -125,8 +101,8 @@ class UrlFinder
                 function (FilterInterface $filter) {
                     return strtolower($filter->getFacet() . '|' . $filter->getValue());
                 },
-                $filters
-            )
+                $filters,
+            ),
         );
 
         return md5(implode('%%', $hashParts));
@@ -134,6 +110,8 @@ class UrlFinder
 
     /**
      * Load array to lookup landing page URL by a given filter combination (represented by a hash)
+     *
+     * @throws LocalizedException
      */
     protected function loadPageLookupArray(): array
     {
@@ -159,11 +137,11 @@ class UrlFinder
             $hash = $this->createHashForFilters($filters, $landingPage->getCategoryId());
             /** @phpstan-ignore-next-line */
             $storeId = $landingPage->getData('store_id');
-            /** @phpstan-ignore-next-line */
             $landingPageLookup[$storeId][$hash] = $landingPage->getUrlRewriteRequestPath();
         }
 
         $this->cache->save($this->serializer->serialize($landingPageLookup), self::CACHE_KEY);
+
         return $landingPageLookup;
     }
 
@@ -172,6 +150,7 @@ class UrlFinder
      *
      * @param FilterInterface $filterA
      * @param FilterInterface $filterB
+     *
      * @return int
      */
     protected function sortFilterItems(FilterInterface $filterA, FilterInterface $filterB): int

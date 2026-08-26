@@ -1,9 +1,11 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Observer;
 
@@ -36,7 +38,6 @@ class UrlRewriteRemoveObserver implements ObserverInterface
     public function execute(Observer $observer)
     {
         $page = $observer->getEvent()->getData('object');
-        /** @phpstan-ignore-next-line */
         if (!$page instanceof UrlRewriteGeneratorInterface || !$page->getPageId()) {
             return;
         }

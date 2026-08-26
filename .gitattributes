@@ -1,0 +1,4 @@
+.gitlab-ci.yml export-ignore
+/.idea export-ignore
+/app export-ignore
+grumphp.yml export-ignore

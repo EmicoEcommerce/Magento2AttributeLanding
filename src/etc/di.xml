@@ -1,22 +1,13 @@
 <?xml version="1.0" ?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Emico\AttributeLanding\Api\LandingPageRepositoryInterface"
-                type="Emico\AttributeLanding\Model\LandingPageRepository"/>
-    <preference for="Emico\AttributeLanding\Api\OverviewPageRepositoryInterface"
-                type="Emico\AttributeLanding\Model\OverviewPageRepository"/>
-    <preference for="Emico\AttributeLanding\Api\Data\LandingPageInterface"
-                type="Emico\AttributeLanding\Model\LandingPage"/>
-    <preference for="Emico\AttributeLanding\Api\Data\OverviewPageInterface"
-                type="Emico\AttributeLanding\Model\OverviewPage"/>
-    <preference for="Emico\AttributeLanding\Api\Data\PageSearchResultsInterface"
-                type="Magento\Framework\Api\SearchResults"/>
-    <preference for="Emico\AttributeLanding\Api\Data\OverviewPageSearchResultsInterface"
-                type="Magento\Framework\Api\SearchResults"/>
-    <preference for="Emico\AttributeLanding\Model\FilterApplier\FilterApplierInterface"
-                type="Emico\AttributeLanding\Model\FilterApplier\AggregateFilterApplier"/>
-    <preference for="Emico\AttributeLanding\Model\FilterHider\FilterHiderInterface"
-                type="Emico\AttributeLanding\Model\FilterHider\MagentoFilterHider"/>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Emico\AttributeLanding\Api\LandingPageRepositoryInterface" type="Emico\AttributeLanding\Model\LandingPageRepository"/>
+    <preference for="Emico\AttributeLanding\Api\OverviewPageRepositoryInterface" type="Emico\AttributeLanding\Model\OverviewPageRepository"/>
+    <preference for="Emico\AttributeLanding\Api\Data\LandingPageInterface" type="Emico\AttributeLanding\Model\LandingPage"/>
+    <preference for="Emico\AttributeLanding\Api\Data\OverviewPageInterface" type="Emico\AttributeLanding\Model\OverviewPage"/>
+    <preference for="Emico\AttributeLanding\Api\Data\PageSearchResultsInterface" type="Emico\AttributeLanding\Model\PageSearchResults"/>
+    <preference for="Emico\AttributeLanding\Api\Data\OverviewPageSearchResultsInterface" type="Emico\AttributeLanding\Model\OverviewPageSearchResults"/>
+    <preference for="Emico\AttributeLanding\Model\FilterApplier\FilterApplierInterface" type="Emico\AttributeLanding\Model\FilterApplier\AggregateFilterApplier"/>
+    <preference for="Emico\AttributeLanding\Model\FilterHider\FilterHiderInterface" type="Emico\AttributeLanding\Model\FilterHider\MagentoFilterHider"/>
     <preference for="Magento\Catalog\Block\Breadcrumbs" type="Emico\AttributeLanding\Block\Catalog\Breadcrumbs"/>
 
     <type name="Emico\AttributeLanding\Model\ResourceModel\Page\Grid\Collection">
@@ -28,8 +19,7 @@
         </arguments>
     </type>
 
-    <virtualType name="Emico\AttributeLanding\Model\ResourceModel\OverviewPage\Grid\Collection"
-                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+    <virtualType name="Emico\AttributeLanding\Model\ResourceModel\OverviewPage\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
         <arguments>
             <argument name="mainTable" xsi:type="string">emico_attributelanding_overviewpage</argument>
             <argument name="resourceModel" xsi:type="string">
@@ -39,8 +29,7 @@
     </virtualType>
 
     <virtualType name="Magento\LayeredNavigation\Block\Navigation\Category">
-        <plugin name="emicoAttributeLanding"
-                type="Emico\AttributeLanding\Block\LayeredNavigation\Navigation\FilterHidePlugin"/>
+        <plugin name="emicoAttributeLanding" type="Emico\AttributeLanding\Block\LayeredNavigation\Navigation\FilterHidePlugin"/>
     </virtualType>
 
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
@@ -69,14 +58,12 @@
         <plugin name="emicoAttributeLanding" type="Emico\AttributeLanding\Model\Catalog\Layer\State\Plugin"/>
     </type>
     <type name="Magento\LayeredNavigation\Block\Navigation">
-        <plugin name="emicoAttributeLanding"
-                type="Emico\AttributeLanding\Block\LayeredNavigation\Navigation\FilterHidePlugin"/>
+        <plugin name="emicoAttributeLanding" type="Emico\AttributeLanding\Block\LayeredNavigation\Navigation\FilterHidePlugin"/>
     </type>
 
     <!-- Sitemap compatibility for Magento 2.2 -->
     <type name="Magento\Sitemap\Model\Sitemap">
-        <plugin name="emicoAttributeLanding" sortOrder="1" disabled="false"
-                type="Emico\AttributeLanding\Plugin\Model\SitemapPlugin"/>
+        <plugin disabled="false" name="emicoAttributeLanding" sortOrder="1" type="Emico\AttributeLanding\Plugin\Model\SitemapPlugin"/>
     </type>
 
     <!-- Sitemap compatibility for Magento 2.3 -->

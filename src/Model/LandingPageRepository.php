@@ -1,100 +1,63 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
- * @author Bram Gerritsen <bgerritsen@emico.nl>
+ * @author        Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
  */
 
+declare(strict_types=1);
+
 namespace Emico\AttributeLanding\Model;
 
-use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
+use Emico\AttributeLanding\Api\Data\LandingPageInterfaceFactory;
+use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
+use Emico\AttributeLanding\Api\Data\PageSearchResultsInterface;
+use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
+use Emico\AttributeLanding\Model\ResourceModel\Page as ResourcePage;
+use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
 use Emico\AttributeLanding\Ui\Component\Product\Form\Categories\Options;
 use Exception;
+use Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface;
+use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Emico\AttributeLanding\Api\Data\PageSearchResultsInterfaceFactory;
-use Emico\AttributeLanding\Model\ResourceModel\Page as ResourcePage;
-use Magento\Framework\Exception\CouldNotSaveException;
-use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
-use Emico\AttributeLanding\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
-use Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface;
-use Emico\AttributeLanding\Api\Data\LandingPageInterfaceFactory;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 
 class LandingPageRepository implements LandingPageRepositoryInterface
 {
     /**
-     * @var ResourcePage
-     */
-    protected $resource;
-
-    /**
-     * @var PageSearchResultsInterfaceFactory
-     */
-    protected $searchResultsFactory;
-
-    /**
-     * @var CollectionProcessorInterface
-     */
-    private $collectionProcessor;
-
-    /**
-     * @var PageCollectionFactory
-     */
-    protected $pageCollectionFactory;
-
-    /**
-     * @var LandingPageInterfaceFactory
-     */
-    protected $dataPageFactory;
-
-    /**
-     * @var JoinProcessorInterface
-     */
-    protected $extensionAttributesJoinProcessor;
-
-    /**
-     * @var SearchCriteriaBuilder
-     */
-    private $searchCriteriaBuilder;
-
-    /**
-     * @param ResourcePage $resource
-     * @param LandingPageInterfaceFactory $dataPageFactory
-     * @param PageCollectionFactory $pageCollectionFactory
+     * @param ResourcePage                      $resource
+     * @param LandingPageInterfaceFactory       $dataPageFactory
+     * @param PageCollectionFactory             $pageCollectionFactory
      * @param PageSearchResultsInterfaceFactory $searchResultsFactory
-     * @param CollectionProcessorInterface $collectionProcessor
-     * @param JoinProcessorInterface $extensionAttributesJoinProcessor
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
-     * @param StoreManagerInterface $storeManager
-     * @param Options $options
+     * @param CollectionProcessorInterface      $collectionProcessor
+     * @param JoinProcessorInterface            $extensionAttributesJoinProcessor
+     * @param SearchCriteriaBuilder             $searchCriteriaBuilder
+     * @param StoreManagerInterface             $storeManager
+     * @param Options                           $options
      */
     public function __construct(
-        ResourcePage $resource,
-        LandingPageInterfaceFactory $dataPageFactory,
-        PageCollectionFactory $pageCollectionFactory,
-        PageSearchResultsInterfaceFactory $searchResultsFactory,
-        CollectionProcessorInterface $collectionProcessor,
-        JoinProcessorInterface $extensionAttributesJoinProcessor,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        private StoreManagerInterface $storeManager,
-        private Options $options
+        protected ResourcePage $resource,
+        protected LandingPageInterfaceFactory $dataPageFactory,
+        protected PageCollectionFactory $pageCollectionFactory,
+        protected PageSearchResultsInterfaceFactory $searchResultsFactory,
+        private readonly CollectionProcessorInterface $collectionProcessor,
+        protected JoinProcessorInterface $extensionAttributesJoinProcessor,
+        private readonly SearchCriteriaBuilder $searchCriteriaBuilder,
+        private readonly StoreManagerInterface $storeManager,
+        private readonly Options $options,
     ) {
-        $this->resource = $resource;
-        $this->pageCollectionFactory = $pageCollectionFactory;
-        $this->searchResultsFactory = $searchResultsFactory;
-        $this->dataPageFactory = $dataPageFactory;
-        $this->collectionProcessor = $collectionProcessor;
-        $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
     /**
      * @param LandingPageInterface $page
+     *
      * @return LandingPageInterface
      * @throws CouldNotSaveException
      */
@@ -123,15 +86,14 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
             /** @var LandingPage $page */
             $this->resource->save($parentLandingPage);
-            /** @phpstan-ignore-next-line */
             $page->setPageId($parentLandingPage->getPageId());
             $this->resource->saveLandingPageStoreData($page);
         } catch (Exception $exception) {
             throw new CouldNotSaveException(
                 __(
                     'Could not save the page: %1',
-                    $exception->getMessage()
-                )
+                    $exception->getMessage(),
+                ),
             );
         }
 
@@ -140,6 +102,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
     /**
      * @param int $pageId
+     *
      * @return LandingPageInterface
      * @throws NoSuchEntityException
      */
@@ -158,6 +121,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     /**
      * @param int $pageId
      * @param int $storeId
+     *
      * @return LandingPageInterface
      * @throws NoSuchEntityException
      */
@@ -188,6 +152,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
     /**
      * @param int $pageId
+     *
      * @return LandingPageInterface[]
      */
     public function getAllPagesById(int $pageId): array
@@ -208,28 +173,30 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getList(SearchCriteriaInterface $criteria)
+    public function getList(SearchCriteriaInterface $searchCriteria): PageSearchResultsInterface
     {
         $collection = $this->pageCollectionFactory->create();
 
         $this->extensionAttributesJoinProcessor->process(
             $collection,
-            LandingPageInterface::class
+            LandingPageInterface::class,
         );
 
-        $this->collectionProcessor->process($criteria, $collection);
+        $this->collectionProcessor->process($searchCriteria, $collection);
 
         $searchResults = $this->searchResultsFactory->create();
-        $searchResults->setSearchCriteria($criteria);
+        $searchResults->setSearchCriteria($searchCriteria);
 
         /** @phpstan-ignore-next-line */
         $searchResults->setItems($collection->getItems());
         $searchResults->setTotalCount($collection->getSize());
+
         return $searchResults;
     }
 
     /**
      * @param LandingPageInterface $page
+     *
      * @return bool
      * @throws CouldNotDeleteException
      */
@@ -242,8 +209,8 @@ class LandingPageRepository implements LandingPageRepositoryInterface
             throw new CouldNotDeleteException(
                 __(
                     'Could not delete the Page: %1',
-                    $exception->getMessage()
-                )
+                    $exception->getMessage(),
+                ),
             );
         }
 
@@ -260,7 +227,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
     /**
      * @return LandingPageInterface[]
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function findAllActive(): array
     {
@@ -272,13 +239,15 @@ class LandingPageRepository implements LandingPageRepositoryInterface
             ->create();
 
         $result = $this->getList($searchCriteria);
+
         return $result->getItems();
     }
 
     /**
      * @param OverviewPageInterface $overviewPage
+     *
      * @return LandingPageInterface[]
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function findAllByOverviewPage(OverviewPageInterface $overviewPage): array
     {
@@ -288,11 +257,13 @@ class LandingPageRepository implements LandingPageRepositoryInterface
             ->create();
 
         $result = $this->getList($searchCriteria);
+
         return $result->getItems();
     }
 
     /**
      * @param LandingPageInterface $page
+     *
      * @return void
      */
     public function saveLandingPageStoreData(LandingPageInterface $page): void

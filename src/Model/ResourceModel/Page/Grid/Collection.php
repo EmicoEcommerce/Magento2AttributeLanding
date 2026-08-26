@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @noinspection PhpMethodNamingConventionInspection
+ * @noinspection PhpMissingReturnTypeInspection
+ */
+
 declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Model\ResourceModel\Page\Grid;
@@ -7,44 +12,18 @@ namespace Emico\AttributeLanding\Model\ResourceModel\Page\Grid;
 use Magento\Framework\DB\Select;
 use Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult;
 use Zend_Db_Expr;
+use Zend_Db_Select_Exception;
 
 class Collection extends SearchResult
 {
-    /**
-     * Add the store URL and store name aggregation just before the collection loads,
-     * after SearchResult has finished setting up its base SELECT.
-     *
-     * @return $this
-     */
-    protected function _beforeLoad()
-    {
-        $this->getSelect()
-            ->joinLeft(
-                ['emico_attributelanding_page_store' => $this->getTable('emico_attributelanding_page_store')],
-                'main_table.page_id = emico_attributelanding_page_store.page_id',
-                [
-                    'store_urls' => new Zend_Db_Expr(
-                        'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id, \':\', emico_attributelanding_page_store.url_path) '
-                        . 'ORDER BY emico_attributelanding_page_store.store_id SEPARATOR \',\')'
-                    ),
-                    'name' => new Zend_Db_Expr(
-                        'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id, \':\', emico_attributelanding_page_store.name) '
-                        . 'ORDER BY emico_attributelanding_page_store.store_id SEPARATOR \',\')'
-                    ),
-                    'active' => 'emico_attributelanding_page_store.active',
-                ]
-            )
-            ->group('main_table.page_id');
-        return parent::_beforeLoad();
-    }
-
     /**
      * Override the count SELECT to include the store join and GROUP BY when a HAVING
      * clause is present, so GROUP_CONCAT aggregate filters work correctly during pagination.
      *
      * @return Select
+     * @throws Zend_Db_Select_Exception
      */
-    public function getSelectCountSql()
+    public function getSelectCountSql(): Select
     {
         $countSelect = parent::getSelectCountSql();
 
@@ -58,7 +37,7 @@ class Collection extends SearchResult
             $countSelect->joinLeft(
                 ['emico_attributelanding_page_store' => $this->getTable('emico_attributelanding_page_store')],
                 'main_table.page_id = emico_attributelanding_page_store.page_id',
-                []
+                [],
             );
             $countSelect->group('main_table.page_id');
         }
@@ -71,8 +50,9 @@ class Collection extends SearchResult
      * work against the GROUP_CONCAT aggregates instead of raw columns.
      *
      * @param string|array $field
-     * @param mixed $condition
-     * @return $this
+     * @param mixed        $condition
+     *
+     * @return static
      */
     public function addFieldToFilter($field, $condition = null)
     {
@@ -88,8 +68,9 @@ class Collection extends SearchResult
             $value = trim((string) $value, '%');
             $this->getSelect()->having(
                 'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id, \':\', emico_attributelanding_page_store.url_path) ORDER BY emico_attributelanding_page_store.store_id SEPARATOR \',\') LIKE ?',
-                '%' . $value . '%'
+                '%' . $value . '%',
             );
+
             return $this;
         }
 
@@ -105,11 +86,41 @@ class Collection extends SearchResult
             $value = trim((string) $value, '%');
             $this->getSelect()->having(
                 'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id, \':\', emico_attributelanding_page_store.name) ORDER BY emico_attributelanding_page_store.store_id SEPARATOR \',\') LIKE ?',
-                '%' . $value . '%'
+                '%' . $value . '%',
             );
+
             return $this;
         }
 
         return parent::addFieldToFilter($field, $condition);
+    }
+
+    /**
+     * Add the store URL and store name aggregation just before the collection loads,
+     * after SearchResult has finished setting up its base SELECT.
+     *
+     * @return static
+     */
+    protected function _beforeLoad()
+    {
+        $this->getSelect()
+            ->joinLeft(
+                ['emico_attributelanding_page_store' => $this->getTable('emico_attributelanding_page_store')],
+                'main_table.page_id = emico_attributelanding_page_store.page_id',
+                [
+                    'store_urls' => new Zend_Db_Expr(
+                        'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id, \':\', emico_attributelanding_page_store.url_path) '
+                        . 'ORDER BY emico_attributelanding_page_store.store_id SEPARATOR \',\')',
+                    ),
+                    'name' => new Zend_Db_Expr(
+                        'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id, \':\', emico_attributelanding_page_store.name) '
+                        . 'ORDER BY emico_attributelanding_page_store.store_id SEPARATOR \',\')',
+                    ),
+                    'active' => 'emico_attributelanding_page_store.active',
+                ],
+            )
+            ->group('main_table.page_id');
+
+        return parent::_beforeLoad();
     }
 }

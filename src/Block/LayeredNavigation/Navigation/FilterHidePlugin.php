@@ -1,9 +1,11 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
- * @author Bram Gerritsen <bgerritsen@emico.nl>
+ * @author        Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Block\LayeredNavigation\Navigation;
 
@@ -14,14 +16,12 @@ use Magento\LayeredNavigation\Block\Navigation;
 /**
  * @copyright (c) Emico B.V. 2019
  */
-
 class FilterHidePlugin
 {
     /**
      * @var FilterHiderInterface
      */
     private $filterHider;
-
     /**
      * @var LandingPageContext
      */
@@ -29,6 +29,7 @@ class FilterHidePlugin
 
     /**
      * Plugin constructor.
+     *
      * @param LandingPageContext $landingPageContext
      * @param FilterHiderInterface $filterHider
      */
@@ -41,6 +42,7 @@ class FilterHidePlugin
     /**
      * @param Navigation $subject
      * @param array $filters
+     *
      * @return array
      * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
      */
