@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author : Edwin Jacobs, email: ejacobs@emico.nl.
+ * @author    : Edwin Jacobs, email: ejacobs@emico.nl.
  * @copyright : Copyright Emico B.V. 2019.
  */
 
@@ -39,8 +39,9 @@ class Collection extends AbstractCollection
         $this->getSelect()->join(
             ['emico_attributelanding_page_store' => $this->getTable('emico_attributelanding_page_store')],
             'main_table.page_id = emico_attributelanding_page_store.page_id',
-            ['*']
+            ['*'],
         );
+
         return $this;
     }
 }

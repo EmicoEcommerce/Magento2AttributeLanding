@@ -9,6 +9,11 @@
 /composer.lock
 /vendor/
 
+## Codeception
+###############################
+/tests/_output/
+/tests/Support/_generated
+
 ## Testing files
 ###############################
 /.grumphpinclude

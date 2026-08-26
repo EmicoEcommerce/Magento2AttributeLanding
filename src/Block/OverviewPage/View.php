@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Bram Gerritsen <bgerritsen@emico.nl>
+ * @author        Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
 
@@ -16,63 +16,42 @@ use Emico\AttributeLanding\Model\LandingPageContext;
 use Emico\AttributeLanding\Model\Page\ImageUploader;
 use Exception;
 use Magento\Cms\Model\Template\FilterProvider;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Filter\Template as FilterTemplate;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Theme\Block\Html\Breadcrumbs;
 use Psr\Log\LoggerInterface;
 
-class View extends Template
+class View extends Template implements IdentityInterface
 {
     /**
-     * @var LandingPageContext
+     * @var FilterTemplate
      */
-    private $landingPageContext;
-
-    /**
-     * @var LandingPageRepositoryInterface
-     */
-    private $landingPageRepository;
-
-    /**
-     * @var ImageUploader
-     */
-    private $imageUploader;
-
-    /**
-     * @var \Magento\Framework\Filter\Template
-     */
-    private $pageFilter;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private FilterTemplate $pageFilter;
 
     /**
      * View constructor.
-     * @param Context $context
-     * @param LandingPageContext $landingPageContext
+     *
+     * @param Context                        $context
+     * @param LandingPageContext             $landingPageContext
      * @param LandingPageRepositoryInterface $landingPageRepository
-     * @param ImageUploader $imageUploader
-     * @param FilterProvider $filterProvider
-     * @param LoggerInterface $logger
+     * @param ImageUploader                  $imageUploader
+     * @param FilterProvider                 $filterProvider
+     * @param LoggerInterface                $logger
      */
     public function __construct(
         Context $context,
-        LandingPageContext $landingPageContext,
-        LandingPageRepositoryInterface $landingPageRepository,
-        ImageUploader $imageUploader,
+        private readonly LandingPageContext $landingPageContext,
+        private readonly LandingPageRepositoryInterface $landingPageRepository,
+        private readonly ImageUploader $imageUploader,
         FilterProvider $filterProvider,
-        LoggerInterface $logger
+        private readonly LoggerInterface $logger,
     ) {
         parent::__construct($context);
-        $this->landingPageContext = $landingPageContext;
-        $this->landingPageRepository = $landingPageRepository;
-        $this->imageUploader = $imageUploader;
         $this->pageFilter = $filterProvider->getPageFilter();
-        $this->logger = $logger;
     }
 
     /**
@@ -99,12 +78,12 @@ class View extends Template
 
     /**
      * @param LandingPageInterface $landingPage
+     *
      * @return string|null
      */
     public function getLandingPageImage(LandingPageInterface $landingPage): ?string
     {
         $image = $landingPage->getOverviewPageImage();
-        /** @phpstan-ignore-next-line */
         if ($image === null) {
             return null;
         }
@@ -129,7 +108,17 @@ class View extends Template
     }
 
     /**
+     * @return array|string[]
+     */
+    public function getIdentities(): array
+    {
+        /** @phpstan-ignore-next-line */
+        return $this->getOverviewPage()->getIdentities();
+    }
+
+    /**
      * @param string $content
+     *
      * @return string
      */
     protected function getFilteredContent(string $content): string
@@ -138,6 +127,7 @@ class View extends Template
             return $this->pageFilter->filter($content);
         } catch (Exception $e) {
             $this->logger->critical($e->getMessage());
+
             return '';
         }
     }
@@ -167,7 +157,7 @@ class View extends Template
                 'label' => __('Home'),
                 'title' => __('Go to Home Page'),
                 'link' => $this->_storeManager->getStore()->getBaseUrl(),
-            ]
+            ],
         );
 
         $overviewPage = $this->getOverviewPage();
@@ -176,8 +166,8 @@ class View extends Template
             [
                 'label' => __($overviewPage->getName()),
                 'title' => __($overviewPage->getName()),
-                'link' => $overviewPage->getUrlPath()
-            ]
+                'link' => $overviewPage->getUrlPath(),
+            ],
         );
 
         return parent::_prepareLayout();

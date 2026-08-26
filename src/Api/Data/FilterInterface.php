@@ -20,4 +20,9 @@ interface FilterInterface
      * @return string
      */
     public function getValue(): string;
+
+    /**
+     * @return string[]
+     */
+    public function getValues(): array;
 }

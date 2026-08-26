@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tweakwise\Test\Support;
+namespace Emico\AttributeLandingTest\Support;
 
 use Codeception\Actor;
 

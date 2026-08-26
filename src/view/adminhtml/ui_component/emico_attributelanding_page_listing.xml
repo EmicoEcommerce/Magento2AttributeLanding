@@ -1,10 +1,8 @@
 <?xml version="1.0" ?>
-<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider"
-                  xsi:type="string">emico_attributelanding_page_listing.emico_attributelanding_page_listing_data_source
+            <item name="provider" xsi:type="string">emico_attributelanding_page_listing.emico_attributelanding_page_listing_data_source
             </item>
         </item>
     </argument>
@@ -29,8 +27,7 @@
             <updateUrl path="mui/index/render"/>
         </settings>
         <aclResource>Emico_AttributeLanding::page_management</aclResource>
-        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider"
-                      name="emico_attributelanding_page_listing_data_source">
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="emico_attributelanding_page_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>page_id</primaryFieldName>
@@ -50,8 +47,7 @@
         <settings>
             <childDefaults>
                 <param name="fieldAction" xsi:type="array">
-                    <item name="provider"
-                          xsi:type="string">emico_attributelanding_page_listing.emico_attributelanding_page_listing.emico_attributelanding_page_columns.actions
+                    <item name="provider" xsi:type="string">emico_attributelanding_page_listing.emico_attributelanding_page_listing.emico_attributelanding_page_columns.actions
                     </item>
                     <item name="target" xsi:type="string">applyAction</item>
                     <item name="params" xsi:type="array">
@@ -62,8 +58,7 @@
             </childDefaults>
 
             <editorConfig>
-                <param name="selectProvider"
-                       xsi:type="string">emico_attributelanding_page_listing.emico_attributelanding_page_listing.emico_attributelanding_page_columns.ids
+                <param name="selectProvider" xsi:type="string">emico_attributelanding_page_listing.emico_attributelanding_page_listing.emico_attributelanding_page_columns.ids
                 </param>
                 <param name="enabled" xsi:type="boolean">true</param>
                 <param name="indexField" xsi:type="string">page_id</param>
@@ -84,10 +79,20 @@
                 <label translate="true">ID</label>
             </settings>
         </column>
-        <column name="name" sortOrder="35">
+        <column class="Emico\AttributeLanding\Ui\Component\Listing\Column\StoreUrls" name="name" sortOrder="35">
             <settings>
                 <filter>text</filter>
                 <label translate="true">Name</label>
+                <sortable>false</sortable>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+            </settings>
+        </column>
+        <column component="Magento_Ui/js/grid/columns/select" name="active" sortOrder="40">
+            <settings>
+                <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Active</label>
             </settings>
         </column>
         <column name="created_at" sortOrder="47">
@@ -100,6 +105,14 @@
             <settings>
                 <filter>text</filter>
                 <label translate="true">Updated at</label>
+            </settings>
+        </column>
+        <column class="Emico\AttributeLanding\Ui\Component\Listing\Column\StoreUrls" name="store_urls" sortOrder="49">
+            <settings>
+                <label translate="true">Store URLs</label>
+                <sortable>false</sortable>
+                <filter>text</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
             </settings>
         </column>
         <actionsColumn class="Emico\AttributeLanding\Ui\Component\Listing\Column\PageActions" name="actions" sortOrder="50">

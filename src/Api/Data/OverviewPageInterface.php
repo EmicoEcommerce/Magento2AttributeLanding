@@ -55,11 +55,29 @@ interface OverviewPageInterface extends UrlRewriteGeneratorInterface
     public function isActive(): bool;
 
     /**
+     * Set active
+     *
+     * @param bool $active
+     *
+     * @return static
+     */
+    public function setActive(bool $active): static;
+
+    /**
      * Get name
      *
      * @return string|null
      */
     public function getName(): ?string;
+
+    /**
+     * Set name
+     *
+     * @param string|null $name
+     *
+     * @return static
+     */
+    public function setName(?string $name): static;
 
     /**
      * Get url_path
@@ -69,11 +87,29 @@ interface OverviewPageInterface extends UrlRewriteGeneratorInterface
     public function getUrlPath(): ?string;
 
     /**
+     * Set url_path
+     *
+     * @param string|null $urlPath
+     *
+     * @return static
+     */
+    public function setUrlPath(?string $urlPath): static;
+
+    /**
      * Get heading
      *
      * @return string|null
      */
     public function getHeading(): ?string;
+
+    /**
+     * Set heading
+     *
+     * @param string|null $heading
+     *
+     * @return static
+     */
+    public function setHeading(?string $heading): static;
 
     /**
      * Get meta_title
@@ -83,11 +119,29 @@ interface OverviewPageInterface extends UrlRewriteGeneratorInterface
     public function getMetaTitle(): ?string;
 
     /**
+     * Set meta_title
+     *
+     * @param string|null $metaTitle
+     *
+     * @return static
+     */
+    public function setMetaTitle(?string $metaTitle): static;
+
+    /**
      * Get meta_keywords
      *
      * @return string|null
      */
     public function getMetaKeywords(): ?string;
+
+    /**
+     * Set meta_keywords
+     *
+     * @param string|null $metaKeywords
+     *
+     * @return static
+     */
+    public function setMetaKeywords(?string $metaKeywords): static;
 
     /**
      * Get meta_description
@@ -97,6 +151,15 @@ interface OverviewPageInterface extends UrlRewriteGeneratorInterface
     public function getMetaDescription(): ?string;
 
     /**
+     * Set meta_description
+     *
+     * @param string|null $metaDescription
+     *
+     * @return static
+     */
+    public function setMetaDescription(?string $metaDescription): static;
+
+    /**
      * Get content_first
      *
      * @return string|null
@@ -104,11 +167,29 @@ interface OverviewPageInterface extends UrlRewriteGeneratorInterface
     public function getContentFirst(): ?string;
 
     /**
+     * Set content_first
+     *
+     * @param string|null $contentFirst
+     *
+     * @return static
+     */
+    public function setContentFirst(?string $contentFirst): static;
+
+    /**
      * Get content_last
      *
      * @return string|null
      */
     public function getContentLast(): ?string;
+
+    /**
+     * Set content_last
+     *
+     * @param string|null $contentLast
+     *
+     * @return static
+     */
+    public function setContentLast(?string $contentLast): static;
 
     /**
      * @return string

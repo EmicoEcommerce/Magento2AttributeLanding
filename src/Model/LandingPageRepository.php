@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Bram Gerritsen <bgerritsen@emico.nl>
+ * @author        Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2017
  */
 
@@ -32,73 +32,32 @@ use Magento\Store\Model\StoreManagerInterface;
 class LandingPageRepository implements LandingPageRepositoryInterface
 {
     /**
-     * @var ResourcePage
-     */
-    protected $resource;
-
-    /**
-     * @var PageSearchResultsInterfaceFactory
-     */
-    protected $searchResultsFactory;
-
-    /**
-     * @var CollectionProcessorInterface
-     */
-    private $collectionProcessor;
-
-    /**
-     * @var PageCollectionFactory
-     */
-    protected $pageCollectionFactory;
-
-    /**
-     * @var LandingPageInterfaceFactory
-     */
-    protected $dataPageFactory;
-
-    /**
-     * @var JoinProcessorInterface
-     */
-    protected $extensionAttributesJoinProcessor;
-
-    /**
-     * @var SearchCriteriaBuilder
-     */
-    private $searchCriteriaBuilder;
-
-    /**
-     * @param ResourcePage $resource
-     * @param LandingPageInterfaceFactory $dataPageFactory
-     * @param PageCollectionFactory $pageCollectionFactory
+     * @param ResourcePage                      $resource
+     * @param LandingPageInterfaceFactory       $dataPageFactory
+     * @param PageCollectionFactory             $pageCollectionFactory
      * @param PageSearchResultsInterfaceFactory $searchResultsFactory
-     * @param CollectionProcessorInterface $collectionProcessor
-     * @param JoinProcessorInterface $extensionAttributesJoinProcessor
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
-     * @param StoreManagerInterface $storeManager
-     * @param Options $options
+     * @param CollectionProcessorInterface      $collectionProcessor
+     * @param JoinProcessorInterface            $extensionAttributesJoinProcessor
+     * @param SearchCriteriaBuilder             $searchCriteriaBuilder
+     * @param StoreManagerInterface             $storeManager
+     * @param Options                           $options
      */
     public function __construct(
-        ResourcePage $resource,
-        LandingPageInterfaceFactory $dataPageFactory,
-        PageCollectionFactory $pageCollectionFactory,
-        PageSearchResultsInterfaceFactory $searchResultsFactory,
-        CollectionProcessorInterface $collectionProcessor,
-        JoinProcessorInterface $extensionAttributesJoinProcessor,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
-        private StoreManagerInterface $storeManager,
-        private Options $options
+        protected ResourcePage $resource,
+        protected LandingPageInterfaceFactory $dataPageFactory,
+        protected PageCollectionFactory $pageCollectionFactory,
+        protected PageSearchResultsInterfaceFactory $searchResultsFactory,
+        private readonly CollectionProcessorInterface $collectionProcessor,
+        protected JoinProcessorInterface $extensionAttributesJoinProcessor,
+        private readonly SearchCriteriaBuilder $searchCriteriaBuilder,
+        private readonly StoreManagerInterface $storeManager,
+        private readonly Options $options,
     ) {
-        $this->resource = $resource;
-        $this->pageCollectionFactory = $pageCollectionFactory;
-        $this->searchResultsFactory = $searchResultsFactory;
-        $this->dataPageFactory = $dataPageFactory;
-        $this->collectionProcessor = $collectionProcessor;
-        $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
     /**
      * @param LandingPageInterface $page
+     *
      * @return LandingPageInterface
      * @throws CouldNotSaveException
      */
@@ -133,8 +92,8 @@ class LandingPageRepository implements LandingPageRepositoryInterface
             throw new CouldNotSaveException(
                 __(
                     'Could not save the page: %1',
-                    $exception->getMessage()
-                )
+                    $exception->getMessage(),
+                ),
             );
         }
 
@@ -143,6 +102,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
     /**
      * @param int $pageId
+     *
      * @return LandingPageInterface
      * @throws NoSuchEntityException
      */
@@ -161,6 +121,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
     /**
      * @param int $pageId
      * @param int $storeId
+     *
      * @return LandingPageInterface
      * @throws NoSuchEntityException
      */
@@ -173,13 +134,13 @@ class LandingPageRepository implements LandingPageRepositoryInterface
         if (!empty($storeData)) {
             unset($storeData['id']);
             /** @phpstan-ignore-next-line */
-            $landingPage->setData($storeData);
+            $landingPage->setData(array_merge($landingPage->getData(), $storeData));
         } else {
             $defaultData = $this->resource->getLandingPageStoreData($pageId, 0);
             if (!empty($defaultData)) {
                 unset($defaultData['id']);
                 /** @phpstan-ignore-next-line */
-                $landingPage->setData($defaultData);
+                $landingPage->setData(array_merge($landingPage->getData(), $defaultData));
             }
 
             /** @phpstan-ignore-next-line */
@@ -191,6 +152,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
     /**
      * @param int $pageId
+     *
      * @return LandingPageInterface[]
      */
     public function getAllPagesById(int $pageId): array
@@ -217,7 +179,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
         $this->extensionAttributesJoinProcessor->process(
             $collection,
-            LandingPageInterface::class
+            LandingPageInterface::class,
         );
 
         $this->collectionProcessor->process($searchCriteria, $collection);
@@ -234,6 +196,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
 
     /**
      * @param LandingPageInterface $page
+     *
      * @return bool
      * @throws CouldNotDeleteException
      */
@@ -246,8 +209,8 @@ class LandingPageRepository implements LandingPageRepositoryInterface
             throw new CouldNotDeleteException(
                 __(
                     'Could not delete the Page: %1',
-                    $exception->getMessage()
-                )
+                    $exception->getMessage(),
+                ),
             );
         }
 
@@ -276,6 +239,7 @@ class LandingPageRepository implements LandingPageRepositoryInterface
             ->create();
 
         $result = $this->getList($searchCriteria);
+
         return $result->getItems();
     }
 
@@ -293,11 +257,13 @@ class LandingPageRepository implements LandingPageRepositoryInterface
             ->create();
 
         $result = $this->getList($searchCriteria);
+
         return $result->getItems();
     }
 
     /**
      * @param LandingPageInterface $page
+     *
      * @return void
      */
     public function saveLandingPageStoreData(LandingPageInterface $page): void

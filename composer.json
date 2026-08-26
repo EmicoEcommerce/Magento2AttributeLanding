@@ -39,6 +39,11 @@
             "src/registration.php"
         ]
     },
+  "autoload-dev": {
+    "psr-4": {
+      "Emico\\AttributeLandingTest\\": "tests"
+    }
+  },
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,

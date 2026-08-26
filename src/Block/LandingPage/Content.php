@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Bram Gerritsen <bgerritsen@emico.nl>
+ * @author        Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
 
@@ -13,43 +13,35 @@ use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Exception;
 use Magento\Cms\Model\Template\FilterProvider;
+use Magento\Framework\DataObject\IdentityInterface;
+use Magento\Framework\Filter\Template as FilterTemplate;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Psr\Log\LoggerInterface;
 
-class Content extends Template
+class Content extends Template implements IdentityInterface
 {
     /**
-     * @var LandingPageContext
+     * @var FilterTemplate
      */
-    private $landingPageContext;
-
-    /**
-     * @var \Magento\Framework\Filter\Template
-     */
-    private $pageFilter;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private FilterTemplate $pageFilter;
 
     /**
      * PageContent constructor.
-     * @param Context $context
+     *
+     * @param Context            $context
      * @param LandingPageContext $landingPageContext
-     * @param FilterProvider $filterProvider
+     * @param FilterProvider     $filterProvider
+     * @param LoggerInterface    $logger
      */
     public function __construct(
         Context $context,
-        LandingPageContext $landingPageContext,
+        private readonly LandingPageContext $landingPageContext,
         FilterProvider $filterProvider,
-        LoggerInterface $logger
+        private readonly LoggerInterface $logger,
     ) {
         parent::__construct($context);
-        $this->landingPageContext = $landingPageContext;
         $this->pageFilter = $filterProvider->getPageFilter();
-        $this->logger = $logger;
     }
 
     /**
@@ -77,7 +69,17 @@ class Content extends Template
     }
 
     /**
+     * @return array|string[]
+     */
+    public function getIdentities(): array
+    {
+        /** @phpstan-ignore-next-line */
+        return $this->getLandingPage()->getIdentities();
+    }
+
+    /**
      * @param string $content
+     *
      * @return string
      */
     protected function getFilteredContent(string $content): string
@@ -86,6 +88,7 @@ class Content extends Template
             return $this->pageFilter->filter($content);
         } catch (Exception $e) {
             $this->logger->critical($e->getMessage());
+
             return '';
         }
     }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Bram Gerritsen <bgerritsen@emico.nl>
+ * @author        Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
 
@@ -14,24 +14,15 @@ use Emico\AttributeLanding\Api\Data\FilterInterface;
 class Filter implements FilterInterface
 {
     /**
-     * @var string
-     */
-    private $facet;
-
-    /**
-     * @var string
-     */
-    private $value;
-
-    /**
      * Filter constructor.
-     * @param string $facet
-     * @param string $value
+     *
+     * @param string   $facet
+     * @param string[] $values
      */
-    public function __construct(string $facet, string $value)
-    {
-        $this->facet = $facet;
-        $this->value = $value;
+    public function __construct(
+        private readonly string $facet,
+        private readonly array $values,
+    ) {
     }
 
     /**
@@ -47,6 +38,14 @@ class Filter implements FilterInterface
      */
     public function getValue(): string
     {
-        return $this->value;
+        return $this->values[0] ?? '';
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getValues(): array
+    {
+        return $this->values;
     }
 }

@@ -13,9 +13,11 @@ namespace Emico\AttributeLanding\Model;
 use Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Model\ResourceModel\Page as PageResourceModel;
+use Exception;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\Model\Context;
@@ -26,8 +28,9 @@ use Magento\Framework\Registry;
  * @SuppressWarnings("PHPMD.ExcessivePublicCount")
  * @SuppressWarnings("PHPMD.ExcessiveClassComplexity")
  */
-class LandingPage extends AbstractExtensibleModel implements LandingPageInterface
+class LandingPage extends AbstractExtensibleModel implements LandingPageInterface, IdentityInterface
 {
+    public const CACHE_TAG = 'emico_attributelanding_page';
     protected $_eventPrefix = 'emico_attributelanding_page';
 
     /**
@@ -126,10 +129,8 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function getExtensionAttributes(): ?LandingPageExtensionInterface
     {
-        /** @var LandingPageExtensionInterface|null $extensionAttributes */
-        $extensionAttributes = $this->_getExtensionAttributes();
-
-        return $extensionAttributes;
+        /** @phpstan-ignore-next-line */
+        return $this->_getExtensionAttributes();
     }
 
     /**
@@ -158,6 +159,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      * Set name
      *
      * @param string|null $name
+     *
      *
      * @return static
      */
@@ -394,11 +396,16 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function getUnserializedFilterAttributes(): array
     {
-        if ($this->getFilterAttributes() === null) {
+        $raw = $this->getFilterAttributes();
+        if ($raw === null || $raw === '') {
             return [];
         }
 
-        $unserialize = unserialize($this->getFilterAttributes());
+        try {
+            $unserialize = unserialize($raw, ['allowed_classes' => false]);
+        } catch (Exception $e) {
+            return [];
+        }
 
         if (!is_array($unserialize)) {
             return [];
@@ -409,6 +416,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 
     /**
      * @return array
+     * @deprecated Use getUnserializedFilterAttributes() instead
      */
     public function getFrontendFilterAttributes(): array
     {
@@ -420,10 +428,10 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     public function getFilters(): array
     {
-        return array_map(
-            fn(array $unserializedFilter) => new Filter($unserializedFilter['attribute'], $unserializedFilter['value']),
-            $this->getFrontendFilterAttributes(),
-        );
+        return array_map(fn(array $unserializedFilter) => new Filter(
+            $unserializedFilter['attribute'],
+            $this->normalizeFilterValues($unserializedFilter['value']),
+        ), $this->getUnserializedFilterAttributes());
     }
 
     /**
@@ -716,5 +724,31 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             $fields,
             array_map(fn($field) => $this->getData($field), $fields),
         );
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getIdentities(): array
+    {
+        return [self::CACHE_TAG . '_' . $this->getId()];
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return string[]
+     */
+    private function normalizeFilterValues(mixed $value): array
+    {
+        if (is_array($value)) {
+            return array_values($value);
+        }
+
+        if (is_string($value) && $value !== '') {
+            return [$value];
+        }
+
+        return [];
     }
 }
