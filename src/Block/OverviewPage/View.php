@@ -10,6 +10,7 @@ namespace Emico\AttributeLanding\Block\OverviewPage;
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Api\LandingPageRepositoryInterface;
+use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
 use Emico\AttributeLanding\Model\Page\ImageUploader;
 use Exception;
@@ -109,6 +110,19 @@ class View extends Template implements IdentityInterface
         }
 
         return $this->imageUploader->getMediaUrl($image);
+    }
+
+    /**
+     * @param LandingPageInterface $landingPage
+     * @return string
+     */
+    public function getLandingPageUrl(LandingPageInterface $landingPage): string
+    {
+        if (!$landingPage instanceof UrlRewriteGeneratorInterface) {
+            return $landingPage->getUrlPath();
+        }
+
+        return $landingPage->getUrlRewriteRequestPath();
     }
 
     /**
