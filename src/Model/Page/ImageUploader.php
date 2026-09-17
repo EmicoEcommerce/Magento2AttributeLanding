@@ -64,16 +64,17 @@ class ImageUploader
     }
 
     /**
-     * Upload attribute landing page overview image
+     * Upload an attribute landing page image (overview tile image by default, or any other
+     * fileUploader field backed by the same media folder, e.g. LandingPageInterface::HEADER_IMAGE)
      */
-    public function upload(): array
+    public function upload(string $fileId = LandingPageInterface::OVERVIEW_PAGE_IMAGE): array
     {
         try {
             $mediaDir = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
             $target = $mediaDir->getAbsolutePath(self::MEDIA_PATH_OVERVIEW);
 
             /** @var Uploader $uploader */
-            $uploader = $this->uploaderFactory->create(['fileId' => LandingPageInterface::OVERVIEW_PAGE_IMAGE]);
+            $uploader = $this->uploaderFactory->create(['fileId' => $fileId]);
 
             $uploader->setAllowedExtensions(['jpg', 'png', 'gif']);
             $uploader->setAllowRenameFiles(true);
