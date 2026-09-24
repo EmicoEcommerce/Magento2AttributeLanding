@@ -108,6 +108,15 @@ class DataProvider extends AbstractDataProvider
                 ];
             }
 
+            if (!empty($modelData[LandingPageInterface::HEADER_IMAGE])) {
+                $modelData[LandingPageInterface::HEADER_IMAGE] = [
+                    [
+                        'name' => $modelData[LandingPageInterface::HEADER_IMAGE],
+                        'url' => $this->imageUploader->getMediaUrl($modelData[LandingPageInterface::HEADER_IMAGE])
+                    ]
+                ];
+            }
+
             $model->setFilterAttributes($modelData[LandingPageInterface::FILTER_ATTRIBUTES]);
             $modelData[LandingPageInterface::FILTER_ATTRIBUTES] = $model->getUnserializedFilterAttributes();
             $modelData[LandingPageInterface::STORE_ID] = $storeId;
