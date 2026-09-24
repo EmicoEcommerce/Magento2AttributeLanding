@@ -12,7 +12,6 @@ use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\Model\Context;
-use Exception;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
 
@@ -397,11 +396,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             return [];
         }
 
-        try {
-            $result = unserialize($raw, ['allowed_classes' => false]);
-        } catch (Exception $e) {
-            return [];
-        }
+        $result = unserialize($raw, ['allowed_classes' => false]);
 
         if (!is_array($result)) {
             return [];
