@@ -130,15 +130,8 @@ class Save extends Action
      */
     protected function hydrateLandingPage(LandingPageInterface $landingPage, array $data)
     {
-        if (!isset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE])) {
-            $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] = null;
-        } elseif (isset($data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['file'])) {
-            $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] =
-                $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['file'];
-        } else {
-            $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE] =
-                $data[LandingPageInterface::OVERVIEW_PAGE_IMAGE][0]['name'];
-        }
+        $data = $this->normalizeImageField($data, LandingPageInterface::OVERVIEW_PAGE_IMAGE);
+        $data = $this->normalizeImageField($data, LandingPageInterface::HEADER_IMAGE);
 
         $filterAttributes = $data[LandingPageInterface::FILTER_ATTRIBUTES] ?? [];
         $filterAttributes = $this->sanitizeFilterAttributes($filterAttributes);
@@ -153,6 +146,24 @@ class Save extends Action
 
         unset($data[LandingPageInterface::FILTER_ATTRIBUTES]);
         $this->dataObjectHelper->populateWithArray($landingPage, $data, LandingPageInterface::class);
+    }
+
+    /**
+     * @param array $data
+     * @param string $field
+     * @return array
+     */
+    private function normalizeImageField(array $data, string $field): array
+    {
+        if (!isset($data[$field])) {
+            $data[$field] = null;
+        } elseif (isset($data[$field][0]['file'])) {
+            $data[$field] = $data[$field][0]['file'];
+        } else {
+            $data[$field] = $data[$field][0]['name'];
+        }
+
+        return $data;
     }
 
     /**

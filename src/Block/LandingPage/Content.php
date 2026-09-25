@@ -9,6 +9,7 @@ namespace Emico\AttributeLanding\Block\LandingPage;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Model\LandingPageContext;
+use Emico\AttributeLanding\Model\Page\ImageUploader;
 use Exception;
 use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\DataObject\IdentityInterface;
@@ -43,12 +44,26 @@ class Content extends Template implements IdentityInterface
         Context $context,
         LandingPageContext $landingPageContext,
         FilterProvider $filterProvider,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        private readonly ImageUploader $imageUploader
     ) {
         parent::__construct($context);
         $this->landingPageContext = $landingPageContext;
         $this->pageFilter = $filterProvider->getPageFilter();
         $this->logger = $logger;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHeaderImageUrl(): ?string
+    {
+        $image = $this->getLandingPage()->getHeaderImage();
+        if ($image === null || $image === '') {
+            return null;
+        }
+
+        return $this->imageUploader->getMediaUrl($image);
     }
 
     /**

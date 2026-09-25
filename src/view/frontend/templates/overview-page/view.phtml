@@ -9,7 +9,7 @@
     <ol class="landingpage-items">
     <?php foreach ($block->getLandingPages() as $landingPage): ?>
         <li class="landingpage-item">
-            <a href="<?=$landingPage->getUrlPath()?>"><?=$landingPage->getHeading() ?: $landingPage->getName()?>
+            <a href="<?=$block->getLandingPageUrl($landingPage)?>"><?=$landingPage->getHeading() ?: $landingPage->getName()?>
                 <img src="<?=$block->getLandingPageImage($landingPage)?>" />
             </a>
         </li>
