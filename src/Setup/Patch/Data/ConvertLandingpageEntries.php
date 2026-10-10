@@ -61,6 +61,7 @@ class ConvertLandingpageEntries implements DataPatchInterface
         ];
 
         $fields = [
+            LandingPageInterface::NAME,
             LandingPageInterface::ACTIVE,
             LandingPageInterface::URL_PATH,
             LandingPageInterface::CATEGORY_ID,
