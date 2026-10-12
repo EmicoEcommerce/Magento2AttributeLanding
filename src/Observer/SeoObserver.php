@@ -91,8 +91,10 @@ class SeoObserver implements ObserverInterface
             $pageMainTitle->setPageTitle($page->getHeading());
         }
 
+        $this->pageConfig->setRobots($page->getRobots());
+
         /** @phpstan-ignore-next-line */
-        if (!($page instanceof LandingPageInterface)) {
+        if (!$page instanceof LandingPageInterface) {
             return;
         }
 
