@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tweakwise\Test\Unit\Model;
 
+use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Model\LandingPage;
 use Emico\CodeCept\Test\Unit;
 use Tweakwise\Test\Support\UnitTester;
@@ -76,6 +77,45 @@ class LandingPageTest extends Unit
 
         $this->assertCount(1, $filters);
         $this->assertSame(['green'], $filters[0]->getValues());
+    }
+
+    public function testRobotsDefaultsToIndexFollow(): void
+    {
+        $subject = $this->createSubject();
+
+        $this->assertSame(LandingPageInterface::DEFAULT_ROBOTS, $subject->getRobots());
+        $this->assertSame(
+            LandingPageInterface::DEFAULT_ROBOTS,
+            $subject->getLandingPageDataForStore()[LandingPageInterface::ROBOTS]
+        );
+    }
+
+    public function testRobotsDirectiveIsStoredWithStoreData(): void
+    {
+        $subject = $this->createSubject();
+        $subject->setRobots('NOINDEX,NOFOLLOW');
+
+        $this->assertSame('NOINDEX,NOFOLLOW', $subject->getRobots());
+        $this->assertSame(
+            'NOINDEX,NOFOLLOW',
+            $subject->getLandingPageDataForStore()[LandingPageInterface::ROBOTS]
+        );
+    }
+
+    public function testInvalidRobotsDirectiveUsesDefault(): void
+    {
+        $subject = $this->createSubject();
+        $subject->setRobots('INVALID');
+
+        $this->assertSame(LandingPageInterface::DEFAULT_ROBOTS, $subject->getRobots());
+    }
+
+    public function testNullRobotsDirectiveUsesDefault(): void
+    {
+        $subject = $this->createSubject();
+        $subject->setRobots(null);
+
+        $this->assertSame(LandingPageInterface::DEFAULT_ROBOTS, $subject->getRobots());
     }
 
     private function createSubject(): LandingPage

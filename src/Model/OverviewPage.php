@@ -12,6 +12,14 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
 {
     public const CACHE_TAG = 'emico_attributelanding_overviewpage';
 
+    /** @var string[] */
+    private const ALLOWED_ROBOTS_DIRECTIVES = [
+        'INDEX,FOLLOW',
+        'NOINDEX,FOLLOW',
+        'INDEX,NOFOLLOW',
+        'NOINDEX,NOFOLLOW',
+    ];
+
     protected $_eventPrefix = 'emico_attributelanding_overviewpage';
 
     /**
@@ -178,6 +186,23 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
     }
 
     /**
+     * @return string
+     */
+    public function getRobots(): string
+    {
+        return $this->normalizeRobotsDirective((string)$this->getData(self::ROBOTS));
+    }
+
+    /**
+     * @param string|null $robots
+     * @return OverviewPageInterface
+     */
+    public function setRobots(?string $robots): OverviewPageInterface
+    {
+        return $this->setData(self::ROBOTS, $this->normalizeRobotsDirective($robots ?? ''));
+    }
+
+    /**
      * Get content_first
      * @return string|null
      */
@@ -317,14 +342,19 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
             OverviewPageInterface::META_TITLE,
             OverviewPageInterface::META_KEYWORDS,
             OverviewPageInterface::META_DESCRIPTION,
+            OverviewPageInterface::ROBOTS,
             OverviewPageInterface::CONTENT_FIRST,
             OverviewPageInterface::CONTENT_LAST,
         ];
 
-        return array_combine(
+        $storeData = array_combine(
             $fields,
             array_map(fn($field) => $this->getData($field), $fields)
         );
+
+        $storeData[OverviewPageInterface::ROBOTS] = $this->getRobots();
+
+        return $storeData;
     }
 
     /**
@@ -333,5 +363,18 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, UrlRe
     public function getIdentities(): array
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
+    }
+
+    /**
+     * @param string $robotsDirective
+     * @return string
+     */
+    private function normalizeRobotsDirective(string $robotsDirective): string
+    {
+        if (in_array($robotsDirective, self::ALLOWED_ROBOTS_DIRECTIVES, true)) {
+            return $robotsDirective;
+        }
+
+        return OverviewPageInterface::DEFAULT_ROBOTS;
     }
 }
