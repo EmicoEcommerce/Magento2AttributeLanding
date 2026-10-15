@@ -13,7 +13,7 @@ class OverviewPageTest extends Unit
 {
     protected UnitTester $tester;
 
-    public function testRobotsDefaultsToIndexFollow(): void
+    public function testRobotsDefaultsToStoreConfiguration(): void
     {
         $subject = $this->createSubject();
 

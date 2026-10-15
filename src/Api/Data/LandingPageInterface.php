@@ -31,7 +31,7 @@ interface LandingPageInterface extends ExtensibleDataInterface
     public const PAGE_ID = 'page_id';
     public const META_DESCRIPTION = 'meta_description';
     public const ROBOTS = 'robots';
-    public const DEFAULT_ROBOTS = 'INDEX,FOLLOW';
+    public const DEFAULT_ROBOTS = '';
     public const OVERVIEW_PAGE_ID = 'overview_page_id';
     public const OVERVIEW_PAGE_IMAGE = 'overview_page_image';
     public const FILTER_LINK_ALLOWED = 'is_filter_link_allowed';

@@ -478,7 +478,8 @@
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Page</item>
-					<item name="default" xsi:type="string">INDEX,FOLLOW</item>
+					<item name="default" xsi:type="string"/>
+					<item name="caption" xsi:type="string" translate="true">Use Store Configuration</item>
 					<item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
 					<item name="showInDefault" xsi:type="boolean">1</item>
 					<item name="showInWebsite" xsi:type="boolean">0</item>
@@ -490,7 +491,7 @@
 				<label translate="true">Search Engine Robots</label>
 				<dataScope>robots</dataScope>
 				<validation>
-					<rule name="required-entry" xsi:type="boolean">true</rule>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 			<formElements>

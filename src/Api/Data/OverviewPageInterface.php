@@ -23,7 +23,7 @@ interface OverviewPageInterface
     public const PAGE_ID = 'page_id';
     public const META_DESCRIPTION = 'meta_description';
     public const ROBOTS = 'robots';
-    public const DEFAULT_ROBOTS = 'INDEX,FOLLOW';
+    public const DEFAULT_ROBOTS = '';
     public const CREATED_AT = 'created_at';
     public const UPDATED_AT = 'updated_at';
     public const STORE_ID = 'store_id';
