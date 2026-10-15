@@ -79,7 +79,7 @@ class LandingPageTest extends Unit
         $this->assertSame(['green'], $filters[0]->getValues());
     }
 
-    public function testRobotsDefaultsToIndexFollow(): void
+    public function testRobotsDefaultsToStoreConfiguration(): void
     {
         $subject = $this->createSubject();
 

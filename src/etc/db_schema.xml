@@ -28,7 +28,7 @@
         <column xsi:type="varchar" name="meta_title" nullable="true" comment="Meta Title"/>
         <column xsi:type="text" name="meta_keywords" nullable="true" comment="Meta Keywords"/>
         <column xsi:type="text" name="meta_description" nullable="true" comment="Meta Description"/>
-        <column xsi:type="varchar" name="robots" nullable="false" length="32" default="INDEX,FOLLOW" comment="Search Engine Robots"/>
+        <column xsi:type="varchar" name="robots" nullable="false" length="32" default="" comment="Search Engine Robots"/>
         <column xsi:type="text" name="content_first" nullable="true" comment="Content above results"/>
         <column xsi:type="text" name="content_last" nullable="true" comment="Content below results"/>
         <column xsi:type="text" name="filter_attributes" nullable="true" comment="The attribute values defining the page"/>
@@ -72,7 +72,7 @@
         <column xsi:type="varchar" name="meta_title" nullable="true" comment="Meta Title"/>
         <column xsi:type="text" name="meta_keywords" nullable="true" comment="Meta Keywords"/>
         <column xsi:type="text" name="meta_description" nullable="true" comment="Meta Description"/>
-        <column xsi:type="varchar" name="robots" nullable="false" length="32" default="INDEX,FOLLOW" comment="Search Engine Robots"/>
+        <column xsi:type="varchar" name="robots" nullable="false" length="32" default="" comment="Search Engine Robots"/>
         <column xsi:type="text" name="content_first" nullable="true" comment="Content above results"/>
         <column xsi:type="text" name="content_last" nullable="true" comment="Content below results"/>
         <constraint xsi:type="primary" referenceId="PRIMARY"><column name="id"/></constraint>
