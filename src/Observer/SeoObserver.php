@@ -137,7 +137,7 @@ class SeoObserver implements ObserverInterface
         }
 
         /** @phpstan-ignore-next-line */
-        return $this->storeManager->getStore()->getUrl('', ['_direct' => $landingPage->getUrlPath()]);
+        return $this->storeManager->getStore()->getUrl('', ['_direct' => $landingPage->getUrlRewriteRequestPath()]);
     }
 
     /**
