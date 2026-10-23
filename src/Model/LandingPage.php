@@ -23,6 +23,14 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
 {
     public const CACHE_TAG = 'emico_attributelanding_page';
 
+    /** @var string[] */
+    private const ALLOWED_ROBOTS_DIRECTIVES = [
+        'INDEX,FOLLOW',
+        'NOINDEX,FOLLOW',
+        'INDEX,NOFOLLOW',
+        'NOINDEX,NOFOLLOW',
+    ];
+
     protected $_eventPrefix = 'emico_attributelanding_page';
 
     /**
@@ -316,6 +324,23 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
     public function setMetaDescription(?string $metaDescription): LandingPageInterface
     {
         return $this->setData(self::META_DESCRIPTION, $metaDescription);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRobots(): string
+    {
+        return $this->normalizeRobotsDirective((string)$this->getData(self::ROBOTS));
+    }
+
+    /**
+     * @param string|null $robots
+     * @return LandingPageInterface
+     */
+    public function setRobots(?string $robots): LandingPageInterface
+    {
+        return $this->setData(self::ROBOTS, $this->normalizeRobotsDirective($robots ?? ''));
     }
 
     /**
@@ -710,6 +735,7 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             LandingPageInterface::META_TITLE,
             LandingPageInterface::META_KEYWORDS,
             LandingPageInterface::META_DESCRIPTION,
+            LandingPageInterface::ROBOTS,
             LandingPageInterface::CONTENT_FIRST,
             LandingPageInterface::CONTENT_LAST,
             LandingPageInterface::FILTER_ATTRIBUTES,
@@ -721,10 +747,14 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
             LandingPageInterface::CANONICAL_URL,
         ];
 
-        return array_combine(
+        $storeData = array_combine(
             $fields,
             array_map(fn($field) => $this->getData($field), $fields),
         );
+
+        $storeData[LandingPageInterface::ROBOTS] = $this->getRobots();
+
+        return $storeData;
     }
 
     /**
@@ -751,5 +781,18 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
         }
 
         return [];
+    }
+
+    /**
+     * @param string $robotsDirective
+     * @return string
+     */
+    private function normalizeRobotsDirective(string $robotsDirective): string
+    {
+        if (in_array($robotsDirective, self::ALLOWED_ROBOTS_DIRECTIVES, true)) {
+            return $robotsDirective;
+        }
+
+        return LandingPageInterface::DEFAULT_ROBOTS;
     }
 }
