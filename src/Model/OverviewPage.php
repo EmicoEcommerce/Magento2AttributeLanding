@@ -18,6 +18,13 @@ use Magento\Framework\Model\AbstractModel;
 class OverviewPage extends AbstractModel implements OverviewPageInterface, IdentityInterface
 {
     public const CACHE_TAG = 'emico_attributelanding_overviewpage';
+    /** @var string[] */
+    private const ALLOWED_ROBOTS_DIRECTIVES = [
+        'INDEX,FOLLOW',
+        'NOINDEX,FOLLOW',
+        'INDEX,NOFOLLOW',
+        'NOINDEX,NOFOLLOW',
+    ];
     protected $_eventPrefix = 'emico_attributelanding_overviewpage';
 
     /**
@@ -40,7 +47,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function getPageId(): int
     {
-        return (int) $this->getData(self::PAGE_ID);
+        return (int) $this->getData(static::PAGE_ID);
     }
 
     /**
@@ -52,7 +59,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function setPageId(int $pageId): static
     {
-        return $this->setData(self::PAGE_ID, $pageId);
+        return $this->setData(static::PAGE_ID, $pageId);
     }
 
     /**
@@ -62,7 +69,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function isActive(): bool
     {
-        return (bool) $this->getData(self::ACTIVE);
+        return (bool) $this->getData(static::ACTIVE);
     }
 
     /**
@@ -74,7 +81,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function setActive(bool $active): static
     {
-        return $this->setData(self::ACTIVE, $active);
+        return $this->setData(static::ACTIVE, $active);
     }
 
     /**
@@ -84,7 +91,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function getName(): ?string
     {
-        return $this->getData(self::NAME);
+        return $this->getData(static::NAME);
     }
 
     /**
@@ -96,7 +103,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function setName(?string $name): static
     {
-        return $this->setData(self::NAME, $name);
+        return $this->setData(static::NAME, $name);
     }
 
     /**
@@ -106,7 +113,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function getUrlPath(): ?string
     {
-        return $this->getData(self::URL_PATH);
+        return $this->getData(static::URL_PATH);
     }
 
     /**
@@ -118,7 +125,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function setUrlPath(?string $urlPath): static
     {
-        return $this->setData(self::URL_PATH, $urlPath);
+        return $this->setData(static::URL_PATH, $urlPath);
     }
 
     /**
@@ -128,7 +135,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function getHeading(): ?string
     {
-        return $this->getData(self::HEADING);
+        return $this->getData(static::HEADING);
     }
 
     /**
@@ -140,7 +147,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function setHeading(?string $heading): static
     {
-        return $this->setData(self::HEADING, $heading);
+        return $this->setData(static::HEADING, $heading);
     }
 
     /**
@@ -150,7 +157,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function getMetaTitle(): ?string
     {
-        return $this->getData(self::META_TITLE);
+        return $this->getData(static::META_TITLE);
     }
 
     /**
@@ -162,7 +169,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function setMetaTitle(?string $metaTitle): static
     {
-        return $this->setData(self::META_TITLE, $metaTitle);
+        return $this->setData(static::META_TITLE, $metaTitle);
     }
 
     /**
@@ -172,7 +179,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function getMetaKeywords(): ?string
     {
-        return $this->getData(self::META_KEYWORDS);
+        return $this->getData(static::META_KEYWORDS);
     }
 
     /**
@@ -184,7 +191,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function setMetaKeywords(?string $metaKeywords): static
     {
-        return $this->setData(self::META_KEYWORDS, $metaKeywords);
+        return $this->setData(static::META_KEYWORDS, $metaKeywords);
     }
 
     /**
@@ -194,7 +201,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function getMetaDescription(): ?string
     {
-        return $this->getData(self::META_DESCRIPTION);
+        return $this->getData(static::META_DESCRIPTION);
     }
 
     /**
@@ -206,7 +213,25 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function setMetaDescription(?string $metaDescription): static
     {
-        return $this->setData(self::META_DESCRIPTION, $metaDescription);
+        return $this->setData(static::META_DESCRIPTION, $metaDescription);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRobots(): string
+    {
+        return $this->normalizeRobotsDirective((string) $this->getData(static::ROBOTS));
+    }
+
+    /**
+     * @param string|null $robots
+     *
+     * @return OverviewPageInterface
+     */
+    public function setRobots(?string $robots): OverviewPageInterface
+    {
+        return $this->setData(static::ROBOTS, $this->normalizeRobotsDirective($robots ?? ''));
     }
 
     /**
@@ -216,7 +241,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function getContentFirst(): ?string
     {
-        return $this->getData(self::CONTENT_FIRST);
+        return $this->getData(static::CONTENT_FIRST);
     }
 
     /**
@@ -228,7 +253,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function setContentFirst(?string $contentFirst): static
     {
-        return $this->setData(self::CONTENT_FIRST, $contentFirst);
+        return $this->setData(static::CONTENT_FIRST, $contentFirst);
     }
 
     /**
@@ -238,7 +263,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function getContentLast(): ?string
     {
-        return $this->getData(self::CONTENT_LAST);
+        return $this->getData(static::CONTENT_LAST);
     }
 
     /**
@@ -250,7 +275,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function setContentLast(?string $contentLast): static
     {
-        return $this->setData(self::CONTENT_LAST, $contentLast);
+        return $this->setData(static::CONTENT_LAST, $contentLast);
     }
 
     /**
@@ -260,7 +285,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function getStoreId(): int
     {
-        return (int) $this->getData(self::STORE_ID);
+        return (int) $this->getData(static::STORE_ID);
     }
 
     /**
@@ -270,7 +295,7 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
      */
     public function setStoreId(int $storeId): static
     {
-        return $this->setData(self::STORE_ID, $storeId);
+        return $this->setData(static::STORE_ID, $storeId);
     }
 
     /**
@@ -357,14 +382,19 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
             static::META_TITLE,
             static::META_KEYWORDS,
             static::META_DESCRIPTION,
+            static::ROBOTS,
             static::CONTENT_FIRST,
             static::CONTENT_LAST,
         ];
 
-        return array_combine(
+        $storeData = array_combine(
             $fields,
             array_map(fn($field) => $this->getData($field), $fields),
         );
+
+        $storeData[static::ROBOTS] = $this->getRobots();
+
+        return $storeData;
     }
 
     /**
@@ -373,5 +403,19 @@ class OverviewPage extends AbstractModel implements OverviewPageInterface, Ident
     public function getIdentities(): array
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
+    }
+
+    /**
+     * @param string $robotsDirective
+     *
+     * @return string
+     */
+    private function normalizeRobotsDirective(string $robotsDirective): string
+    {
+        if (in_array($robotsDirective, self::ALLOWED_ROBOTS_DIRECTIVES, true)) {
+            return $robotsDirective;
+        }
+
+        return static::DEFAULT_ROBOTS;
     }
 }

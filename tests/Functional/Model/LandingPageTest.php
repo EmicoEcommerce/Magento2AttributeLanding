@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Emico\AttributeLandingTest\Functional\Model;
 
 use Emico\AttributeLanding\Api\Data\LandingPageExtensionInterface;
+use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Model\LandingPage;
 use Emico\AttributeLandingTest\Support\FunctionalTester;
 use Emico\CodeCept\Test\Unit;
@@ -96,5 +97,39 @@ class LandingPageTest extends Unit
 
         $this->tester->assertCount(1, $filters);
         $this->tester->assertSame(['green'], $filters[0]->getValues());
+    }
+
+    public function testRobotsDefaultsToStoreConfiguration(): void
+    {
+        $this->tester->assertSame(LandingPageInterface::DEFAULT_ROBOTS, $this->subject->getRobots());
+        $this->tester->assertSame(
+            LandingPageInterface::DEFAULT_ROBOTS,
+            $this->subject->getLandingPageDataForStore()[LandingPageInterface::ROBOTS],
+        );
+    }
+
+    public function testRobotsDirectiveIsStoredWithStoreData(): void
+    {
+        $this->subject->setRobots('NOINDEX,NOFOLLOW');
+
+        $this->tester->assertSame('NOINDEX,NOFOLLOW', $this->subject->getRobots());
+        $this->tester->assertSame(
+            'NOINDEX,NOFOLLOW',
+            $this->subject->getLandingPageDataForStore()[LandingPageInterface::ROBOTS],
+        );
+    }
+
+    public function testInvalidRobotsDirectiveUsesDefault(): void
+    {
+        $this->subject->setRobots('INVALID');
+
+        $this->tester->assertSame(LandingPageInterface::DEFAULT_ROBOTS, $this->subject->getRobots());
+    }
+
+    public function testNullRobotsDirectiveUsesDefault(): void
+    {
+        $this->subject->setRobots(null);
+
+        $this->tester->assertSame(LandingPageInterface::DEFAULT_ROBOTS, $this->subject->getRobots());
     }
 }

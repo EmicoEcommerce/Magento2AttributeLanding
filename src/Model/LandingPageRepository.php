@@ -251,14 +251,27 @@ class LandingPageRepository implements LandingPageRepositoryInterface
      */
     public function findAllByOverviewPage(OverviewPageInterface $overviewPage): array
     {
+        $storeId = (int) $this->storeManager->getStore()->getId();
+
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter(LandingPageInterface::OVERVIEW_PAGE_ID, $overviewPage->getPageId())
             ->addFilter('emico_attributelanding_page_store.' . LandingPageInterface::ACTIVE, 1)
+            ->addFilter('emico_attributelanding_page_store.' . LandingPageInterface::STORE_ID, [0, $storeId], 'in')
             ->create();
 
         $result = $this->getList($searchCriteria);
 
-        return $result->getItems();
+        $itemsByPageId = [];
+        foreach ($result->getItems() as $item) {
+            $pageId = $item->getPageId();
+            if (isset($itemsByPageId[$pageId]) && (int) $item->getStoreId() !== $storeId) {
+                continue;
+            }
+
+            $itemsByPageId[$pageId] = $item;
+        }
+
+        return array_values($itemsByPageId);
     }
 
     /**

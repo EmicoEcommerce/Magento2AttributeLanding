@@ -36,6 +36,8 @@ interface OverviewPageInterface extends UrlRewriteGeneratorInterface
     public const META_KEYWORDS    = 'meta_keywords';
     public const PAGE_ID          = 'page_id';
     public const META_DESCRIPTION = 'meta_description';
+    public const ROBOTS           = 'robots';
+    public const DEFAULT_ROBOTS   = '';
     public const CREATED_AT       = 'created_at';
     public const UPDATED_AT       = 'updated_at';
     public const STORE_ID         = 'store_id';
@@ -160,6 +162,13 @@ interface OverviewPageInterface extends UrlRewriteGeneratorInterface
     public function setMetaDescription(?string $metaDescription): static;
 
     /**
+     * Get search engine robots directive
+     *
+     * @return string
+     */
+    public function getRobots(): string;
+
+    /**
      * Get content_first
      *
      * @return string|null
@@ -200,6 +209,15 @@ interface OverviewPageInterface extends UrlRewriteGeneratorInterface
      * @return string
      */
     public function getUpdatedAt(): string;
+
+    /**
+     * Set search engine robots directive
+     *
+     * @param string|null $robots
+     *
+     * @return \Emico\AttributeLanding\Api\Data\OverviewPageInterface
+     */
+    public function setRobots(?string $robots): OverviewPageInterface;
 
     /**
      * @param int $storeId

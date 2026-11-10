@@ -5,7 +5,7 @@
  * @copyright (c) Emico B.V. 2019
  * @noinspection  PhpFullyQualifiedNameUsageInspection
  * @noinspection  PhpUnnecessaryFullyQualifiedNameInspection
- * @phpcs:disable EmicoMagento2.Classes.UnsupportedTypesInApiInterface.UnsupportedTypesInApiInterface
+ * @phpcs         :disable EmicoMagento2.Classes.UnsupportedTypesInApiInterface.UnsupportedTypesInApiInterface
  */
 
 declare(strict_types=1);
@@ -14,8 +14,9 @@ namespace Emico\AttributeLanding\Api\Data;
 
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Magento\Framework\Api\ExtensibleDataInterface;
+use Magento\Framework\DataObject\IdentityInterface;
 
-interface LandingPageInterface extends ExtensibleDataInterface, UrlRewriteGeneratorInterface
+interface LandingPageInterface extends ExtensibleDataInterface, UrlRewriteGeneratorInterface, IdentityInterface
 {
     /**
      * Field constants
@@ -36,6 +37,8 @@ interface LandingPageInterface extends ExtensibleDataInterface, UrlRewriteGenera
     public const CATEGORY_ID                = 'category_id';
     public const PAGE_ID                    = 'page_id';
     public const META_DESCRIPTION           = 'meta_description';
+    public const ROBOTS                     = 'robots';
+    public const DEFAULT_ROBOTS             = '';
     public const OVERVIEW_PAGE_ID           = 'overview_page_id';
     public const OVERVIEW_PAGE_IMAGE        = 'overview_page_image';
     public const FILTER_LINK_ALLOWED        = 'is_filter_link_allowed';
@@ -130,6 +133,13 @@ interface LandingPageInterface extends ExtensibleDataInterface, UrlRewriteGenera
      * @return string|null
      */
     public function getMetaDescription(): ?string;
+
+    /**
+     * Get search engine robots directive
+     *
+     * @return string
+     */
+    public function getRobots(): string;
 
     /**
      * Get content_first
@@ -291,6 +301,13 @@ interface LandingPageInterface extends ExtensibleDataInterface, UrlRewriteGenera
      * @return static
      */
     public function setMetaDescription(?string $metaDescription): static;
+
+    /**
+     * @param string|null $robots
+     *
+     * @return \Emico\AttributeLanding\Api\Data\LandingPageInterface
+     */
+    public function setRobots(?string $robots): LandingPageInterface;
 
     /**
      * @param string|null $contentFirst
