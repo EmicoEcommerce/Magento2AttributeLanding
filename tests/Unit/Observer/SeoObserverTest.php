@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tweakwise\Test\Unit\Observer;
+namespace Emico\AttributeLandingTest\Unit\Observer;
 
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Block\OverviewPage\View as OverviewPageView;

@@ -1,0 +1,25 @@
+# Don't edit below this line
+# This GrumPHP File is copied to the project dir. And should be edited for custom overrides.
+imports:
+- { resource: vendor/emico/code-quality/grumphp.base.yml }
+# Add project custom ignores like this
+# parameters:
+#     ignore.phpcs:
+#         - "test"
+#     ignore.phpmd:
+#         - "test"
+#     ignore.phpstan:
+#         - "test"
+# Edits below this line
+
+grumphp:
+  tasks:
+    composer:
+      no_check_lock: true
+      no_check_publish: true
+      with_dependencies: false
+      strict: false
+
+    commit_mandatory_files:
+      mandatory_files:
+        - 'composer.json'

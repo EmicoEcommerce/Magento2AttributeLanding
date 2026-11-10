@@ -1,4 +1,4 @@
-namespace: Tweakwise\Test
+namespace: Emico\AttributeLandingTest
 support_namespace: Support
 paths:
     tests: tests

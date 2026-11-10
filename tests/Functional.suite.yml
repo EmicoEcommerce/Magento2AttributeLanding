@@ -1,5 +1,4 @@
 actor: FunctionalTester
-suite_namespace: Tweakwise\Test\Functional
 modules:
   enabled:
     - Asserts

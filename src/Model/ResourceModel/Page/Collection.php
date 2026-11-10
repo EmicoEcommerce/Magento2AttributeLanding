@@ -1,9 +1,11 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
- * @author : Edwin Jacobs, email: ejacobs@emico.nl.
+ * @author    : Edwin Jacobs, email: ejacobs@emico.nl.
  * @copyright : Copyright Emico B.V. 2019.
  */
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Model\ResourceModel\Page;
 
@@ -27,6 +29,8 @@ class Collection extends AbstractCollection
     }
 
     /**
+     * Initialize select with join
+     *
      * @return $this
      */
     protected function _initSelect()
@@ -35,8 +39,9 @@ class Collection extends AbstractCollection
         $this->getSelect()->join(
             ['emico_attributelanding_page_store' => $this->getTable('emico_attributelanding_page_store')],
             'main_table.page_id = emico_attributelanding_page_store.page_id',
-            ['*']
+            ['*'],
         );
+
         return $this;
     }
 }

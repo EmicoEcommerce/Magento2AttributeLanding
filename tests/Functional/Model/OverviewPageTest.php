@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Tweakwise\Test\Unit\Model;
+namespace Emico\AttributeLandingTest\Functional\Model;
 
 use Emico\AttributeLanding\Api\Data\OverviewPageInterface;
 use Emico\AttributeLanding\Model\OverviewPage;
 use Emico\CodeCept\Test\Unit;
-use Tweakwise\Test\Support\UnitTester;
+use Emico\AttributeLandingTest\Support\FunctionalTester;
 
 class OverviewPageTest extends Unit
 {
-    protected UnitTester $tester;
+    protected FunctionalTester $tester;
 
     public function testRobotsDefaultsToStoreConfiguration(): void
     {
         $subject = $this->createSubject();
 
-        $this->assertSame(OverviewPageInterface::DEFAULT_ROBOTS, $subject->getRobots());
-        $this->assertSame(
+        $this->tester->assertSame(OverviewPageInterface::DEFAULT_ROBOTS, $subject->getRobots());
+        $this->tester->assertSame(
             OverviewPageInterface::DEFAULT_ROBOTS,
             $subject->getOverviewPageDataForStore()[OverviewPageInterface::ROBOTS]
         );
@@ -29,8 +29,8 @@ class OverviewPageTest extends Unit
         $subject = $this->createSubject();
         $subject->setRobots('NOINDEX,NOFOLLOW');
 
-        $this->assertSame('NOINDEX,NOFOLLOW', $subject->getRobots());
-        $this->assertSame(
+        $this->tester->assertSame('NOINDEX,NOFOLLOW', $subject->getRobots());
+        $this->tester->assertSame(
             'NOINDEX,NOFOLLOW',
             $subject->getOverviewPageDataForStore()[OverviewPageInterface::ROBOTS]
         );
@@ -41,7 +41,7 @@ class OverviewPageTest extends Unit
         $subject = $this->createSubject();
         $subject->setRobots('INVALID');
 
-        $this->assertSame(OverviewPageInterface::DEFAULT_ROBOTS, $subject->getRobots());
+        $this->tester->assertSame(OverviewPageInterface::DEFAULT_ROBOTS, $subject->getRobots());
     }
 
     public function testNullRobotsDirectiveUsesDefault(): void
@@ -49,7 +49,7 @@ class OverviewPageTest extends Unit
         $subject = $this->createSubject();
         $subject->setRobots(null);
 
-        $this->assertSame(OverviewPageInterface::DEFAULT_ROBOTS, $subject->getRobots());
+        $this->tester->assertSame(OverviewPageInterface::DEFAULT_ROBOTS, $subject->getRobots());
     }
 
     private function createSubject(): OverviewPage

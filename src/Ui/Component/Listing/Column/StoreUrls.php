@@ -12,18 +12,18 @@ use Magento\Ui\Component\Listing\Columns\Column;
 class StoreUrls extends Column
 {
     /**
-     * @param ContextInterface $context
-     * @param UiComponentFactory $uiComponentFactory
+     * @param ContextInterface         $context
+     * @param UiComponentFactory       $uiComponentFactory
      * @param StoreRepositoryInterface $storeRepository
-     * @param array $components
-     * @param array $data
+     * @param array                    $components
+     * @param array                    $data
      */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
         private readonly StoreRepositoryInterface $storeRepository,
         array $components = [],
-        array $data = []
+        array $data = [],
     ) {
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
@@ -32,7 +32,9 @@ class StoreUrls extends Column
      * Prepare Data Source by replacing the raw store_urls string with a human-readable list.
      *
      * @param array $dataSource
+     *
      * @return array
+     * @noinspection PhpMissingParentCallCommonInspection
      */
     public function prepareDataSource(array $dataSource): array
     {
@@ -63,7 +65,7 @@ class StoreUrls extends Column
                 }
                 [$storeId, $urlPath] = $parts;
                 $storeId = (int) $storeId;
-                $storeName = $storeId === 0 ? __('Global') : ($storeNames[$storeId] ?? __('Store %1', $storeId));
+                $storeName = $storeId === 0 ? __('Global') : $storeNames[$storeId] ?? __('Store %1', $storeId);
                 $lines[] = sprintf('%s: %s', $storeName, $urlPath);
             }
 
