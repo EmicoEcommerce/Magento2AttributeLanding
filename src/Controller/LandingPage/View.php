@@ -113,9 +113,10 @@ class View extends Action
      */
     protected function setCategoryInRegistry(LandingPageInterface $page)
     {
-        $categoryId = $page->getCategoryId();
+        $categoryId = (int)$page->getCategoryId();
         if (!$categoryId) {
-            return;
+            // Category layout blocks expect a current category, so fall back to the store root category
+            $categoryId = (int)$this->storeManager->getStore()->getRootCategoryId();
         }
 
         $category = $this->categoryRepository->get($categoryId);
