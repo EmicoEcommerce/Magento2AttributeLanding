@@ -772,6 +772,10 @@ class LandingPage extends AbstractExtensibleModel implements LandingPageInterfac
      */
     private function normalizeFilterValues(mixed $value): array
     {
+        if (is_int($value)) {
+            return [(string)$value];
+        }
+
         if (is_array($value)) {
             return array_values($value);
         }
