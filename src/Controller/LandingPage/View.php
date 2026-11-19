@@ -116,7 +116,7 @@ class View extends Action
         $categoryId = (int)$page->getCategoryId();
         if (!$categoryId) {
             // Category layout blocks expect a current category, so fall back to the store root category
-            $categoryId = (int)$this->storeManager->getStore()->getRootCategoryId();
+            $categoryId = (int)$this->storeManager->getGroup()->getRootCategoryId();
         }
 
         $category = $this->categoryRepository->get($categoryId);

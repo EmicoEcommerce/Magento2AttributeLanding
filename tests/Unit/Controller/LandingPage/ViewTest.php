@@ -16,6 +16,7 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
+use Magento\Store\Api\Data\GroupInterface;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -99,10 +100,13 @@ class ViewTest extends TestCase
 
         $store = $this->createStub(Store::class);
         $store->method('getId')->willReturn(self::STORE_ID);
-        $store->method('getRootCategoryId')->willReturn(self::ROOT_CATEGORY_ID);
+
+        $group = $this->createStub(GroupInterface::class);
+        $group->method('getRootCategoryId')->willReturn(self::ROOT_CATEGORY_ID);
 
         $storeManager = $this->createStub(StoreManagerInterface::class);
         $storeManager->method('getStore')->willReturn($store);
+        $storeManager->method('getGroup')->willReturn($group);
 
         $landingPageRepository = $this->createStub(LandingPageRepositoryInterface::class);
         $landingPageRepository->method('getByIdWithStore')
