@@ -19,7 +19,6 @@ use Magento\Framework\View\Result\PageFactory;
 use Magento\Store\Api\Data\GroupInterface;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ViewTest extends TestCase
@@ -48,8 +47,22 @@ class ViewTest extends TestCase
      * Category layout blocks (e.g. MageWorx SocialMarkup) assume a current category is registered,
      * so a landing page without a category must still register one.
      */
-    #[DataProvider('emptyCategoryIdProvider')]
-    public function testFallsBackToStoreRootCategoryWhenPageHasNoCategory(mixed $categoryId): void
+    public function testFallsBackToStoreRootCategoryWhenCategoryIdIsNull(): void
+    {
+        $this->assertFallsBackToStoreRootCategory(null);
+    }
+
+    public function testFallsBackToStoreRootCategoryWhenCategoryIdIsZero(): void
+    {
+        $this->assertFallsBackToStoreRootCategory(0);
+    }
+
+    public function testFallsBackToStoreRootCategoryWhenCategoryIdIsZeroString(): void
+    {
+        $this->assertFallsBackToStoreRootCategory('0');
+    }
+
+    private function assertFallsBackToStoreRootCategory(mixed $categoryId): void
     {
         $rootCategory = $this->createStub(CategoryInterface::class);
         $categoryRepository = $this->createMock(CategoryRepositoryInterface::class);
@@ -64,18 +77,6 @@ class ViewTest extends TestCase
             ->with('current_category', $rootCategory);
 
         $this->createSubject($this->createLandingPage($categoryId), $categoryRepository, $registry)->execute();
-    }
-
-    /**
-     * @return array<string, array{mixed}>
-     */
-    public static function emptyCategoryIdProvider(): array
-    {
-        return [
-            'null' => [null],
-            'zero' => [0],
-            'zero string' => ['0'],
-        ];
     }
 
     private function createLandingPage(mixed $categoryId): LandingPageInterface
