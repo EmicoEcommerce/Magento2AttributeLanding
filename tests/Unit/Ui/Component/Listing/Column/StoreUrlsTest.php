@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tweakwise\Test\Unit\Ui\Component\Listing\Column;
+namespace Emico\AttributeLandingTest\Unit\Ui\Component\Listing\Column;
 
 use Emico\AttributeLanding\Ui\Component\Listing\Column\StoreUrls;
 use Emico\CodeCept\Test\Unit;
@@ -12,7 +12,7 @@ use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Api\StoreRepositoryInterface;
 use Mockery;
 use Mockery\MockInterface;
-use Tweakwise\Test\Support\UnitTester;
+use Emico\AttributeLandingTest\Support\UnitTester;
 
 class StoreUrlsTest extends Unit
 {

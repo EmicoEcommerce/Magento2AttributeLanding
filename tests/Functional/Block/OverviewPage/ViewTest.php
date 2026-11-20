@@ -2,24 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Tweakwise\Test\Unit\Block\OverviewPage;
+namespace Emico\AttributeLandingTest\Functional\Block\OverviewPage;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\UrlRewriteGeneratorInterface;
 use Emico\AttributeLanding\Block\OverviewPage\View;
 use Emico\CodeCept\Test\Unit;
 use Mockery;
-use Tweakwise\Test\Support\UnitTester;
+use Emico\AttributeLandingTest\Support\FunctionalTester;
 
 class ViewTest extends Unit
 {
-    protected UnitTester $tester;
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        Mockery::close();
-    }
+    protected FunctionalTester $tester;
 
     public function testGetLandingPageUrlUsesUrlRewriteRequestPathWhenLandingPageImplementsInterface(): void
     {

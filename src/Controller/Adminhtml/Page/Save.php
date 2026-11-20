@@ -1,4 +1,6 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
+
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Controller\Adminhtml\Page;
 
@@ -114,7 +116,7 @@ class Save extends Action
         } catch (LocalizedException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         } catch (Exception $e) {
-            $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the Page.'));
+            $this->messageManager->addExceptionMessage($e, (string) __('Something went wrong while saving the Page.'));
         }
 
         $this->dataPersistor->set('emico_attributelanding_page', $data);

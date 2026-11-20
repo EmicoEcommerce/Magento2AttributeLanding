@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tweakwise\Test\Unit\Model;
+namespace Emico\AttributeLandingTest\Unit\Model;
 
 use Emico\AttributeLanding\Api\Data\LandingPageInterface;
 use Emico\AttributeLanding\Api\Data\LandingPageInterfaceFactory;
@@ -22,7 +22,7 @@ use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Mockery;
 use Mockery\MockInterface;
-use Tweakwise\Test\Support\UnitTester;
+use Emico\AttributeLandingTest\Support\UnitTester;
 
 class LandingPageRepositoryTest extends Unit
 {

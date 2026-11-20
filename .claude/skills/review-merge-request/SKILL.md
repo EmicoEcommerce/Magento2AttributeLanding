@@ -17,8 +17,8 @@ Review a GitLab merge request using `glab`, show findings in chat, then post app
    glab api "projects/:fullpath/merge_requests/<MR>" --jq '{base: .diff_refs.base_sha, head: .diff_refs.head_sha, start: .diff_refs.start_sha}'
    ```
 4. **Review**: Analyse the diff thoroughly. For each finding, produce two versions:
-   - A **Dutch** version to show in the chat to the user.
-   - An **English** version to post on GitLab (prepared but not shown unless posting).
+    - A **Dutch** version to show in the chat to the user.
+    - An **English** version to post on GitLab (prepared but not shown unless posting).
 
    Track the exact **file path** and **new-file line number** for each finding (needed for inline placement).
 
@@ -38,7 +38,9 @@ Suggestie:
 5. **Present findings**: Show all findings numbered in the chat **in Dutch**. After listing them, ask:
    > "Welke punten wil je als comment plaatsen op de MR? Geef de nummers op (bijv. 1,3,5) of zeg 'alles' of 'geen'."
 
-6. **Post approved comments as draft notes**: Write each comment to a temp JSON file using `note` (not `body`) and post as a draft. Using `-F` form fields does NOT work for nested position params — always use `--input` with `-H "Content-Type: application/json"`:
+6. **Post approved comments as draft notes**: Write each comment to a temp JSON file using `note` (not `body`) and post
+   as a draft. Using `-F` form fields does NOT work for nested position params — always use `--input` with
+   `-H "Content-Type: application/json"`:
    ```bash
    cat > /tmp/mr_comment.json << EOF
    {
@@ -61,7 +63,8 @@ Suggestie:
      --input /tmp/mr_comment.json
    ```
 
-   Always include `old_path` (same value as `new_path` for added/modified files) — without it GitLab ignores the position.
+   Always include `old_path` (same value as `new_path` for added/modified files) — without it GitLab ignores the
+   position.
 
    Verify the comment was placed inline by checking `position != null` in the response.
 
@@ -70,7 +73,8 @@ Suggestie:
    glab api "projects/:fullpath/merge_requests/<MR>/draft_notes/bulk_publish" -X POST
    ```
 
-8. **Request changes**: The REST endpoint `POST /request_changes` returns 404 on this GitLab instance. Use the GraphQL API instead:
+8. **Request changes**: The REST endpoint `POST /request_changes` returns 404 on this GitLab instance. Use the GraphQL
+   API instead:
    ```bash
    glab api "graphql" -X POST -H "Content-Type: application/json" --input - << 'EOF'
    {"query": "mutation { mergeRequestRequestChanges(input: { projectPath: \"<project_path>\", iid: \"<MR>\" }) { mergeRequest { id } errors } }"}

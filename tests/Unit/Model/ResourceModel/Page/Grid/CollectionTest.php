@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tweakwise\Test\Unit\Model\ResourceModel\Page\Grid;
+namespace Emico\AttributeLandingTest\Unit\Model\ResourceModel\Page\Grid;
 
 use Emico\AttributeLanding\Model\ResourceModel\Page\Grid\Collection as GridCollection;
+use Emico\AttributeLandingTest\Support\UnitTester;
 use Emico\CodeCept\Test\Unit;
 use Magento\Framework\DB\Adapter\Pdo\Mysql;
 use Magento\Framework\DB\Select;
@@ -12,13 +13,11 @@ use Magento\Framework\DB\Select\SelectRenderer;
 use Magento\Framework\Event\ManagerInterface;
 use Mockery;
 use Mockery\MockInterface;
-use Tweakwise\Test\Support\UnitTester;
 use Zend_Db_Expr;
 
 class CollectionTest extends Unit
 {
     protected UnitTester $tester;
-
     private Mysql|MockInterface $connection;
     private SelectRenderer|MockInterface $selectRenderer;
     private ManagerInterface|MockInterface $eventManager;
@@ -33,18 +32,12 @@ class CollectionTest extends Unit
 
         $this->connection = Mockery::mock(Mysql::class)->makePartial();
         $this->connection->shouldReceive('quoteIdentifier')->andReturnUsing(
-            static fn (string $identifier): string => $identifier
+            static fn(string $identifier): string => $identifier,
         );
         $this->connection->shouldReceive('quoteInto')->andReturnUsing(
-            static fn (string $text, mixed $value): string => str_replace('?', sprintf("'%s'", (string) $value), $text)
+            static fn(string $text, mixed $value): string => str_replace('?', sprintf("'%s'", (string) $value), $text),
         );
-        $this->connection->shouldReceive('select')->andReturnUsing(fn (): Select => $this->createSelect());
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        Mockery::close();
+        $this->connection->shouldReceive('select')->andReturnUsing(fn(): Select => $this->createSelect());
     }
 
     public function testBeforeLoadAddsStoreJoinAndAggregatedColumns(): void
@@ -58,15 +51,15 @@ class CollectionTest extends Unit
         $from = $select->getPart(Select::FROM);
         $columns = $select->getPart(Select::COLUMNS);
 
-        $this->assertArrayHasKey('emico_attributelanding_page_store', $from);
-        $this->assertSame(['main_table.page_id'], $select->getPart(Select::GROUP));
-        $this->assertCount(4, $columns);
-        $this->assertSame('store_urls', $columns[1][2]);
-        $this->assertInstanceOf(Zend_Db_Expr::class, $columns[1][1]);
-        $this->assertSame('name', $columns[2][2]);
-        $this->assertInstanceOf(Zend_Db_Expr::class, $columns[2][1]);
-        $this->assertSame('active', $columns[3][1]);
-        $this->assertSame('active', $columns[3][2]);
+        $this->tester->assertArrayHasKey('emico_attributelanding_page_store', $from);
+        $this->tester->assertSame(['main_table.page_id'], $select->getPart(Select::GROUP));
+        $this->tester->assertCount(4, $columns);
+        $this->tester->assertSame('store_urls', $columns[1][2]);
+        $this->tester->assertInstanceOf(Zend_Db_Expr::class, $columns[1][1]);
+        $this->tester->assertSame('name', $columns[2][2]);
+        $this->tester->assertInstanceOf(Zend_Db_Expr::class, $columns[2][1]);
+        $this->tester->assertSame('active', $columns[3][1]);
+        $this->tester->assertSame('active', $columns[3][2]);
     }
 
     public function testAddFieldToFilterAddsHavingForStoreUrls(): void
@@ -78,8 +71,11 @@ class CollectionTest extends Unit
 
         $having = implode(' ', $select->getPart(Select::HAVING));
 
-        $this->assertStringContainsString('GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id', $having);
-        $this->assertStringContainsString("'%default/url%'", $having);
+        $this->tester->assertStringContainsString(
+            'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id',
+            $having,
+        );
+        $this->tester->assertStringContainsString("'%default/url%'", $having);
     }
 
     public function testAddFieldToFilterAddsHavingForName(): void
@@ -91,9 +87,12 @@ class CollectionTest extends Unit
 
         $having = implode(' ', $select->getPart(Select::HAVING));
 
-        $this->assertStringContainsString('GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id', $having);
-        $this->assertStringContainsString('emico_attributelanding_page_store.name', $having);
-        $this->assertStringContainsString("'%Landing Page%'", $having);
+        $this->tester->assertStringContainsString(
+            'GROUP_CONCAT(DISTINCT CONCAT(emico_attributelanding_page_store.store_id',
+            $having,
+        );
+        $this->tester->assertStringContainsString('emico_attributelanding_page_store.name', $having);
+        $this->tester->assertStringContainsString("'%Landing Page%'", $having);
     }
 
     public function testGetSelectCountSqlWrapsGroupedQueryWhenHavingIsPresent(): void
@@ -108,9 +107,9 @@ class CollectionTest extends Unit
         $from = $countSelect->getPart(Select::FROM);
         $innerSelect = reset($from)['tableName'];
 
-        $this->assertInstanceOf(Select::class, $innerSelect);
-        $this->assertArrayHasKey('emico_attributelanding_page_store', $innerSelect->getPart(Select::FROM));
-        $this->assertSame(['main_table.page_id'], $innerSelect->getPart(Select::GROUP));
+        $this->tester->assertInstanceOf(Select::class, $innerSelect);
+        $this->tester->assertArrayHasKey('emico_attributelanding_page_store', $innerSelect->getPart(Select::FROM));
+        $this->tester->assertSame(['main_table.page_id'], $innerSelect->getPart(Select::GROUP));
     }
 
     public function testAddFieldToFilterFallsBackToParentWhenConditionHasNoLikeKey(): void
@@ -123,8 +122,8 @@ class CollectionTest extends Unit
 
         $where = implode(' ', $select->getPart(Select::WHERE));
 
-        $this->assertSame([], $select->getPart(Select::HAVING));
-        $this->assertStringContainsString('foo', $where);
+        $this->tester->assertSame([], $select->getPart(Select::HAVING));
+        $this->tester->assertStringContainsString('foo', $where);
     }
 
     public function testGetSelectCountSqlDoesNotDuplicateJoinWhenAlreadyPresent(): void
@@ -134,7 +133,7 @@ class CollectionTest extends Unit
         $select->joinLeft(
             ['emico_attributelanding_page_store' => 'emico_attributelanding_page_store'],
             'main_table.page_id = emico_attributelanding_page_store.page_id',
-            []
+            [],
         );
         $select->having('COUNT(*) > ?', 0);
 
@@ -152,7 +151,7 @@ class CollectionTest extends Unit
             $joinCount++;
         }
 
-        $this->assertSame(1, $joinCount);
+        $this->tester->assertSame(1, $joinCount);
     }
 
     private function createSubject(Select $select): GridCollection
@@ -161,7 +160,7 @@ class CollectionTest extends Unit
             public function __construct(
                 Select $select,
                 Mysql $connection,
-                ManagerInterface $eventManager
+                ManagerInterface $eventManager,
             ) {
                 $this->_select = $select;
                 $this->_conn = $connection;
@@ -173,12 +172,12 @@ class CollectionTest extends Unit
                 return $this->_beforeLoad();
             }
 
-            public function getConnection()
+            public function getConnection(): Mysql
             {
                 return $this->_conn;
             }
 
-            public function getSelect()
+            public function getSelect(): Select
             {
                 return $this->_select;
             }

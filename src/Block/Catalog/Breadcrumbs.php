@@ -1,15 +1,11 @@
-<?php // phpcs:ignore SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing
+<?php
 
 /**
  * @author Bram Gerritsen <bgerritsen@emico.nl>
  * @copyright (c) Emico B.V. 2019
  */
 
-/**
- * Adds landing page breadcrumbs
- * We have no way to overwrite category breadcrumbs using events or plugins.
- * So we need to extend the Magento\Catalog\Block\Breadcrumbs breadcrumbs block
- */
+declare(strict_types=1);
 
 namespace Emico\AttributeLanding\Block\Catalog;
 
@@ -21,6 +17,11 @@ use Magento\Catalog\Helper\Data;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Template\Context;
 
+/**
+ * Adds landing page breadcrumbs
+ * We have no way to overwrite category breadcrumbs using events or plugins.
+ * So we need to extend the Magento\Catalog\Block\Breadcrumbs breadcrumbs block
+ */
 class Breadcrumbs extends CatalogBreadcrumbs
 {
     /**
